@@ -561,6 +561,303 @@ body {
   .ex-check { width: 28px; height: 28px; font-size: 15px; }
   .complete-day-btn { padding: 16px; font-size: 15px; }
 }
+
+/* ========================================= */
+/* TRAINING LOG                              */
+/* ========================================= */
+
+/* Log day cards mirror schedule day cards */
+.log-day-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+}
+.log-day-card:hover { border-color: var(--border-light); }
+.log-day-card.has-data { border-color: var(--lift)44; }
+
+.log-day-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.log-day-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.log-day-left h3 { font-size: 14px; font-weight: 600; }
+.log-day-left p { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+.log-day-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.log-day-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.log-day-chevron {
+  font-size: 16px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.log-day-card.log-expanded .log-day-chevron { transform: rotate(180deg); }
+
+.log-day-body {
+  display: none;
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+}
+.log-day-card.log-expanded .log-day-body { display: block; }
+
+/* Exercise logging block */
+.log-ex-block {
+  margin-top: 14px;
+}
+.log-ex-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.log-ex-rx {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+/* Set input row */
+.log-set-input-row {
+  display: grid;
+  grid-template-columns: 32px 1fr 1fr 1fr 36px;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.log-set-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.log-input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 7px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+.log-input:focus { border-color: var(--accent); }
+.log-input::placeholder { color: var(--text-muted); font-family: var(--font-mono); font-size: 11px; }
+.log-input.filled { border-color: var(--complete)66; background: var(--complete)0a; }
+
+.log-set-action {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.log-set-action.add-set {
+  background: transparent;
+  border: 1px dashed var(--border-light);
+  color: var(--text-muted);
+  font-size: 16px;
+}
+.log-set-action.add-set:hover { border-color: var(--accent); color: var(--accent); }
+.log-set-action.del-set {
+  background: transparent;
+  color: var(--text-muted);
+}
+.log-set-action.del-set:hover { color: #e74c3c; background: #e74c3c15; }
+
+/* Logged set display */
+.log-set-filled {
+  display: grid;
+  grid-template-columns: 32px 1fr 1fr 1fr 28px;
+  gap: 6px;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--surface-3);
+}
+.log-set-filled:last-child { border-bottom: none; }
+.log-set-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.log-set-val.primary { color: var(--text); font-weight: 600; }
+
+/* Cardio log input */
+.log-cardio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+.log-cardio-grid.three-col { grid-template-columns: 1fr 1fr 1fr; }
+.log-field-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.log-field-mini label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+.log-field-mini .log-input { padding: 6px 8px; }
+.log-notes-input {
+  grid-column: 1 / -1;
+}
+
+/* Save indicator */
+.log-save-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.log-save-btn:hover { background: var(--accent); color: #fff; }
+.log-save-btn.saved { background: var(--complete); border-color: var(--complete); color: #fff; pointer-events: none; }
+
+/* PR badge inline */
+.pr-inline {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: var(--accent-glow);
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+}
+
+/* Summary strip at top of log */
+.log-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.log-summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+.log-summary-val {
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--text);
+}
+.log-summary-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Bodyweight mini-section in log */
+.log-bw-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.log-bw-section label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.log-bw-section .log-input { max-width: 120px; }
+.log-bw-btn {
+  padding: 7px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.log-bw-btn:hover { background: var(--accent); color: #fff; }
+.log-bw-trend {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* Sparkline bars in bodyweight */
+.bw-spark {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 28px;
+}
+.bw-spark-bar {
+  width: 4px;
+  background: var(--lift);
+  border-radius: 1px;
+  min-height: 2px;
+}
+
+@media (max-width: 640px) {
+  .log-set-input-row { grid-template-columns: 24px 1fr 1fr 1fr 28px; gap: 4px; }
+  .log-cardio-grid { grid-template-columns: 1fr 1fr; }
+  .log-cardio-grid.three-col { grid-template-columns: 1fr 1fr; }
+  .log-summary-strip { grid-template-columns: repeat(2, 1fr); }
+  .log-bw-section { flex-wrap: wrap; }
+  .log-bw-trend { margin-left: 0; width: 100%; justify-content: center; margin-top: 6px; }
+}
 </style>
 </head>
 <body>
@@ -584,6 +881,7 @@ body {
 
   <div class="tab-bar">
     <button class="tab-btn active" onclick="setTab('schedule')">Schedule</button>
+    <button class="tab-btn" onclick="setTab('log')">Training Log</button>
     <button class="tab-btn" onclick="setTab('overview')">Program Notes</button>
   </div>
 
@@ -593,6 +891,7 @@ body {
     <div class="day-grid" id="dayGrid"></div>
   </div>
 
+  <div id="logTab" style="display:none"></div>
   <div id="overviewTab" style="display:none"></div>
 </div>
 
@@ -1628,12 +1927,15 @@ let currentTab = 'schedule';
 
 function setTab(tab) {
   currentTab = tab;
+  const tabs = ['schedule', 'log', 'overview'];
   document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', (i === 0 && tab === 'schedule') || (i === 1 && tab === 'overview'));
+    btn.classList.toggle('active', tabs[i] === tab);
   });
   document.getElementById('scheduleTab').style.display = tab === 'schedule' ? 'block' : 'none';
+  document.getElementById('logTab').style.display = tab === 'log' ? 'block' : 'none';
   document.getElementById('overviewTab').style.display = tab === 'overview' ? 'block' : 'none';
   if (tab === 'overview') renderOverview();
+  if (tab === 'log') renderLog();
 }
 
 function renderOverview() {
@@ -2024,6 +2326,462 @@ function render() {
       <div class="day-detail">${detailHTML}</div>
     </div>`;
   }).join('');
+}
+
+// =============================================
+// TRAINING LOG SYSTEM
+// =============================================
+
+const LOG_KEY = 'hybrid_athlete_log_v2';
+let logWeek = 1;
+let logExpandedDays = {};
+
+function loadLog() {
+  try {
+    const saved = safeStorage.get(LOG_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return { sets: {}, cardio: {}, bodyWeights: {} };
+}
+function saveLog() {
+  try { safeStorage.set(LOG_KEY, JSON.stringify(logData)); } catch(e) {}
+}
+let logData = loadLog();
+
+// Determine which sections contain loggable exercises (not warmups/stretches/sauna/recovery)
+function isLoggableSection(title) {
+  const t = title.toLowerCase();
+  if (t.includes('warm') || t.includes('post-run') || t.includes('post-ride') || t.includes('stretching') || t.includes('mobility') || t.includes('sauna') || t.includes('recovery')) return false;
+  return true;
+}
+
+// Determine if an exercise is weight-trackable (vs bodyweight/timed)
+function isWeightExercise(name) {
+  const n = name.toLowerCase();
+  const bodyweight = ['dead bug', 'bird-dog', 'bird dog', 'side plank', 'plank', 'mcgill', 'pallof', 'bicycle', 'v sit', 'hanging leg', 'ab wheel', 'copenhagen', 'walk', 'run', 'easy run', 'long easy run', 'jog', 'strides', 'foam roll', 'pigeon', 'stretch', 'cooldown', 'easy road ride', 'easy spin', 'warm-up spin', 'tempo block', 'freestyle', 'kick drill', 'catch-up', 'backstroke'];
+  return !bodyweight.some(kw => n.includes(kw));
+}
+
+// Parse prescribed sets x reps from rx string (e.g. "3x5 @ 255-265 lbs (RPE 7)" -> {sets:3, reps:5})
+function parseRx(rx) {
+  const m = rx.match(/(\d+)x(\d+)/i);
+  if (m) return { sets: parseInt(m[1]), reps: parseInt(m[2]) };
+  const m2 = rx.match(/(\d+)\s*sets?/i);
+  if (m2) return { sets: parseInt(m2[1]), reps: null };
+  return { sets: 3, reps: null };
+}
+
+// Get a stable key for a day's exercise
+function logKey(weekId, dayIdx, secIdx, exIdx) {
+  return `${weekId}-${dayIdx}-${secIdx}-${exIdx}`;
+}
+function logDayKey(weekId, dayIdx) {
+  return `d-${weekId}-${dayIdx}`;
+}
+
+// Get all logged sets for a specific exercise
+function getSets(key) {
+  return logData.sets[key] || [];
+}
+function getCardio(dayKey) {
+  return logData.cardio[dayKey] || null;
+}
+
+// Add a set to an exercise
+function logAddSet(weekId, dayIdx, secIdx, exIdx) {
+  const key = logKey(weekId, dayIdx, secIdx, exIdx);
+  const wInput = document.getElementById(`lw-${key}`);
+  const rInput = document.getElementById(`lr-${key}`);
+  const rpInput = document.getElementById(`lrpe-${key}`);
+  if (!wInput || !rInput) return;
+  const weight = parseFloat(wInput.value);
+  const reps = parseInt(rInput.value);
+  const rpe = rpInput ? rpInput.value : '';
+  if (isNaN(weight) && isNaN(reps)) return;
+  if (!logData.sets[key]) logData.sets[key] = [];
+  logData.sets[key].push({
+    weight: isNaN(weight) ? 0 : weight,
+    reps: isNaN(reps) ? 0 : reps,
+    rpe: rpe || null,
+    ts: Date.now()
+  });
+  saveLog();
+  wInput.value = '';
+  rInput.value = '';
+  if (rpInput) rpInput.value = '';
+  wInput.focus();
+  renderLog();
+}
+
+// Remove last set
+function logRemoveSet(weekId, dayIdx, secIdx, exIdx) {
+  const key = logKey(weekId, dayIdx, secIdx, exIdx);
+  if (logData.sets[key] && logData.sets[key].length > 0) {
+    logData.sets[key].pop();
+    if (logData.sets[key].length === 0) delete logData.sets[key];
+    saveLog();
+    renderLog();
+  }
+}
+
+// Save cardio for a day
+function logSaveCardio(weekId, dayIdx) {
+  const dk = logDayKey(weekId, dayIdx);
+  const dur = document.getElementById(`cd-${dk}`);
+  const dist = document.getElementById(`cdist-${dk}`);
+  const notes = document.getElementById(`cn-${dk}`);
+  const duration = dur ? parseInt(dur.value) : 0;
+  const distance = dist ? parseFloat(dist.value) : 0;
+  logData.cardio[dk] = {
+    duration: isNaN(duration) ? 0 : duration,
+    distance: isNaN(distance) ? 0 : distance,
+    pace: (distance > 0 && duration > 0) ? Math.round(duration / distance * 10) / 10 : null,
+    notes: notes ? notes.value : '',
+    ts: Date.now()
+  };
+  saveLog();
+  renderLog();
+}
+
+// Bodyweight
+function logAddBW() {
+  const input = document.getElementById('log-bw-input');
+  if (!input) return;
+  const w = parseFloat(input.value);
+  if (isNaN(w)) return;
+  const today = new Date().toISOString().split('T')[0];
+  logData.bodyWeights[today] = w;
+  saveLog();
+  input.value = '';
+  renderLog();
+}
+
+// Toggle log day expand
+function toggleLogDay(weekId, dayIdx) {
+  const key = `${weekId}-${dayIdx}`;
+  logExpandedDays[key] = !logExpandedDays[key];
+  renderLog();
+}
+
+function selectLogWeek(weekId) {
+  logWeek = weekId;
+  renderLog();
+}
+
+// Calculate summary stats
+function getLogStats() {
+  let totalSets = 0, totalVolume = 0, totalCardioMin = 0, sessionsLogged = 0;
+  const daysTouched = new Set();
+  Object.entries(logData.sets).forEach(([key, sets]) => {
+    if (sets.length > 0) {
+      totalSets += sets.length;
+      sets.forEach(s => { totalVolume += (s.weight || 0) * (s.reps || 0); });
+      daysTouched.add(key.split('-').slice(0,2).join('-'));
+    }
+  });
+  Object.entries(logData.cardio).forEach(([key, c]) => {
+    if (c && c.duration > 0) {
+      totalCardioMin += c.duration;
+      daysTouched.add(key.replace('d-',''));
+    }
+  });
+  sessionsLogged = daysTouched.size;
+  return { totalSets, totalVolume, totalCardioMin, sessionsLogged };
+}
+
+// Get best set for an exercise across entire log
+function getBestForExercise(exerciseName) {
+  let best = null;
+  // Search all keys
+  PROGRAM.weeks.forEach(w => {
+    w.days.forEach((d, di) => {
+      d.sections.forEach((s, si) => {
+        s.exercises.forEach((ex, ei) => {
+          if (ex.name === exerciseName) {
+            const sets = getSets(logKey(w.id, di, si, ei));
+            sets.forEach(set => {
+              if (!best || set.weight > best.weight) best = set;
+            });
+          }
+        });
+      });
+    });
+  });
+  return best;
+}
+
+function formatPace(mpm) {
+  if (!mpm || mpm <= 0) return '--';
+  const mins = Math.floor(mpm);
+  const secs = Math.round((mpm - mins) * 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}/mi`;
+}
+
+function resetLogData() {
+  if (confirm('Clear all training log data? This cannot be undone.')) {
+    logData = { sets: {}, cardio: {}, bodyWeights: {} };
+    saveLog();
+    renderLog();
+  }
+}
+
+function renderLog() {
+  const el = document.getElementById('logTab');
+  const week = PROGRAM.weeks.find(w => w.id === logWeek);
+  if (!week) return;
+  const stats = getLogStats();
+  const bwEntries = Object.entries(logData.bodyWeights).sort((a,b) => a[0].localeCompare(b[0]));
+  const latestBW = bwEntries.length > 0 ? bwEntries[bwEntries.length - 1] : null;
+
+  let html = '';
+
+  // Summary strip
+  html += `<div class="log-summary-strip">
+    <div class="log-summary-card">
+      <div class="log-summary-val">${stats.sessionsLogged}</div>
+      <div class="log-summary-label">Sessions</div>
+    </div>
+    <div class="log-summary-card">
+      <div class="log-summary-val">${stats.totalSets}</div>
+      <div class="log-summary-label">Total Sets</div>
+    </div>
+    <div class="log-summary-card">
+      <div class="log-summary-val">${stats.totalVolume > 999 ? Math.round(stats.totalVolume/1000) + 'k' : stats.totalVolume}</div>
+      <div class="log-summary-label">Volume (lbs)</div>
+    </div>
+    <div class="log-summary-card">
+      <div class="log-summary-val">${stats.totalCardioMin}</div>
+      <div class="log-summary-label">Cardio (min)</div>
+    </div>
+  </div>`;
+
+  // Bodyweight strip
+  html += `<div class="log-bw-section">
+    <label>Bodyweight</label>
+    <input class="log-input" id="log-bw-input" type="number" step="0.1" placeholder="${latestBW ? latestBW[1] : '200.0'}" style="max-width:100px;" onkeydown="if(event.key==='Enter')logAddBW()">
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">lbs</span>
+    <button class="log-bw-btn" onclick="logAddBW()">Log</button>
+    <div class="log-bw-trend">`;
+
+  if (bwEntries.length > 0) {
+    const last7 = bwEntries.slice(-7);
+    const minW = Math.min(...last7.map(e => e[1]));
+    const maxW = Math.max(...last7.map(e => e[1]));
+    const range = maxW - minW || 1;
+    html += `<span>${latestBW[1]} lbs</span>`;
+    html += `<div class="bw-spark">`;
+    last7.forEach(e => {
+      const pct = ((e[1] - minW) / range) * 100;
+      html += `<div class="bw-spark-bar" style="height:${Math.max(8, pct)}%;" title="${e[0]}: ${e[1]} lbs"></div>`;
+    });
+    html += `</div>`;
+    if (bwEntries.length >= 2) {
+      const diff = (bwEntries[bwEntries.length-1][1] - bwEntries[bwEntries.length-2][1]).toFixed(1);
+      const sign = diff >= 0 ? '+' : '';
+      html += `<span style="color:${diff>=0?'var(--complete)':'var(--accent)'};">${sign}${diff}</span>`;
+    }
+  } else {
+    html += `<span style="color:var(--text-muted);">No entries yet</span>`;
+  }
+
+  html += `</div></div>`;
+
+  // Week nav (same structure as schedule)
+  html += `<div class="week-nav" style="margin-bottom:16px;">`;
+  PROGRAM.weeks.forEach(w => {
+    // Count logged data for this week
+    let weekHasData = false;
+    w.days.forEach((d, di) => {
+      const dk = logDayKey(w.id, di);
+      if (logData.cardio[dk]) weekHasData = true;
+      d.sections.forEach((s, si) => {
+        s.exercises.forEach((ex, ei) => {
+          if ((logData.sets[logKey(w.id, di, si, ei)] || []).length > 0) weekHasData = true;
+        });
+      });
+    });
+    html += `<button class="week-btn ${w.id === logWeek ? 'active' : ''}" onclick="selectLogWeek(${w.id})">
+      ${w.name} <span style="color:${w.id===logWeek?'#fff':'var(--text-muted)'};font-weight:400;margin-left:4px;font-size:11px;">${w.dates}</span>
+      ${weekHasData ? '<span class="week-check">&#10003;</span>' : ''}
+    </button>`;
+  });
+  html += `</div>`;
+
+  // Week title
+  html += `<div style="margin-bottom:16px;display:flex;align-items:baseline;justify-content:space-between;">
+    <div>
+      <div class="week-title">${week.name}: ${week.theme}</div>
+      <div class="week-subtitle" style="font-size:13px;color:var(--text-muted);">Log your actual weights, reps, and cardio for each session</div>
+    </div>
+    <button class="reset-btn" onclick="resetLogData()">Clear Log</button>
+  </div>`;
+
+  // Day cards
+  week.days.forEach((d, di) => {
+    const isExpanded = !!logExpandedDays[`${week.id}-${di}`];
+    const dayType = d.type;
+    const dk = logDayKey(week.id, di);
+
+    // Count logged data for this day
+    let daySetCount = 0;
+    let dayHasCardio = !!logData.cardio[dk];
+    d.sections.forEach((s, si) => {
+      s.exercises.forEach((ex, ei) => {
+        daySetCount += (logData.sets[logKey(week.id, di, si, ei)] || []).length;
+      });
+    });
+    const hasData = daySetCount > 0 || dayHasCardio;
+
+    html += `<div class="log-day-card ${isExpanded ? 'log-expanded' : ''} ${hasData ? 'has-data' : ''}">`;
+
+    // Header
+    html += `<div class="log-day-header" onclick="toggleLogDay(${week.id},${di})">
+      <div class="log-day-left">
+        <div class="day-badge ${dayType}">${dayType}</div>
+        <div>
+          <h3>${d.day}, ${d.date} -- ${d.title}</h3>
+          <p>${d.subtitle}</p>
+        </div>
+      </div>
+      <div class="log-day-meta">
+        ${hasData ? `<span class="log-day-count">${daySetCount > 0 ? daySetCount + ' sets' : ''}${daySetCount > 0 && dayHasCardio ? ' + ' : ''}${dayHasCardio ? 'cardio' : ''}</span>` : ''}
+        <span class="log-day-chevron">&#9662;</span>
+      </div>
+    </div>`;
+
+    // Body
+    html += `<div class="log-day-body">`;
+
+    if (dayType === 'rest') {
+      // Rest day: just show a note
+      html += `<div style="text-align:center;padding:20px;color:var(--text-muted);">
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--text-dim);margin-bottom:4px;">Rest Day</div>
+        <p style="font-size:12px;">Recovery is training. Nothing to log here.</p>
+      </div>`;
+
+    } else if (dayType === 'run' || dayType === 'bike' || dayType === 'swim') {
+      // Cardio day: duration, distance, pace, notes
+      const existing = getCardio(dk);
+      const typeLabel = dayType === 'run' ? 'Run' : dayType === 'bike' ? 'Ride' : 'Swim';
+
+      html += `<div style="margin-top:10px;">
+        <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;">Log ${typeLabel} Session</div>
+        <div class="log-cardio-grid three-col">
+          <div class="log-field-mini">
+            <label>Duration (min)</label>
+            <input class="log-input ${existing && existing.duration ? 'filled' : ''}" type="number" id="cd-${dk}" placeholder="30" value="${existing ? existing.duration || '' : ''}">
+          </div>
+          <div class="log-field-mini">
+            <label>Distance (mi)</label>
+            <input class="log-input ${existing && existing.distance ? 'filled' : ''}" type="number" step="0.1" id="cdist-${dk}" placeholder="${dayType==='bike'?'15':'3.0'}" value="${existing ? existing.distance || '' : ''}">
+          </div>
+          <div class="log-field-mini">
+            <label>Avg Pace</label>
+            <input class="log-input" type="text" disabled value="${existing && existing.pace ? formatPace(existing.pace) : '--'}" style="color:var(--accent);">
+          </div>
+          <div class="log-field-mini log-notes-input">
+            <label>Notes</label>
+            <input class="log-input" type="text" id="cn-${dk}" placeholder="How did it feel? Zone 2? HR?" value="${existing ? existing.notes || '' : ''}">
+          </div>
+        </div>
+        <button class="log-save-btn ${existing && existing.ts ? 'saved' : ''}" onclick="logSaveCardio(${week.id},${di})">
+          ${existing && existing.ts ? '&#10003; Saved' : 'Save Session'}
+        </button>
+      </div>`;
+
+      // Also show loggable strength exercises if the day has them (some days mix cardio + strength)
+      d.sections.forEach((s, si) => {
+        if (!isLoggableSection(s.title)) return;
+        s.exercises.forEach((ex, ei) => {
+          if (!isWeightExercise(ex.name)) return;
+          html += renderExerciseLog(week.id, di, si, ei, ex);
+        });
+      });
+
+    } else if (dayType === 'lift') {
+      // Lift day: show each loggable section's exercises
+      d.sections.forEach((s, si) => {
+        if (!isLoggableSection(s.title)) return;
+
+        html += `<div style="margin-top:${si===0?'8':'16'}px;">
+          <div style="font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">${s.title}</div>
+        `;
+
+        s.exercises.forEach((ex, ei) => {
+          html += renderExerciseLog(week.id, di, si, ei, ex);
+        });
+
+        html += `</div>`;
+      });
+    }
+
+    html += `</div></div>`;
+  });
+
+  el.innerHTML = html;
+}
+
+function renderExerciseLog(weekId, dayIdx, secIdx, exIdx, ex) {
+  const key = logKey(weekId, dayIdx, secIdx, exIdx);
+  const sets = getSets(key);
+  const prescribed = parseRx(ex.rx);
+  const wt = isWeightExercise(ex.name);
+  const best = getBestForExercise(ex.name);
+
+  let html = `<div class="log-ex-block">
+    <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;">
+      <span class="log-ex-name">${ex.name}</span>
+      ${best && best.weight > 0 ? `<span class="pr-inline">Best: ${best.weight} x ${best.reps}</span>` : ''}
+    </div>
+    <div class="log-ex-rx">${ex.rx}</div>`;
+
+  // Show already logged sets
+  if (sets.length > 0) {
+    sets.forEach((s, i) => {
+      html += `<div class="log-set-filled">
+        <span class="log-set-num">${i+1}</span>
+        <span class="log-set-val primary">${s.weight > 0 ? s.weight + ' lbs' : '--'}</span>
+        <span class="log-set-val">${s.reps > 0 ? s.reps + ' reps' : '--'}</span>
+        <span class="log-set-val">${s.rpe ? 'RPE ' + s.rpe : ''}</span>
+        <button class="log-set-action del-set" onclick="event.stopPropagation();logRemoveSet(${weekId},${dayIdx},${secIdx},${exIdx})" title="Remove last set">&times;</button>
+      </div>`;
+    });
+  }
+
+  // Input row for next set (show if less than prescribed or always show one)
+  const setNum = sets.length + 1;
+  if (wt) {
+    html += `<div class="log-set-input-row" style="margin-top:${sets.length>0?'4':'0'}px;">
+      <span class="log-set-num">${setNum}</span>
+      <input class="log-input" type="number" id="lw-${key}" placeholder="lbs" onkeydown="if(event.key==='Enter'){document.getElementById('lr-${key}').focus();}">
+      <input class="log-input" type="number" id="lr-${key}" placeholder="reps" onkeydown="if(event.key==='Enter'){logAddSet(${weekId},${dayIdx},${secIdx},${exIdx});}">
+      <input class="log-input" type="text" id="lrpe-${key}" placeholder="RPE" onkeydown="if(event.key==='Enter'){logAddSet(${weekId},${dayIdx},${secIdx},${exIdx});}">
+      <button class="log-set-action add-set" onclick="event.stopPropagation();logAddSet(${weekId},${dayIdx},${secIdx},${exIdx})" title="Log set">+</button>
+    </div>`;
+  } else {
+    // Bodyweight/timed exercise: just reps
+    html += `<div class="log-set-input-row" style="margin-top:${sets.length>0?'4':'0'}px;grid-template-columns:32px 1fr 1fr 36px;">
+      <span class="log-set-num">${setNum}</span>
+      <input class="log-input" type="number" id="lr-${key}" placeholder="reps or sec" onkeydown="if(event.key==='Enter'){logAddSet(${weekId},${dayIdx},${secIdx},${exIdx});}">
+      <input class="log-input" type="text" id="lrpe-${key}" placeholder="RPE" onkeydown="if(event.key==='Enter'){logAddSet(${weekId},${dayIdx},${secIdx},${exIdx});}">
+      <button class="log-set-action add-set" onclick="event.stopPropagation();logAddSet(${weekId},${dayIdx},${secIdx},${exIdx})" title="Log set">+</button>
+    </div>`;
+    // Hidden weight input so logAddSet doesn't break
+    html += `<input type="hidden" id="lw-${key}" value="0">`;
+  }
+
+  // Show how many sets are prescribed vs logged
+  if (prescribed.sets) {
+    const remaining = prescribed.sets - sets.length;
+    if (remaining > 0) {
+      html += `<div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:4px;">${remaining} of ${prescribed.sets} sets remaining</div>`;
+    } else if (sets.length > 0) {
+      html += `<div style="font-family:var(--font-mono);font-size:10px;color:var(--complete);margin-top:4px;">&#10003; ${sets.length}/${prescribed.sets} sets complete</div>`;
+    }
+  }
+
+  html += `</div>`;
+  return html;
 }
 
 // Initial render
