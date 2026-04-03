@@ -563,6 +563,95 @@ body {
 }
 
 /* ========================================= */
+/* COLLAPSIBLE DAY PANELS                    */
+/* ========================================= */
+
+.day-panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.day-panel:last-child { margin-bottom: 0; }
+
+.day-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--surface-2);
+  gap: 10px;
+}
+.day-panel-header:active { background: var(--surface-3); }
+
+.day-panel-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.day-panel-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+.day-panel-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.day-panel-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.day-panel-chevron {
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.day-panel.panel-open .day-panel-chevron { transform: rotate(180deg); }
+
+.day-panel-body {
+  display: none;
+  padding: 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.day-panel.panel-open .day-panel-body { display: block; }
+
+/* Panel color variants */
+.day-panel.panel-warmup .day-panel-header { border-left: 3px solid var(--bike); }
+.day-panel.panel-warmup .day-panel-title { color: var(--bike); }
+.day-panel.panel-mobility .day-panel-header { border-left: 3px solid var(--core); }
+.day-panel.panel-mobility .day-panel-title { color: var(--core); }
+.day-panel.panel-work .day-panel-header { border-left: 3px solid var(--lift); }
+.day-panel.panel-work .day-panel-title { color: var(--lift); }
+.day-panel.panel-core .day-panel-header { border-left: 3px solid var(--core); }
+.day-panel.panel-core .day-panel-title { color: var(--core); }
+.day-panel.panel-sauna .day-panel-header { border-left: 3px solid #f0c040; }
+.day-panel.panel-sauna .day-panel-title { color: #f0c040; }
+.day-panel.panel-recovery .day-panel-header { border-left: 3px solid var(--complete); }
+.day-panel.panel-recovery .day-panel-title { color: var(--complete); }
+.day-panel.panel-mental .day-panel-header { border-left: 3px solid var(--accent); }
+.day-panel.panel-mental .day-panel-title { color: var(--accent); }
+.day-panel.panel-run .day-panel-header { border-left: 3px solid var(--run); }
+.day-panel.panel-run .day-panel-title { color: var(--run); }
+
+/* ========================================= */
 /* TRAINING LOG                              */
 /* ========================================= */
 
@@ -858,6 +947,124 @@ body {
   .log-bw-section { flex-wrap: wrap; }
   .log-bw-trend { margin-left: 0; width: 100%; justify-content: center; margin-top: 6px; }
 }
+
+/* ========================================= */
+/* WARM-UP SETS, MOBILITY, RECOVERY          */
+/* ========================================= */
+
+.warmup-set-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  background: var(--surface-3);
+  border-left: 3px solid var(--border-light);
+  align-items: start;
+  opacity: 0.85;
+}
+.warmup-set-row .ex-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+}
+.warmup-set-row .ex-prescription {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.warmup-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* Morning mobility card */
+.mobility-card {
+  background: linear-gradient(135deg, #c77dff08, #c77dff03);
+  border: 1px solid #c77dff30;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.mobility-card-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--core);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mobility-item {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--surface-3);
+}
+.mobility-item:last-child { border-bottom: none; }
+.mobility-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.mobility-item-rx {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--core);
+  margin-bottom: 2px;
+}
+.mobility-item-notes {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* Recovery section */
+.recovery-section {
+  background: linear-gradient(135deg, #22b57308, #22b57303);
+  border: 1px solid #22b57330;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 14px;
+}
+.recovery-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--complete);
+  margin-bottom: 10px;
+}
+
+/* Mental prep block */
+.mental-prep {
+  background: linear-gradient(135deg, #5b8def08, #5b8def03);
+  border: 1px solid #5b8def30;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+.mental-prep-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--lift);
+  margin-bottom: 6px;
+}
+.mental-prep p {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
 </style>
 </head>
 <body>
@@ -900,273 +1107,234 @@ body {
 // DATA: Full 4-Week Hybrid Training Program
 // =============================================
 
+const MORNING_MOBILITY = {
+  title: "Morning Mobility -- 10 Min (Do Every Day)",
+  exercises: [
+    { name: "Supine Diaphragmatic Breathing", rx: "5 breaths (4-sec inhale, 6-sec exhale)", notes: "Lie on back, knees bent. Hands on ribs. Breathe into your sides and belly -- ribs should expand laterally. This resets your nervous system from sleep and activates your deep core stabilizers (DNS principle). Don't skip this -- it's the foundation.", isWarmup: true },
+    { name: "Hip CARs (Controlled Articular Rotations)", rx: "5 each direction, each hip", notes: "On all fours. Lift one knee, draw the LARGEST circle you can with your knee -- forward, out, back, in. Then reverse. Move SLOWLY. This maps your available hip ROM and distributes synovial fluid across the entire joint capsule. The slower, the better.", isWarmup: true },
+    { name: "Thoracic Spine CARs", rx: "5 each direction", notes: "Seated or kneeling. Lock your pelvis (don't let it move). Rotate your ribcage as far as you can one direction, then the other. Reach further each rep. At 6'3\" with desk posture, your T-spine is your biggest restriction.", isWarmup: true },
+    { name: "Ankle CARs", rx: "5 each direction, each ankle", notes: "Seated. Point, circle, flex through the largest range you can. Running at 200 lbs demands full ankle ROM -- restricted ankles force your knees to compensate.", isWarmup: true },
+    { name: "90/90 Hip Switches with Lean", rx: "8 total (4 each side)", notes: "Sit with both knees at 90 deg. Drop knees to one side, lean torso toward the front shin. Hold 2 sec, switch. This mobilizes internal and external hip rotation simultaneously.", isWarmup: true },
+    { name: "Cat-Cow", rx: "8 slow reps", notes: "On all fours. Full spinal flexion to full extension. Breathe out on the cat, breathe in on the cow. Segment by segment -- don't rush.", isWarmup: true },
+    { name: "World's Greatest Stretch", rx: "4 each side", notes: "Lunge, plant hand, rotate and reach. The single best multi-joint mobilizer. Hit the hip flexor stretch, T-spine rotation, and hamstring in one movement. Hold each position 3 sec.", isWarmup: true },
+    { name: "Standing Wall Ankle Dorsiflexion", rx: "10 each ankle", notes: "Face wall, foot 4 inches away. Drive knee over toes toward wall, keeping heel down. If knee reaches wall easily, move foot back. Target: knee 4-5 inches past toes. This is the #1 exercise for your knee health -- restricted dorsiflexion increases patellofemoral stress during running and squatting.", isWarmup: true }
+  ]
+};
+
+const MENTAL_PREP = {
+  lift: {
+    title: "Pre-Session Mental Shift (2 min)",
+    text: "Phone on DND. Close laptop. 60 seconds: box breathing (4-sec inhale, 4-sec hold, 4-sec exhale, 4-sec hold) -- this downregulates your prefrontal cortex and shifts from analytical to kinesthetic awareness. Then 30 sec: visualize your first working set -- the setup, the brace, the rep. Finally, self-check: 'Is today a high-stress day or a low-stress day?' If high-stress: drop all RPE targets by 1 point (your RPE 8 is actually RPE 7 when mentally fatigued -- Marcora et al. 2009). If low-stress: execute as prescribed. This isn't motivational -- it's neurological gear-shifting."
+  },
+  run: {
+    title: "Pre-Run Mental Shift (1 min)",
+    text: "Phone on DND (except Strava). 30 sec: 5 deep nasal breaths, exhale through mouth. Then set your intention: 'This run is Zone 2 -- conversational, relaxed, easy.' On high-stress days, your perceived effort is inflated by ~1.5 RPE points. What feels hard is actually moderate. Trust the pace, not the feeling. Start slower than you think you need to."
+  }
+};
+
+const RECOVERY_LIFT = {
+  title: "Post-Lift Recovery Protocol",
+  exercises: [
+    { name: "90/90 Breathing Reset", rx: "5 breaths", notes: "Lie on back, feet on wall, knees/hips at 90 deg. Exhale fully, pause, inhale into sides. This shifts you from sympathetic (training) to parasympathetic (recovery). Do this BEFORE sauna.", isWarmup: true },
+    { name: "Standing Quad Stretch", rx: "45 sec each leg", notes: "Squeeze glute on the stretching side to tilt pelvis posteriorly -- this stretches the rectus femoris AND hip flexor simultaneously.", isWarmup: true },
+    { name: "Pigeon Stretch", rx: "60 sec each side", notes: "Front shin as parallel to your body as flexibility allows. Breathe into the stretch. This hits glute med, piriformis, and deep external rotators.", isWarmup: true },
+    { name: "Doorway Pec Stretch", rx: "30 sec each side", notes: "Arm at 90 deg on door frame, lean through. Counteracts the internal rotation from pressing. Hold, breathe, relax into it.", isWarmup: true },
+    { name: "Child's Pose with Lat Reach", rx: "45 sec each side", notes: "Walk hands to one side. Feel the lat stretch on that side. Your lats are the biggest muscle you trained -- they need dedicated stretching.", isWarmup: true }
+  ]
+};
+
+const RECOVERY_RUN = {
+  title: "Post-Run Recovery Protocol",
+  exercises: [
+    { name: "Walk Cooldown", rx: "5 min easy walking", notes: "Don't stop abruptly. Walk until heart rate drops below 100 BPM. This clears metabolic byproducts from working muscles.", isWarmup: true },
+    { name: "Standing Calf Stretch (straight leg)", rx: "30 sec each", notes: "Wall stretch with straight back leg. Targets gastrocnemius. Hold, don't bounce.", isWarmup: true },
+    { name: "Standing Calf Stretch (bent knee)", rx: "30 sec each", notes: "Same position but bend the back knee. Targets soleus -- the deeper calf muscle that takes the most impact force during running.", isWarmup: true },
+    { name: "Standing Quad Stretch", rx: "30 sec each", notes: "Squeeze glute on the stretching side.", isWarmup: true },
+    { name: "Pigeon Stretch", rx: "60 sec each side", notes: "Your hips take enormous load running at 200 lbs. This is non-negotiable after every run.", isWarmup: true },
+    { name: "Supine Figure-4 Stretch", rx: "30 sec each side", notes: "On your back, ankle crossed over opposite knee. Pull bottom knee toward chest. Hits piriformis and deep rotators.", isWarmup: true },
+    { name: "Prone Diaphragmatic Breathing", rx: "5 breaths (4-sec in, 6-sec out)", notes: "Face down, forehead on hands. Breathe into your belly against the floor. Parasympathetic reset. This signals your nervous system that training is over.", isWarmup: true }
+  ]
+};
+
 const PROGRAM = {
   weeks: [
     {
       id: 1,
       name: "Week 1",
-      dates: "Mar 31 - Apr 6",
-      theme: "Foundation",
-      subtitle: "Establish the hybrid rhythm. Introduce aerobic volume conservatively. Lift volume drops ~30% from Nippard to open recovery capacity for endurance work. All runs at conversational pace -- if you can't hold a conversation, slow down.",
+      dates: "Apr 2 - Apr 6",
+      theme: "Ramp Up",
+      subtitle: "Starting Thursday Apr 3. 4 days, 3 runs. All easy pace. First hypertrophy lifts Thursday and Friday. Target: ~9 miles this week.",
       days: [
-        {
-          day: "Monday",
-          date: "Mar 31",
-          type: "lift",
-          title: "Full Body Strength A",
-          subtitle: "Compound-focused, strength maintenance",
-          duration: "55-65 min",
-          sections: [
-            {
-              title: "Warm-Up (8 min)",
-              exercises: [
-                { name: "Rowing Machine or Bike", rx: "3 min easy", notes: "Get blood flowing, light sweat" },
-                { name: "90/90 Hip Switches", rx: "2x8 each side", notes: "Open up hips after sitting in class all day" },
-                { name: "Cat-Cow + Thoracic Rotations", rx: "8 each", notes: "Mobilize the spine before loading it" },
-                { name: "Band Pull-Aparts", rx: "2x15", notes: "Warm the rear delts and rotator cuff" }
-              ]
-            },
-            {
-              title: "Strength (Main Lifts)",
-              exercises: [
-                { name: "Back Squat", rx: "3x5 @ 255-265 lbs (RPE 7)", notes: "~80% of 315. Focus on speed out of the hole. No grinders -- we're maintaining, not peaking. Full depth, brace hard." },
-                { name: "Barbell Bench Press", rx: "3x6 @ 185-195 lbs (RPE 7)", notes: "~77% of 245. Controlled eccentric, slight pause on chest, explosive press. You know this from Nippard." },
-                { name: "Barbell Row (Pendlay)", rx: "3x8 @ RPE 7", notes: "Strict form. Dead stop each rep on the floor. Elbows at 45 deg, pull to lower chest." }
-              ]
-            },
-            {
-              title: "Hypertrophy Accessories",
-              exercises: [
-                { name: "Bulgarian Split Squat", rx: "2x10 each leg @ RPE 8", notes: "Rear foot on bench. Upright torso, feel the quads. Also builds single-leg stability for running." },
-                { name: "Dumbbell Lateral Raise", rx: "3x15 @ RPE 9", notes: "Controlled arc, slight lean forward. Keep the shoulders looking full." },
-                { name: "Face Pull", rx: "3x15 @ RPE 8", notes: "External rotate at the top. Shoulder health is critical now that you're adding swim/endurance overhead work." }
-              ]
-            },
-            {
-              title: "Core Circuit -- 3 Rounds (12-15 min)",
-              exercises: [
-                { name: "McGill Curl-Up", rx: "3x8 each side", notes: "Lie on back, one knee bent, hands under lower back to preserve its natural arch. Lift ONLY your head and shoulders -- this is not a crunch. Slow and controlled. Builds TVA without spinal flexion stress." },
-                { name: "Bird-Dog", rx: "3x8 each side", notes: "From hands and knees, extend opposite arm and leg simultaneously. Hold 2 sec at the top. Do NOT let your hips rotate. This is your spine-sparing stability foundation -- McGill's #1 exercise." },
-                { name: "Side Plank", rx: "3x25 sec each side", notes: "Stack feet or stagger. Keep hips HIGH and forward -- don't let them drop or rotate back. Lateral core stiffness directly supports running hip stability." },
-                { name: "Dead Bug", rx: "3x8 each side", notes: "Press lower back INTO the floor the entire time. Extend opposite arm and leg, return, switch. Anti-extension -- keeps your lumbar spine safe under squat and deadlift load." },
-                { name: "Pallof Press Hold", rx: "3x20 sec each side", notes: "Cable or band at chest height. Press arms out, hold, return. Resist the pull the entire time. Anti-rotation. Week 1: isometric holds. Week 2+: progress to reps." }
-              ]
-            },
-            {
-              title: "Sauna (post-session)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Finnish dry sauna. Enter after your core circuit, already cooled slightly from training. This timing captures the GH spike in your post-lift anabolic window. Drink 24oz water immediately after. Do NOT do this pre-workout -- heat fatigue will hurt performance." }
-              ]
-            }
-          ],
-          coachNote: "You're coming off heavy Nippard volume. This session is intentionally lighter -- same movement patterns, lower volume. Your body needs to learn to recover for tomorrow's run. Core work is a full training block, not an afterthought -- it's what keeps your spine safe under heavy load and your pelvis stable while running."
-        },
-        {
-          day: "Tuesday",
-          date: "Apr 1",
-          type: "run",
-          title: "Easy Run -- Aerobic Base",
-          subtitle: "Zone 2 running, build the engine",
-          duration: "25-30 min",
-          sections: [
-            {
-              title: "The Session",
-              exercises: [
-                { name: "5 min Walk", rx: "Brisk pace", notes: "Warm up your joints and connective tissue. Don't skip this -- your body isn't used to running volume." },
-                { name: "Easy Run", rx: "20 min continuous @ conversational pace", notes: "Target roughly 9:30-10:00/mi. YES, this is slower than your treadmill pace. That's the point. Zone 2 means you could speak in full sentences. If you're gasping, WALK for 30 sec then resume. Your ego will fight this. Trust the process -- 80% of elite endurance training is this slow." },
-                { name: "5 min Walk Cooldown", rx: "Easy pace", notes: "Bring heart rate down. Shake out the legs." }
-              ]
-            },
-            {
-              title: "Post-Run Mobility (5 min)",
-              exercises: [
-                { name: "Standing Quad Stretch", rx: "30 sec each leg", notes: "" },
-                { name: "Pigeon Stretch", rx: "45 sec each side", notes: "Your hips will be tight from squats yesterday. This combo recovers both." },
-                { name: "Calf Stretch (wall)", rx: "30 sec each side", notes: "Straight leg AND bent knee -- hits both gastrocnemius and soleus." }
-              ]
-            }
-          ],
-          coachNote: "This pace will feel embarrassingly slow. Good. The aerobic adaptations (mitochondrial density, capillary growth, cardiac output) happen at LOW intensity. Going hard just makes you tired without building the base. You'll get faster by going slower right now."
-        },
         {
           day: "Wednesday",
           date: "Apr 2",
-          type: "lift",
-          title: "Full Body Strength B",
-          subtitle: "Hinge + press emphasis, hypertrophy accessories",
-          duration: "55-65 min",
+          type: "rest",
+          title: "Rest Day -- Sick",
+          subtitle: "Block delayed one day",
+          duration: "--",
           sections: [
             {
-              title: "Warm-Up (8 min)",
+              title: "Today",
               exercises: [
-                { name: "Bike or Light Jog", rx: "3 min easy", notes: "" },
-                { name: "Banded Good Morning", rx: "2x10", notes: "Wake up the posterior chain" },
-                { name: "Scapular Push-Ups", rx: "2x10", notes: "Protract/retract at the top. Activates serratus anterior for pressing." },
-                { name: "Leg Swings (front-back + lateral)", rx: "10 each direction per leg", notes: "" }
-              ]
-            },
-            {
-              title: "Strength (Main Lifts)",
-              exercises: [
-                { name: "Deadlift (Conv. or Sumo)", rx: "3x4 @ 290-305 lbs (RPE 7)", notes: "~80% of 365. Reset each rep. Brace, wedge, pull slack, drive. No bouncing. We're keeping you strong without frying your CNS." },
-                { name: "Overhead Press", rx: "3x8 @ RPE 7-8", notes: "Strict. Reset each rep from a dead stop at the shoulders. Squeeze glutes to stay upright. This carries over to swim entry position." },
-                { name: "Weighted Pull-Up", rx: "3x6 @ RPE 8", notes: "Add weight via belt or DB between feet. Full dead hang at bottom, chest to bar at top. If 6 is easy with bodyweight, start adding 10-15 lbs." }
-              ]
-            },
-            {
-              title: "Hypertrophy Accessories",
-              exercises: [
-                { name: "Incline Dumbbell Press", rx: "3x10 @ RPE 8", notes: "30-45 deg incline. Full stretch at bottom. Maintains chest thickness." },
-                { name: "Cable Row (close-grip)", rx: "3x12 @ RPE 8", notes: "Squeeze shoulder blades together. Hold peak contraction 1 sec." },
-                { name: "Hammer Curl", rx: "2x15 @ RPE 9", notes: "Elbows pinned. Grip the DB hard. Brachialis development makes arms look bigger from the front." }
-              ]
-            },
-            {
-              title: "Core Circuit -- 3 Rounds (12-15 min)",
-              exercises: [
-                { name: "McGill Curl-Up", rx: "3x8 each side", notes: "Same as Monday. Hands under lower back, arch preserved. Head and shoulders only." },
-                { name: "Bird-Dog", rx: "3x8 each side", notes: "Opposite arm and leg. 2-sec hold at top. Hips square the whole time." },
-                { name: "Copenhagen Plank", rx: "3x20 sec each side", notes: "Top foot on bench, bottom leg hanging. Hits adductors and lateral hip -- critical for running injury prevention. Start conservative on hold time." },
-                { name: "Hanging Knee Raise", rx: "3x10", notes: "Controlled -- no swinging. Curl the pelvis up, don't just lift knees. Dynamic core through full ROM. Progress toward straight-leg over the block." },
-                { name: "Ab Wheel Rollout", rx: "3x8", notes: "From knees. Slow roll out, pause, slow return. Use a wall to limit range if needed. Anti-extension -- most demanding exercise in the circuit." }
-              ]
-            },
-            {
-              title: "Sauna (post-session)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Post-lift, after core circuit. 24oz water immediately after. Rehydrate before your Thursday bike ride." }
+                { name: "Full Rest", rx: "No training", notes: "Sick day. Block begins tomorrow, Thursday Apr 3. Rest, hydrate, eat well. Don't try to make up the missed session -- the program accounts for it." }
               ]
             }
           ],
-          coachNote: "Deadlifts + OHP is your heavy hinge/press day. Keep the RPE honest -- a 7 means 3 reps left in the tank. You'll have a bike ride tomorrow and need to be able to sit on the saddle. Core circuit lives at the END -- your core needs to be fresh for heavy compound lifts."
+          coachNote: "Missing day 1 to illness is not a setback -- it's the right call. Training sick spikes cortisol, impairs recovery, and prolongs the illness. Starting Thursday means your first lift is today (Friday Apr 4), your first run was yesterday (Thursday Apr 3). Week 1 mileage target adjusts to ~9 miles."
         },
         {
           day: "Thursday",
           date: "Apr 3",
-          type: "bike",
-          title: "Easy Bike -- Aerobic Base",
-          subtitle: "Low-impact endurance volume on the road bike",
-          duration: "40-50 min",
+          type: "run",
+          title: "Easy Run #1",
+          subtitle: "First Strava miles -- Zone 2, conversational",
+          duration: "35-40 min total",
+          morningMobility: true,
+          mentalPrep: "run",
           sections: [
             {
-              title: "The Ride",
+              title: "Dynamic Warm-Up -- Run Prep (8-10 min)",
               exercises: [
-                { name: "Easy Road Ride", rx: "40-50 min @ Zone 2 (conversational)", notes: "Flat to rolling terrain. Spin at 80-90 RPM. Stay in the small ring if you need to. This should feel EASY -- like you could go for another hour. Hands relaxed on the bars, breathe through your nose if possible." },
+                { name: "Walk", rx: "3 min brisk", notes: "Elevate heart rate gradually. Warm the joints before impact.", isWarmup: true },
+                { name: "Leg Swings (front-to-back)", rx: "10 each leg", notes: "Hold a wall. Swing from the hip, not the knee. Progressively increase range. Warms hip flexors and hamstrings.", isWarmup: true },
+                { name: "Leg Swings (lateral)", rx: "10 each leg", notes: "Swing across your body. Warms adductors and hip abductors.", isWarmup: true },
+                { name: "Walking High Knee Pulls", rx: "8 each leg", notes: "Pull knee to chest, rise on toes of stance leg. Hip flexion + calf activation in one movement.", isWarmup: true },
+                { name: "Walking Quad Pulls", rx: "8 each leg", notes: "Pull heel to glute while walking. Stretches quad and hip flexor dynamically. Your hip flexors are shortened from yesterday's lifting -- this counteracts that.", isWarmup: true },
+                { name: "A-Skips", rx: "2x15m", notes: "Exaggerated running motion. High knee, quick ground contact. Activates hip flexors and calves in running-specific pattern.", isWarmup: true },
+                { name: "Glute Activation: Single-Leg Bridge", rx: "8 each side", notes: "Squeeze glute at top, hold 2 sec. Your glutes get inhibited by sitting AND by yesterday's squat fatigue. Wake them up before running or your low back will compensate.", isWarmup: true }
               ]
             },
             {
-              title: "Post-Ride",
+              title: "The Run",
               exercises: [
-                { name: "Hip Flexor Stretch (kneeling)", rx: "45 sec each side", notes: "Cycling shortens hip flexors. Counteract it every time." },
-                { name: "Figure-4 Glute Stretch", rx: "30 sec each side", notes: "" }
+                { name: "Easy Run", rx: "3.0 miles @ 9:30-10:30/mi", notes: "Conversational pace. If you can't speak full sentences, SLOW DOWN or walk 30 sec. At your current base, 3 miles easy should take roughly 30 min. Run on softer surfaces if available (grass, track, trail)." }
               ]
             }
           ],
-          coachNote: "Cycling is your best friend as a hybrid athlete. It builds aerobic volume WITHOUT the impact stress of running. Your legs get blood flow (active recovery from Wednesday's deadlifts) while your cardiovascular system does real work. Find a nice route and enjoy it."
+          recovery: "run",
+          coachNote: "3 miles on Strava. Running total: 3/60. The run warm-up specifically addresses hip flexor tightness from yesterday's BSS and desk sitting, plus glute activation to protect your lower back. Do NOT skip the glute bridges -- an inhibited glute at 200 lbs means your lumbar spine absorbs the impact."
         },
         {
           day: "Friday",
           date: "Apr 4",
           type: "lift",
-          title: "Full Body Strength C",
-          subtitle: "Hypertrophy focus + beach muscles",
-          duration: "55-65 min",
+          title: "Full Body Hypertrophy B",
+          subtitle: "Hinge-dominant, horizontal pull, shoulder volume",
+          duration: "70-80 min",
+          morningMobility: true,
+          mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (6 min)",
+              title: "Dynamic Warm-Up -- Hinge/Pull Prep (10-12 min)",
               exercises: [
-                { name: "Jump Rope or Light Jog", rx: "2 min", notes: "" },
-                { name: "World's Greatest Stretch", rx: "5 each side", notes: "Lunge, rotate, reach. Hits everything." },
-                { name: "Band Shoulder Dislocates", rx: "2x10", notes: "" }
+                { name: "Bike or Row", rx: "3 min easy", notes: "Tissue temperature up.", isWarmup: true },
+                { name: "Banded Good Morning", rx: "2x10", notes: "Light band around neck, hinge at hips. This patterns the hip hinge before loading. Feel hamstrings stretch, drive hips forward.", isWarmup: true },
+                { name: "Single-Leg RDL (bodyweight)", rx: "5 each side", notes: "Slow and controlled. This activates your glutes AND challenges hip stability unilaterally. Prep for trap bar DL.", isWarmup: true },
+                { name: "Thoracic Spine Foam Roll", rx: "10 slow rolls", notes: "Upper back on roller. Arms crossed. Roll from mid-back to shoulder blades. Open up T-spine extension for pulling movements.", isWarmup: true },
+                { name: "Scapular Push-Ups", rx: "2x10", notes: "Protract/retract at the top. Activates serratus anterior -- critical for shoulder health in overhead pressing.", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "Rear delt and rotator cuff activation before rows and presses.", isWarmup: true },
+                { name: "Leg Swings (front-back)", rx: "10 each", notes: "Hamstring and hip flexor dynamic prep for the hinge.", isWarmup: true }
               ]
             },
             {
-              title: "Strength",
+              title: "Strength / Hypertrophy (15 working sets)",
               exercises: [
-                { name: "Front Squat", rx: "3x6 @ RPE 7", notes: "If back squat is 315, target ~185-205. Front squat builds quad mass, core bracing, and upright posture that carries over to running. Clean grip or cross-arm." },
-                { name: "Weighted Dip", rx: "3x8 @ RPE 8", notes: "Slight forward lean for chest. Add weight via belt. Full depth -- shoulder below elbow at bottom." },
-                { name: "Chin-Up (underhand)", rx: "3x8-10 @ RPE 8", notes: "Underhand grip, shoulder-width. Full hang at bottom. Builds biceps AND lats simultaneously." }
-              ]
-            },
-            {
-              title: "Hypertrophy / Pump",
-              exercises: [
-                { name: "Leg Extension", rx: "3x15 @ RPE 9", notes: "Quad pump. Squeeze hard at the top, 2-sec hold. Running demands quad endurance -- this helps." },
-                { name: "Cable Lateral Raise", rx: "3x12 each arm @ RPE 9", notes: "Behind the body. Keeps constant tension. Capped delts make you look athletic." },
-                { name: "Incline DB Curl", rx: "3x12 @ RPE 9", notes: "Arms hang behind your torso for a deep stretch. Full ROM. Slow eccentric." },
-                { name: "Tricep Pressdown", rx: "3x15 @ RPE 9", notes: "Rope attachment. Spread at the bottom, squeeze." }
+                { name: "Trap Bar Deadlift -- WARM-UP", rx: "Set 1: 40% x 8 | Set 2: 60% x 5 | Set 3: 80% x 3", notes: "3 warm-up sets for your heaviest hinge. Set 1 is movement rehearsal (bar path, brace pattern). Set 2 increases tissue tension. Set 3 is neural priming. Rest 60-90 sec between each.", isWarmup: true },
+                { name: "Trap Bar Deadlift", rx: "3x8 @ RPE 7-8", notes: "More quad involvement, less spinal loading, faster recovery than conventional. At your 365 max, target around 245-265 for sets of 8. Reset each rep. Brace hard." },
+                { name: "Seated Cable Row -- WARM-UP", rx: "1 set: 50% x 8", notes: "Light set to feel the lats engage before loading.", isWarmup: true },
+                { name: "Seated Cable Row (close-grip)", rx: "3x12 @ RPE 8", notes: "Horizontal pull for back thickness. Squeeze shoulder blades, 1-sec hold at peak contraction." },
+                { name: "Standing Arnold Press -- WARM-UP", rx: "1 set: 50% x 8", notes: "Light set to warm the shoulder through the rotation pattern.", isWarmup: true },
+                { name: "Standing Arnold Press", rx: "3x10 @ RPE 8", notes: "Rotate DBs from chin to overhead. Hits all 3 delt heads. Shoulder volume builder." },
+                { name: "Dumbbell Lateral Raise", rx: "3x15 @ RPE 9", notes: "Every session. Controlled arc, no momentum." },
+                { name: "Hammer Curl + Dip (superset)", rx: "2x12 each @ RPE 8", notes: "Hammer curls hit brachialis. Dips with slight forward lean for chest/tricep. Bodyweight dips are fine this month." }
               ]
             },
             {
               title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "McGill Curl-Up", rx: "3x8 each side", notes: "Third session this week. Cementing the movement pattern. Hands under lower back, arch preserved, head and shoulders only." },
-                { name: "Bird-Dog", rx: "3x8 each side", notes: "2-sec hold, hips square. If this is easy, add a 1-sec pause at the top AND bottom." },
-                { name: "Side Plank", rx: "3x25 sec each side", notes: "Hips high and forward. Lateral stiffness that carries directly to running economy." },
-                { name: "Ab Wheel Rollout", rx: "3x8", notes: "From knees. Slow and controlled. This is the anti-extension finisher -- your TVA will be working hard by this point in the circuit." },
-                { name: "Hanging Leg Raise", rx: "3x10", notes: "Full straight-leg if you can -- knee raise if not. Controlled descent, no kipping. This is your rectus abdominis and hip flexor builder -- the visible core." }
+                { name: "McGill Curl-Up", rx: "3x8 each side", notes: "Same cues as Wednesday. Cementing the pattern." },
+                { name: "Bird-Dog", rx: "3x8 each side", notes: "2-sec hold, hips don't rotate." },
+                { name: "Side Plank", rx: "3x25 sec each side", notes: "Hips high and forward." },
+                { name: "Hanging Knee Raise", rx: "3x10", notes: "Controlled, no kipping. Curl pelvis up, don't just lift knees." },
+                { name: "Pallof Press Hold", rx: "3x20 sec each side", notes: "Anti-rotation." }
               ]
             },
             {
               title: "Sauna (post-session)",
               exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Third sauna of the week. Post-lift timing is ideal. 24oz water after. Tomorrow is your long run -- prioritize sleep and hydration tonight." }
+                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Second sauna of the week. 24oz water after." }
               ]
             }
           ],
-          coachNote: "This is your 'look good, feel good' day. Front squats, dips, curls, lateral raises -- all the stuff that builds a physique while developing functional strength. Enjoy the pump before your weekend endurance work."
+          recovery: "lift",
+          coachNote: "Hinge/pull day warm-up focuses on hamstring length, hip hinge patterning, and T-spine mobility for pulling. Three warm-up sets on trap bar DL because it's your heaviest lift of the day. One warm-up set each on rows and Arnold press. Laterals and arms skip warm-up sets -- those muscles are already hot from compounds."
         },
         {
           day: "Saturday",
           date: "Apr 5",
           type: "run",
-          title: "Long Run -- Building Duration",
-          subtitle: "Your longest run of the week. Go slow to go long.",
-          duration: "30-35 min",
+          title: "Long Run -- Week 1",
+          subtitle: "Longest single run. Slow and steady.",
+          duration: "50-60 min total",
+          morningMobility: true,
+          mentalPrep: "run",
           sections: [
             {
-              title: "The Session",
+              title: "Dynamic Warm-Up -- Long Run Prep (10 min)",
               exercises: [
-                { name: "5 min Walk Warm-Up", rx: "Brisk", notes: "" },
-                { name: "Long Easy Run", rx: "25 min continuous @ 10:00-10:30/mi", notes: "This is your LONG run for Week 1. It's only 25 minutes -- that's fine. You're building duration over 4 weeks. Same rule: if you can't talk in full sentences, slow down or walk 30 seconds. Run on softer surfaces if you can (grass, trail, track) to reduce impact." },
-                { name: "5 min Walk Cooldown", rx: "", notes: "" }
+                { name: "Walk", rx: "5 min brisk", notes: "Longer warm-up for a longer run. Joints need extra time today.", isWarmup: true },
+                { name: "Leg Swings (front-back + lateral)", rx: "10 each direction, each leg", notes: "Full range, progressively larger swings.", isWarmup: true },
+                { name: "Walking Lunge with Rotation", rx: "5 each side", notes: "Lunge forward, rotate torso over front knee. Opens hips AND T-spine simultaneously.", isWarmup: true },
+                { name: "Walking High Knee + Quad Pull combo", rx: "6 each", notes: "Alternate: pull knee to chest, then pull heel to glute. Moving hip flexion and extension.", isWarmup: true },
+                { name: "A-Skips", rx: "2x20m", notes: "Slightly longer than weekday runs. Build running-specific muscle activation.", isWarmup: true },
+                { name: "Glute Activation: Banded Lateral Walk", rx: "10 steps each direction", notes: "Mini-band above knees. Feel the burn in glute med. This stabilizes your pelvis during the longer run and protects your knees.", isWarmup: true }
               ]
             },
             {
-              title: "Post-Run Stretching (8 min)",
+              title: "The Run",
               exercises: [
-                { name: "Foam Roll Quads + IT Band", rx: "2 min each leg", notes: "Slow rolls, pause on tender spots" },
-                { name: "Pigeon Stretch", rx: "60 sec each side", notes: "" },
-                { name: "Standing Calf Stretch", rx: "30 sec each, both straight and bent knee", notes: "" }
+                { name: "Long Easy Run", rx: "4.5 miles @ 10:00-10:30/mi", notes: "Walk breaks are fine -- 30 sec every mile if needed. Stay relaxed: drop shoulders, unclench hands, breathe rhythmically. Softer surfaces if possible." }
               ]
             }
           ],
-          coachNote: "25 minutes feels short. That's intentional. You're coming from a 2-mile max with discomfort. We add ~10% duration each week. By Week 4 you'll be at 40+ minutes continuous, which is a massive jump from where you are. Patience."
+          recovery: "run",
+          coachNote: "4.5 miles on Strava. Running total: ~7.5/60. Your longest run yet. The banded lateral walk in the warm-up is specifically for your knee history -- it activates glute med, which controls femoral internal rotation during running. Weak glute med = knee caves inward = patellofemoral pain."
         },
         {
           day: "Sunday",
           date: "Apr 6",
-          type: "rest",
-          title: "Rest & Recovery",
-          subtitle: "Active recovery or full rest",
-          duration: "--",
+          type: "run",
+          title: "Easy Recovery Run + Strides",
+          subtitle: "Short shakeout to bank extra miles",
+          duration: "30-35 min total",
+          morningMobility: true,
+          mentalPrep: "run",
           sections: [
             {
-              title: "Recovery Options (pick one or rest fully)",
+              title: "Dynamic Warm-Up -- Easy Run Prep (6 min)",
               exercises: [
-                { name: "Option A: 20-min Easy Walk", rx: "Outdoors, no headphones", notes: "Moving meditation. Deload the CNS." },
-                { name: "Option B: 15-min Mobility Flow", rx: "YouTube: 'Tom Merrick 15-min Full Body'", notes: "Hit hips, thoracic spine, ankles -- your three tightest areas." },
-                { name: "Option C: Full Rest", rx: "Do absolutely nothing athletic", notes: "Sleep in, eat well, recover. Your body builds muscle and aerobic capacity during rest, not during training." }
+                { name: "Walk", rx: "3 min brisk", notes: "Short warm-up for a short run.", isWarmup: true },
+                { name: "Leg Swings (front-back)", rx: "8 each", notes: "", isWarmup: true },
+                { name: "Walking Quad Pulls", rx: "6 each", notes: "Open hip flexors.", isWarmup: true },
+                { name: "Single-Leg Glute Bridge", rx: "6 each", notes: "Quick glute activation.", isWarmup: true }
+              ]
+            },
+            {
+              title: "The Run",
+              exercises: [
+                { name: "Easy Run", rx: "2.5 miles @ easy pace", notes: "Very relaxed. Active recovery from yesterday's long run." },
+                { name: "Strides", rx: "4x20 sec @ 85% effort, 60 sec walk between", notes: "After the easy run. Build to fast (not sprint), stay smooth. Maintain neuromuscular speed without fatigue cost." }
               ]
             },
             {
               title: "Sauna (Sunday protocol)",
               exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Sunday sauna is parasympathetic recovery -- lower stress, no pre-workout fatigue. GH release, plasma volume maintenance, and cortisol reduction heading into Monday's lift. 24oz water after. This is your fourth sauna session of the week -- the sweet spot in the research." }
+                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Sunday sauna is parasympathetic recovery. 24oz water after." }
               ]
             }
           ],
-          coachNote: "You're a full-time student and startup founder. Mental recovery matters as much as physical. If you're fried from the week, take the full rest day without guilt. Consistency over months beats heroic single weeks."
+          recovery: "run",
+          coachNote: "2.5 miles on Strava. Running total: ~10/60. Three runs in four days. Tomorrow is a lift day, so you'll have 24+ hours before your next run."
         }
       ]
     },
@@ -1175,238 +1343,276 @@ const PROGRAM = {
       name: "Week 2",
       dates: "Apr 7 - Apr 13",
       theme: "Build",
-      subtitle: "Slight bump in endurance volume. Run durations increase ~10%. Add your first swim session. Lifting stays consistent -- same movements, same RPE targets. The body is adapting.",
+      subtitle: "Full 7-day week. 4 runs targeting ~16 miles. Lifting continues with slight progressive overload. Core circuit progresses. Your body is adapting to the concurrent demand.",
       days: [
         {
           day: "Monday", date: "Apr 7", type: "lift",
-          title: "Full Body Strength A",
-          subtitle: "Compound strength + accessories",
-          duration: "55-65 min",
+          title: "Full Body Hypertrophy A",
+          subtitle: "Squat-pattern, vertical pull, shoulders",
+          duration: "70-80 min",
+          morningMobility: true,
+          mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (8 min)",
+              title: "Dynamic Warm-Up -- Squat/Push Prep (10-12 min)",
               exercises: [
-                { name: "Rowing Machine", rx: "3 min easy", notes: "" },
-                { name: "90/90 Hip Switches", rx: "2x8 each", notes: "" },
-                { name: "Cat-Cow + T-Spine Rotations", rx: "8 each", notes: "" },
-                { name: "Band Pull-Aparts", rx: "2x15", notes: "" }
+                { name: "Row or Bike", rx: "3 min easy", notes: "", isWarmup: true },
+                { name: "Goblet Squat Hold", rx: "2x20 sec", notes: "Full depth, elbows push knees out.", isWarmup: true },
+                { name: "Walking Knee Hugs to Lunge", rx: "5 each", notes: "", isWarmup: true },
+                { name: "Lateral Lunge", rx: "5 each", notes: "Adductor and lateral hip mobility.", isWarmup: true },
+                { name: "Wall Slide", rx: "2x8", notes: "Scapular activation for pressing.", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+                { name: "Terminal Knee Extension (band)", rx: "2x15 each", notes: "VMO activation. Non-negotiable before squatting.", isWarmup: true }
               ]
             },
             {
-              title: "Strength",
+              title: "Strength / Hypertrophy (15 working sets)",
               exercises: [
-                { name: "Back Squat", rx: "3x5 @ 260-270 lbs (RPE 7)", notes: "Small bump from last week if it felt smooth. Same cues: depth, brace, speed out of the hole." },
-                { name: "Barbell Bench Press", rx: "3x6 @ 190-200 lbs (RPE 7)", notes: "Slight pause on chest. Maintain the arch and leg drive you built during Nippard." },
-                { name: "Pendlay Row", rx: "3x8 @ RPE 7-8", notes: "Dead stop on floor. Drive elbows back." }
-              ]
-            },
-            {
-              title: "Hypertrophy",
-              exercises: [
-                { name: "Walking Lunge (DB)", rx: "2x12 each leg @ RPE 8", notes: "Swapping from BSS to lunges -- more dynamic, mimics running stride. Upright torso." },
-                { name: "DB Lateral Raise", rx: "3x15 @ RPE 9", notes: "" },
-                { name: "Face Pull", rx: "3x15 @ RPE 8", notes: "" }
+                { name: "Back Squat -- WARM-UP", rx: "Set 1: bar x 8 | Set 2: 135 x 6 | Set 3: 175 x 3", notes: "Three warm-up sets for the squat. Bar set is movement rehearsal -- focus on depth and brace. Second set is tissue priming. Third set is neural activation before your first working set of 205-225.", isWarmup: true },
+                { name: "Back Squat", rx: "3x10 @ 205-225 lbs (RPE 7-8)", notes: "~65-70% of 315. Deep, controlled reps. Lighter load + higher reps = more metabolic stress = more hypertrophy with less CNS drain." },
+                { name: "Incline DB Press -- WARM-UP", rx: "Set 1: 50% x 8 | Set 2: 75% x 4", notes: "Two warm-up sets. Groove the pressing pattern.", isWarmup: true },
+                { name: "Incline DB Press (30 deg)", rx: "3x10 @ RPE 8", notes: "Try adding 2.5-5 lbs from Week 1." },
+                { name: "Lat Pulldown (wide) -- WARM-UP", rx: "1 set: 50% x 8", notes: "Light set to activate lats.", isWarmup: true },
+                { name: "Lat Pulldown (wide grip)", rx: "3x10 @ RPE 8", notes: "Wide overhand grip, pull to upper chest, squeeze lats. V-taper builder." },
+                { name: "Dumbbell Lateral Raise", rx: "3x15 @ RPE 9", notes: "Every session." },
+                { name: "Incline DB Curl + Skull Crusher (superset)", rx: "3x12 each @ RPE 8-9", notes: "Added a set from Week 1. Incline curls stretch the bicep long head. Skull crushers for tricep mass." }
               ]
             },
             {
               title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "McGill Curl-Up", rx: "3x10 each side", notes: "Added 2 reps from Week 1. Same form: arch preserved, head and shoulders only, slow and controlled." },
-                { name: "Bird-Dog", rx: "3x10 each side", notes: "Added 2 reps. Still 2-sec hold at top. If hips are rotating, slow down." },
-                { name: "Side Plank", rx: "3x30 sec each side", notes: "5 seconds longer than Week 1. Hips high and forward the entire time." },
-                { name: "Dead Bug", rx: "3x10 each side", notes: "Added 2 reps. Lower back stays GLUED to the floor. If you lose contact, you've gone too far." },
-                { name: "Pallof Press (reps)", rx: "3x10 reps each side", notes: "Progressing from Week 1 isometric holds to reps. Press out fully, hold 1 sec, return. Resist lateral pull the entire time. Anti-rotation loaded movement." }
+                { name: "McGill Curl-Up", rx: "3x10 each side", notes: "Progressed from 8 to 10 reps." },
+                { name: "Bird-Dog", rx: "3x10 each side", notes: "Added 1-sec pause at top AND bottom." },
+                { name: "Side Plank", rx: "3x30 sec each side", notes: "Progressed from 25 to 30 sec." },
+                { name: "Dead Bug", rx: "3x10 each side", notes: "Progressed to 10 reps. Back glued to floor." },
+                { name: "Pallof Press (reps)", rx: "3x10 each side", notes: "Progressed from holds to reps. Press out, return, repeat." }
               ]
             },
             {
               title: "Sauna (post-session)",
               exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Post-lift. You are now one week into regular sauna use -- plasma volume expansion is beginning. 24oz water after. Second LMNT packet today (you've sweated through both a lift and a sauna)." }
+                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "24oz water after." }
               ]
             }
           ],
-          coachNote: "Same structure as Week 1. Small weight increases ONLY if last week's RPE was truly a 7. If it was closer to 8, repeat the same load. No ego lifting -- endurance training is already adding systemic fatigue."
+          recovery: "lift",
+          coachNote: "Back squats return at hypertrophy loads. Three warm-up sets ramp from bar to 175 before your first working set at 205-225. Core circuit progresses -- more reps, longer holds, Pallof moves from isometric to dynamic."
         },
         {
           day: "Tuesday", date: "Apr 8", type: "run",
-          title: "Easy Run + Strides",
-          subtitle: "Aerobic base + neuromuscular speed",
-          duration: "30 min",
+          title: "Easy Run #1",
+          subtitle: "Zone 2 mileage banking",
+          duration: "40-45 min total",
+          morningMobility: true,
+          mentalPrep: "run",
           sections: [
             {
-              title: "The Session",
+              title: "Dynamic Warm-Up -- Run Prep (8 min)",
               exercises: [
-                { name: "5 min Walk Warm-Up", rx: "", notes: "" },
-                { name: "Easy Run", rx: "20 min @ conversational pace (9:30-10:00/mi)", notes: "Same rules as last week. Conversational. Nose-breathing if possible." },
-                { name: "Strides", rx: "4x20 sec @ fast (NOT sprint) with 60 sec walk between", notes: "NEW this week. After your easy run, do 4 accelerations over ~100m. Build to about 85% effort -- fast and smooth, NOT all-out. Walk back. This teaches your legs to turn over faster without the fatigue cost of interval training. Think: fast and relaxed, like a cheetah warming up." },
-                { name: "5 min Walk Cooldown", rx: "", notes: "" }
+                { name: "Walk", rx: "3 min brisk", notes: "", isWarmup: true },
+                { name: "Leg Swings (front-back + lateral)", rx: "10 each direction, each leg", notes: "", isWarmup: true },
+                { name: "Walking High Knee Pulls", rx: "8 each", notes: "", isWarmup: true },
+                { name: "Walking Quad Pulls", rx: "8 each", notes: "Hip flexors shortened from yesterday's squats.", isWarmup: true },
+                { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+                { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "Glute activation before impact.", isWarmup: true }
+              ]
+            },
+            {
+              title: "The Run",
+              exercises: [
+                { name: "Easy Run", rx: "3.5 miles @ 9:30-10:30/mi", notes: "Half-mile bump from last week. Same rules: conversational, walk if needed." }
               ]
             }
           ],
-          coachNote: "Strides are the secret weapon for new runners who came from a strength background. They maintain neuromuscular speed and running economy without the fatigue of true intervals. 20 seconds is not long enough to accumulate lactate. You'll feel fast and fresh after these."
+          recovery: "run",
+          coachNote: "3.5 miles on Strava. Running total: ~13.5/60."
         },
         {
           day: "Wednesday", date: "Apr 9", type: "lift",
-          title: "Full Body Strength B",
-          subtitle: "Hinge + press emphasis",
-          duration: "55-65 min",
+          title: "Full Body Hypertrophy B",
+          subtitle: "Hinge-dominant, horizontal pull, shoulders",
+          duration: "70-80 min",
+          morningMobility: true,
+          mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (8 min)",
+              title: "Dynamic Warm-Up -- Hinge/Pull Prep (10-12 min)",
               exercises: [
-                { name: "Bike", rx: "3 min easy", notes: "" },
-                { name: "Banded Good Morning", rx: "2x10", notes: "" },
-                { name: "Scapular Push-Ups", rx: "2x10", notes: "" },
-                { name: "Leg Swings", rx: "10 each direction per leg", notes: "" }
+                { name: "Bike or Row", rx: "3 min easy", notes: "", isWarmup: true },
+                { name: "Banded Good Morning", rx: "2x10", notes: "Pattern the hip hinge.", isWarmup: true },
+                { name: "Single-Leg RDL (bodyweight)", rx: "5 each", notes: "Glute activation + hip stability.", isWarmup: true },
+                { name: "T-Spine Foam Roll", rx: "10 slow rolls", notes: "Open T-spine for pulling.", isWarmup: true },
+                { name: "Scapular Push-Ups", rx: "2x10", notes: "Serratus activation.", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+                { name: "Leg Swings (front-back)", rx: "10 each", notes: "Hamstring dynamic prep.", isWarmup: true }
               ]
             },
             {
-              title: "Strength",
+              title: "Strength / Hypertrophy (15 working sets)",
               exercises: [
-                { name: "Deadlift", rx: "3x4 @ 295-310 lbs (RPE 7)", notes: "Small increment if last week was smooth. Reset every rep." },
-                { name: "Overhead Press", rx: "3x8 @ RPE 7-8", notes: "Try adding 2.5-5 lbs from Week 1 if possible." },
-                { name: "Weighted Pull-Up", rx: "3x6 @ RPE 8", notes: "Add 2.5-5 lbs from last week if ready." }
-              ]
-            },
-            {
-              title: "Hypertrophy",
-              exercises: [
-                { name: "Incline DB Press", rx: "3x10 @ RPE 8", notes: "" },
-                { name: "Seated Cable Row", rx: "3x12 @ RPE 8", notes: "" },
-                { name: "Hammer Curl", rx: "2x15 @ RPE 9", notes: "" }
+                { name: "Romanian Deadlift -- WARM-UP", rx: "Set 1: 40% x 8 | Set 2: 60% x 5 | Set 3: 80% x 3", notes: "Three warm-up sets. Focus on feeling the hamstring stretch in set 1. Build tension through sets 2-3.", isWarmup: true },
+                { name: "Romanian Deadlift", rx: "3x10 @ RPE 8", notes: "Slow 3-sec eccentric, feel the stretch, drive hips forward. Target ~205-225 lbs. Builds posterior chain without heavy spinal loading." },
+                { name: "Chest-Supported DB Row -- WARM-UP", rx: "1 set: 50% x 8", notes: "Light set to feel lats engage.", isWarmup: true },
+                { name: "Chest-Supported DB Row", rx: "3x12 @ RPE 8", notes: "Lie face down on incline bench. Zero low-back involvement." },
+                { name: "Standing Arnold Press -- WARM-UP", rx: "1 set: 50% x 8", notes: "", isWarmup: true },
+                { name: "Standing Arnold Press", rx: "3x10 @ RPE 8", notes: "Try small weight increase from Week 1." },
+                { name: "Dumbbell Lateral Raise", rx: "3x15 @ RPE 9", notes: "Every session." },
+                { name: "Hammer Curl + Weighted Dip (superset)", rx: "3x10 each @ RPE 8", notes: "Added a set from Week 1." }
               ]
             },
             {
               title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "McGill Curl-Up", rx: "3x10 each side", notes: "Week 2 progression. Slow, controlled, arch preserved." },
-                { name: "Bird-Dog", rx: "3x10 each side", notes: "2-sec hold. Add a 1-sec pause at the bottom (quadruped position) if the movement feels easy." },
-                { name: "Copenhagen Plank", rx: "3x25 sec each side", notes: "5 seconds longer than Week 1. Top foot on bench, bottom leg hanging. You may feel this in your adductors -- that's correct." },
-                { name: "Hanging Knee Raise", rx: "3x12", notes: "Added 2 reps. Still fully controlled. No kipping." },
-                { name: "Ab Wheel Rollout", rx: "3x10", notes: "Added 2 reps from Week 1. You should be rolling slightly further out now. Stay braced." }
+                { name: "McGill Curl-Up", rx: "3x10 each side", notes: "" },
+                { name: "Bird-Dog", rx: "3x10 each side", notes: "Pauses at top and bottom." },
+                { name: "Side Plank", rx: "3x30 sec each side", notes: "" },
+                { name: "Hanging Knee Raise", rx: "3x12", notes: "Progressed from 10 to 12." },
+                { name: "Pallof Press (reps)", rx: "3x10 each side", notes: "" }
               ]
             },
             {
               title: "Sauna (post-session)",
               exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Post-lift. 24oz water after. Second LMNT packet today." }
+                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "24oz water after." }
               ]
             }
           ],
-          coachNote: "Copenhagen planks are not fun but they're one of the best evidenced exercises for groin injury prevention in running athletes. Start conservative on the hold time."
+          recovery: "lift",
+          coachNote: "RDL warm-up sets build from 40% to 80% in 3 steps. Tomorrow is a run day -- your hamstrings will be sore. The run warm-up addresses this specifically."
         },
         {
-          day: "Thursday", date: "Apr 10", type: "swim",
-          title: "Intro Swim -- Technique Focus",
-          subtitle: "Get comfortable in the water",
-          duration: "30 min pool time",
+          day: "Thursday", date: "Apr 10", type: "run",
+          title: "Easy Run #2",
+          subtitle: "Mid-week mileage",
+          duration: "40-45 min total",
+          morningMobility: true,
+          mentalPrep: "run",
           sections: [
             {
-              title: "The Session",
+              title: "Dynamic Warm-Up -- Run Prep (8 min)",
               exercises: [
-                { name: "Easy Freestyle", rx: "4x50m with 30 sec rest between", notes: "Focus on breathing rhythm. Exhale underwater through nose, inhale by rotating (not lifting) your head. If 50m continuous is too much, do 25m + rest." },
-                { name: "Kick Drill (with board)", rx: "4x25m", notes: "Hold kickboard, flutter kick. Toes pointed, kick from hips not knees. This builds feel for the water." },
-                { name: "Easy Freestyle", rx: "4x50m with 30 sec rest", notes: "Long strokes. Count your strokes per length -- fewer is better. Reach forward, pull all the way past your hip." },
-                { name: "Cooldown", rx: "100m easy (any stroke)", notes: "Backstroke is great for opening up the chest after lifting all week." }
+                { name: "Walk", rx: "3 min brisk", notes: "", isWarmup: true },
+                { name: "Leg Swings (front-back + lateral)", rx: "10 each direction, each leg", notes: "Extra attention to hamstrings -- yesterday's RDLs will have them tight.", isWarmup: true },
+                { name: "Walking Knee Hugs", rx: "8 each", notes: "", isWarmup: true },
+                { name: "Walking Quad Pulls", rx: "8 each", notes: "", isWarmup: true },
+                { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+                { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "", isWarmup: true }
+              ]
+            },
+            {
+              title: "The Run",
+              exercises: [
+                { name: "Easy Run", rx: "3.5 miles @ easy pace", notes: "Same distance as Tuesday. Consistency > heroics." }
               ]
             }
           ],
-          coachNote: "This is NOT a cardio session -- it's a SKILL session. Swimming is the most technique-dependent of the three triathlon disciplines. A strong dude who can't swim efficiently will burn 3x the energy of a weaker swimmer with good form. Humble yourself and focus on smooth strokes. Total volume: ~500m. That's plenty for week one in the pool."
+          recovery: "run",
+          coachNote: "3.5 miles. Running total: ~17/60."
         },
         {
           day: "Friday", date: "Apr 11", type: "lift",
-          title: "Full Body Strength C",
-          subtitle: "Hypertrophy focus + beach muscles",
-          duration: "55-65 min",
+          title: "Full Body Hypertrophy C",
+          subtitle: "Unilateral legs, pull-ups, pump work",
+          duration: "70-80 min",
+          morningMobility: true,
+          mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (6 min)",
+              title: "Dynamic Warm-Up -- Unilateral/Pull Prep (10 min)",
               exercises: [
-                { name: "Jump Rope", rx: "2 min", notes: "" },
-                { name: "World's Greatest Stretch", rx: "5 each side", notes: "" },
-                { name: "Band Dislocates", rx: "2x10", notes: "" }
+                { name: "Jump Rope or Light Jog", rx: "2 min", notes: "", isWarmup: true },
+                { name: "World's Greatest Stretch", rx: "5 each side", notes: "Multi-joint mobilizer. Hold each position 3 sec.", isWarmup: true },
+                { name: "Lateral Lunge", rx: "5 each", notes: "Adductor prep for lunges.", isWarmup: true },
+                { name: "Band Shoulder Dislocates", rx: "2x10", notes: "Full ROM shoulder mobilization.", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+                { name: "Terminal Knee Extension", rx: "2x15 each", notes: "VMO activation before lunges.", isWarmup: true }
               ]
             },
             {
-              title: "Strength",
+              title: "Strength / Hypertrophy (16 working sets)",
               exercises: [
-                { name: "Front Squat", rx: "3x6 @ RPE 7-8", notes: "Add 5 lbs if Week 1 was clean." },
-                { name: "Weighted Dip", rx: "3x8 @ RPE 8", notes: "Try adding 5 lbs." },
-                { name: "Chin-Up", rx: "3x8-10 @ RPE 8", notes: "" }
-              ]
-            },
-            {
-              title: "Hypertrophy / Pump",
-              exercises: [
-                { name: "Leg Extension", rx: "3x15 @ RPE 9", notes: "2-sec squeeze at top." },
-                { name: "Cable Lateral Raise", rx: "3x12 each @ RPE 9", notes: "" },
-                { name: "Incline DB Curl", rx: "3x12 @ RPE 9", notes: "" },
-                { name: "Overhead Tricep Extension (cable)", rx: "3x15 @ RPE 9", notes: "Long head stretch. Face away from the cable stack, arms overhead." }
+                { name: "Walking Lunge (DB) -- WARM-UP", rx: "Set 1: bodyweight x 6 each | Set 2: 50% x 5 each", notes: "Movement rehearsal, then light load. Find your stride length and balance.", isWarmup: true },
+                { name: "Walking Lunge (DB)", rx: "3x10 each leg @ RPE 8", notes: "Dynamic unilateral leg work. Mimics running stride. Upright torso, long steps." },
+                { name: "Flat DB Bench -- WARM-UP", rx: "Set 1: 50% x 8 | Set 2: 75% x 4", notes: "", isWarmup: true },
+                { name: "Flat Dumbbell Bench Press", rx: "3x10 @ RPE 8", notes: "Full ROM, squeeze at top. DB for unilateral stability." },
+                { name: "Weighted Chin-Up -- WARM-UP", rx: "Set 1: bodyweight x 5 | Set 2: 50% added x 3", notes: "", isWarmup: true },
+                { name: "Weighted Chin-Up (underhand)", rx: "3x8 @ RPE 8", notes: "V-taper + bicep builder. Full dead hang, pull chest to bar." },
+                { name: "Cable Lateral Raise", rx: "3x12 each arm @ RPE 9", notes: "Behind-the-body cable path. Constant tension. Different angle than DB raises." },
+                { name: "Preacher Curl + Overhead Tricep Extension (superset)", rx: "2x12 each @ RPE 9", notes: "Preacher curl isolates bicep peak. Overhead extension stretches tricep long head." }
               ]
             },
             {
               title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "McGill Curl-Up", rx: "3x10 each side", notes: "Week 2. Slow and controlled. Arch preserved." },
-                { name: "Bird-Dog", rx: "3x10 each side", notes: "2-sec hold at top. Hips square." },
-                { name: "Side Plank", rx: "3x30 sec each side", notes: "Hips high. Option: lift your top leg for added challenge if 30 sec feels easy." },
-                { name: "Ab Wheel Rollout", rx: "3x10", notes: "Week 2 target. Slow and braced." },
-                { name: "Hanging Leg Raise", rx: "3x10", notes: "Straight leg if possible, knee raise if not. Controlled descent. This is your visible rectus abdominis builder." }
+                { name: "McGill Curl-Up", rx: "3x10 each side", notes: "" },
+                { name: "Bird-Dog", rx: "3x10 each side", notes: "" },
+                { name: "Side Plank", rx: "3x30 sec each side", notes: "" },
+                { name: "Ab Wheel Rollout", rx: "3x8", notes: "From knees. Slow, controlled. Anti-extension finisher." },
+                { name: "Copenhagen Plank", rx: "2x20 sec each side", notes: "Top leg on bench, bottom hangs. Adductor + lateral core. Groin injury prevention for runners." }
               ]
             },
             {
               title: "Sauna (post-session)",
               exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Third sauna of the week. 24oz water after. Tomorrow is long bike day -- hydrate well tonight." }
+                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Third sauna. Tomorrow is long run -- sleep and hydrate tonight." }
               ]
             }
           ],
-          coachNote: "Same template, slight progressions. Your body is starting to adapt to the hybrid demand. You might feel more fatigued than a pure lifting block -- that's normal. Sleep and food are the answer, not skipping sessions."
+          recovery: "lift",
+          coachNote: "Friday warm-up includes TKEs again because you're doing unilateral leg work. Copenhagen planks continue for groin protection as run volume builds. Tomorrow is your longest run of the week."
         },
         {
-          day: "Saturday", date: "Apr 12", type: "bike",
-          title: "Long Bike -- Aerobic Endurance",
-          subtitle: "Build time in the saddle",
-          duration: "55-65 min",
+          day: "Saturday", date: "Apr 12", type: "run",
+          title: "Long Run -- Week 2",
+          subtitle: "Biggest mileage day of the week",
+          duration: "55-65 min total",
+          morningMobility: true,
+          mentalPrep: "run",
           sections: [
             {
-              title: "The Ride",
+              title: "Dynamic Warm-Up -- Long Run Prep (10 min)",
               exercises: [
-                { name: "Easy Road Ride", rx: "55-65 min @ Zone 2", notes: "Longer than last week's Thursday ride. Find a route with some gentle rolling hills. Stay seated on climbs to build pedaling strength. Cadence 80-90 RPM. Bring water." },
+                { name: "Walk", rx: "5 min brisk", notes: "Longer warm-up for longer run.", isWarmup: true },
+                { name: "Leg Swings (front-back + lateral)", rx: "10 each direction, each leg", notes: "", isWarmup: true },
+                { name: "Walking Lunge with Rotation", rx: "5 each side", notes: "Hip + T-spine combo.", isWarmup: true },
+                { name: "Walking High Knee + Quad Pull combo", rx: "6 each", notes: "", isWarmup: true },
+                { name: "A-Skips", rx: "2x20m", notes: "", isWarmup: true },
+                { name: "Banded Lateral Walk", rx: "10 each direction", notes: "Glute med activation for knee protection.", isWarmup: true }
               ]
             },
             {
-              title: "Post-Ride",
+              title: "The Run",
               exercises: [
-                { name: "Hip Flexor + Quad Stretch", rx: "45 sec each side", notes: "" },
-                { name: "Figure-4 Glute Stretch", rx: "30 sec each side", notes: "" }
+                { name: "Long Easy Run", rx: "5.0 miles @ 10:00-10:30/mi", notes: "First 5-miler. Walk breaks fine -- 30 sec/mile if needed. Relax. You're covering real distance now." }
               ]
             }
           ],
-          coachNote: "Saturday is your big aerobic day. Swapped from a long run to a long bike -- the cycling builds massive aerobic volume with much less muscle damage and impact stress than running. This protects your legs for Monday's lifts."
+          recovery: "run",
+          coachNote: "5 miles on Strava. Running total: ~22/60. Over one-third done."
         },
         {
           day: "Sunday", date: "Apr 13", type: "rest",
           title: "Rest & Recovery",
-          subtitle: "Recover and reset for Week 3",
+          subtitle: "Full rest or very light movement only",
           duration: "--",
+          morningMobility: true,
           sections: [
             {
-              title: "Recovery Options",
+              title: "Recovery Options (pick one or rest fully)",
               exercises: [
-                { name: "Option A: 20-min Walk + Stretching", rx: "", notes: "Easy movement, nothing strenuous" },
-                { name: "Option B: Yoga / Mobility Flow", rx: "15-20 min", notes: "" },
-                { name: "Option C: Full Rest", rx: "", notes: "Sleep, eat, recharge. Midterms? Study. Startup stuff? Handle it. Life doesn't stop for training." }
+                { name: "Option A: 20-min Easy Walk", rx: "Outdoors", notes: "Does NOT count toward 60 miles. Purely for recovery." },
+                { name: "Option B: Extended Mobility Session", rx: "20 min", notes: "Do your morning mobility routine TWICE -- once on waking, once in the afternoon. Extra hip and ankle work." },
+                { name: "Option C: Full Rest", rx: "Do nothing", notes: "Sleep, eat, recharge." }
               ]
             },
             {
               title: "Sauna (Sunday protocol)",
               exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Sunday parasympathetic recovery session. No workout fatigue stacking -- just heat adaptation, GH release, and cortisol reduction. 24oz water after. You're two weeks into consistent sauna use -- plasma volume gains are accumulating." }
+                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Fourth sauna. Parasympathetic recovery. 24oz water after." }
               ]
             }
           ],
-          coachNote: "Two weeks in. Check in with yourself: How's sleep? Appetite? Energy in class? If any are tanking, we dial back Week 3. The plan serves you -- not the other way around."
+          coachNote: "No running today. Legs need a full day off from impact. You're at ~22 miles through 12 days -- on pace."
         }
       ]
     },
@@ -1415,481 +1621,507 @@ const PROGRAM = {
       name: "Week 3",
       dates: "Apr 14 - Apr 20",
       theme: "Peak Volume",
-      subtitle: "Highest training volume of the block. Run duration peaks, bike stays long, you get your second swim. This is the hardest week -- embrace the fatigue, knowing Week 4 is a deload.",
+      subtitle: "Hardest week. Run mileage peaks at ~17 miles. Lifting RPE nudges up. Core circuit at max progression. Push through -- Week 4 is the deload.",
       days: [
         {
           day: "Monday", date: "Apr 14", type: "lift",
-          title: "Full Body Strength A",
-          subtitle: "Compound strength maintenance",
-          duration: "55-65 min",
+          title: "Full Body Hypertrophy A",
+          subtitle: "Peak squat-pattern + vertical pull loading",
+          duration: "70-80 min",
+          morningMobility: true,
+          mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (8 min)",
+              title: "Dynamic Warm-Up -- Squat/Push Prep (10-12 min)",
               exercises: [
-                { name: "Row or Bike", rx: "3 min easy", notes: "" },
-                { name: "90/90 Hip Switches", rx: "2x8", notes: "" },
-                { name: "Cat-Cow + T-Spine Rotations", rx: "8 each", notes: "" },
-                { name: "Band Pull-Aparts", rx: "2x15", notes: "" }
+                { name: "Row or Bike", rx: "3 min easy", notes: "", isWarmup: true },
+                { name: "Goblet Squat Hold", rx: "2x20 sec", notes: "", isWarmup: true },
+                { name: "Walking Knee Hugs to Lunge", rx: "5 each", notes: "", isWarmup: true },
+                { name: "Lateral Lunge", rx: "5 each", notes: "", isWarmup: true },
+                { name: "Wall Slide", rx: "2x8", notes: "", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+                { name: "Terminal Knee Extension", rx: "2x15 each", notes: "VMO activation.", isWarmup: true }
               ]
             },
             {
-              title: "Strength",
+              title: "Strength / Hypertrophy (15 working sets)",
               exercises: [
-                { name: "Back Squat", rx: "4x4 @ 265-275 lbs (RPE 7-8)", notes: "Added a set, dropped a rep. Slightly heavier than Week 2. Still not grinding -- crisp, fast reps." },
-                { name: "Barbell Bench Press", rx: "4x5 @ 195-205 lbs (RPE 7-8)", notes: "Same adjustment: more sets, fewer reps, slightly heavier. Maintain technique." },
-                { name: "Pendlay Row", rx: "3x8 @ RPE 8", notes: "Push these slightly harder this week -- you can handle it on the row." }
-              ]
-            },
-            {
-              title: "Hypertrophy",
-              exercises: [
-                { name: "Leg Press", rx: "3x12 @ RPE 8", notes: "Swap from lunges for joint-friendliness at peak volume week. Feet shoulder-width, full depth." },
+                { name: "Bulgarian Split Squat (DB) -- WARM-UP", rx: "Set 1: bodyweight x 6 each | Set 2: 60% x 5 each", notes: "Movement rehearsal, then moderate load.", isWarmup: true },
+                { name: "Bulgarian Split Squat (DB)", rx: "3x10 each leg @ RPE 8-9", notes: "Push harder this week. Add 5 lbs per hand if Week 2 was clean. Peak unilateral loading." },
+                { name: "Incline DB Press -- WARM-UP", rx: "Set 1: 50% x 8 | Set 2: 75% x 4", notes: "", isWarmup: true },
+                { name: "Incline DB Press (30 deg)", rx: "3x10 @ RPE 8-9", notes: "Small weight increase if possible." },
+                { name: "Weighted Pull-Up -- WARM-UP", rx: "Set 1: bodyweight x 5 | Set 2: 50% added x 3", notes: "", isWarmup: true },
+                { name: "Weighted Pull-Up", rx: "3x8 @ RPE 8-9", notes: "Add 2.5-5 lbs from Week 2. Peak pulling." },
                 { name: "DB Lateral Raise", rx: "3x15 @ RPE 9-10", notes: "Last set to true failure. Partials at the end if you want." },
-                { name: "Face Pull", rx: "3x15 @ RPE 8", notes: "" }
+                { name: "EZ Curl + Overhead Extension (superset)", rx: "3x12 each @ RPE 9", notes: "Peak arm volume." }
               ]
             },
             {
               title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "McGill Curl-Up", rx: "3x12 each side", notes: "Peak volume week. Added 2 reps from Week 2. Arch preserved, slow and deliberate." },
-                { name: "Bird-Dog", rx: "3x10 each side + 3-sec hold", notes: "Extended hold from 2 to 3 seconds. Progressive overload via time under tension." },
-                { name: "Side Plank (feet stacked)", rx: "3x35 sec each side", notes: "10 more seconds than Week 1. Feet stacked (harder than staggered). If easy, lift your top leg." },
-                { name: "Dead Bug (contralateral)", rx: "3x10 each side", notes: "Opposite arm/leg extend simultaneously. Harder than alternating. Lower back stays GLUED to floor -- no exceptions." },
-                { name: "Pallof Press Walkout", rx: "3x8 each side", notes: "Press out, then take 2 steps away from cable to increase tension. Return. Anti-rotation progression -- significantly harder than standard Pallof press." }
+                { name: "McGill Curl-Up", rx: "3x12 each side", notes: "Progressed to 12." },
+                { name: "Bird-Dog", rx: "3x10 each side (2-sec hold)", notes: "" },
+                { name: "Side Plank", rx: "3x35 sec each side", notes: "Progressed to 35 sec." },
+                { name: "Dead Bug (contralateral)", rx: "3x10 each side", notes: "Opposite arm/leg extend simultaneously. Harder coordination." },
+                { name: "Pallof Press Walkout", rx: "3x8 each side", notes: "Press out, take 2 steps away from cable, return. Anti-rotation progression." }
               ]
             },
             {
               title: "Sauna (post-session)",
               exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Week 3 -- peak volume. Sauna is especially valuable this week for accelerating recovery between sessions. 24oz water + second LMNT packet after. This is your highest-fatigue week -- prioritize sleep tonight." }
+                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "" }
               ]
             }
           ],
-          coachNote: "Peak volume week for lifting too. The extra set on squats and bench is your main progression lever. Accessories stay the same -- the endurance training is adding enough systemic volume."
+          recovery: "lift",
+          coachNote: "Peak volume week. RPE targets nudge to 8-9. Core circuit at max progression: 12-rep curl-ups, 35-sec side planks, Pallof walkouts. After this week, you start recovering."
         },
         {
           day: "Tuesday", date: "Apr 15", type: "run",
-          title: "Tempo Intervals -- Introduction",
-          subtitle: "Your first taste of faster running",
-          duration: "30-35 min",
+          title: "Easy Run #1", subtitle: "Zone 2", duration: "40-45 min total",
+          morningMobility: true, mentalPrep: "run",
           sections: [
             {
-              title: "The Session",
+              title: "Dynamic Warm-Up -- Run Prep (8 min)",
               exercises: [
-                { name: "5 min Walk + 5 min Easy Jog", rx: "Warm up thoroughly", notes: "Your body needs to be warm before any tempo work. Don't rush this." },
-                { name: "Tempo Intervals", rx: "4x3 min @ 'comfortably hard' with 2 min easy jog between", notes: "'Comfortably hard' = you can say a few words but not a full sentence. Roughly 8:00-8:30/mi pace for you right now. This is NOT all-out. You should finish each interval feeling like you could have done one more minute. The 2-min jog recovery should bring you back to easy breathing." },
-                { name: "5 min Walk Cooldown", rx: "", notes: "" }
+                { name: "Walk", rx: "3 min brisk", notes: "", isWarmup: true },
+                { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+                { name: "Walking High Knee Pulls", rx: "8 each", notes: "", isWarmup: true },
+                { name: "Walking Quad Pulls", rx: "8 each", notes: "", isWarmup: true },
+                { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+                { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "", isWarmup: true }
               ]
             },
-            {
-              title: "Post-Run",
-              exercises: [
-                { name: "Quad + Hip Flexor Stretch", rx: "30 sec each", notes: "" },
-                { name: "Calf Stretch (both positions)", rx: "30 sec each", notes: "" }
-              ]
-            }
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "3.5 miles @ easy pace", notes: "If you're feeling good, let pace drift faster naturally -- don't force it." }
+            ]}
           ],
-          coachNote: "First structured speed work! Tempo intervals are the most time-efficient way to improve lactate threshold. 4x3 min is conservative -- just enough to introduce the stimulus. If it feels too easy, don't go faster -- that means your aerobic base is building. Just stay consistent."
+          recovery: "run",
+          coachNote: "3.5 miles. Running total: ~25.5/60."
         },
         {
           day: "Wednesday", date: "Apr 16", type: "lift",
-          title: "Full Body Strength B",
-          subtitle: "Hinge + press, peak loading",
-          duration: "55-65 min",
+          title: "Full Body Hypertrophy B",
+          subtitle: "Peak hinge + row loading",
+          duration: "70-80 min",
+          morningMobility: true, mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (8 min)",
+              title: "Dynamic Warm-Up -- Hinge/Pull Prep (10-12 min)",
               exercises: [
-                { name: "Bike", rx: "3 min easy", notes: "" },
-                { name: "Banded Good Morning", rx: "2x10", notes: "" },
-                { name: "Scap Push-Ups", rx: "2x10", notes: "" },
-                { name: "Leg Swings", rx: "10 each per leg", notes: "" }
+                { name: "Bike", rx: "3 min easy", notes: "", isWarmup: true },
+                { name: "Banded Good Morning", rx: "2x10", notes: "", isWarmup: true },
+                { name: "Single-Leg RDL (bodyweight)", rx: "5 each", notes: "", isWarmup: true },
+                { name: "T-Spine Foam Roll", rx: "10 rolls", notes: "", isWarmup: true },
+                { name: "Scap Push-Ups", rx: "2x10", notes: "", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+                { name: "Leg Swings (front-back)", rx: "10 each", notes: "", isWarmup: true }
               ]
             },
             {
-              title: "Strength",
+              title: "Strength / Hypertrophy (15 working sets)",
               exercises: [
-                { name: "Deadlift", rx: "4x3 @ 300-315 lbs (RPE 7-8)", notes: "Added a set at lower reps. This is your heaviest pulling of the block. Technique first." },
-                { name: "Overhead Press", rx: "3x6 @ RPE 8", notes: "Dropped reps, go a bit heavier. Push it a little this week." },
-                { name: "Weighted Pull-Up", rx: "3x5 @ RPE 8", notes: "Heavier than last week. Fewer reps." }
-              ]
-            },
-            {
-              title: "Hypertrophy",
-              exercises: [
-                { name: "Incline DB Press", rx: "3x10 @ RPE 8-9", notes: "Push the last set harder." },
-                { name: "Chest-Supported Row", rx: "3x12 @ RPE 8", notes: "Lying face-down on incline bench. No low back fatigue -- important at peak volume." },
-                { name: "Hammer Curl", rx: "3x12 @ RPE 9", notes: "Added a set this week." }
+                { name: "Trap Bar Deadlift -- WARM-UP", rx: "Set 1: 40% x 8 | Set 2: 60% x 5 | Set 3: 80% x 3", notes: "Heaviest hinge of the block.", isWarmup: true },
+                { name: "Trap Bar Deadlift", rx: "3x8 @ RPE 8", notes: "Try adding 10 lbs from Week 2." },
+                { name: "Chest-Supported Row -- WARM-UP", rx: "1 set: 50% x 8", notes: "", isWarmup: true },
+                { name: "Chest-Supported DB Row", rx: "3x12 @ RPE 8-9", notes: "Push last set harder." },
+                { name: "Seated DB OHP -- WARM-UP", rx: "1 set: 50% x 8", notes: "", isWarmup: true },
+                { name: "Seated DB Overhead Press", rx: "3x10 @ RPE 8", notes: "Seated to isolate delts." },
+                { name: "DB Lateral Raise", rx: "3x15 @ RPE 9-10", notes: "" },
+                { name: "Hammer Curl + Dip (superset)", rx: "3x10 each @ RPE 8-9", notes: "" }
               ]
             },
             {
               title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "McGill Curl-Up", rx: "3x12 each side", notes: "Peak volume. Slow and deliberate. Never yank the neck." },
-                { name: "Bird-Dog", rx: "3x10 each side + 3-sec hold", notes: "Peak hold time. Add a 1-sec pause at bottom (quadruped) between reps if you want extra challenge." },
-                { name: "Copenhagen Plank", rx: "3x30 sec each side", notes: "10 more seconds than Week 1. This is a serious hold -- your adductors and lateral hip are working hard. Short rest between sides." },
-                { name: "Hanging Leg Raise (straight leg)", rx: "3x10", notes: "Full straight leg if possible. Controlled descent -- resist gravity on the way down. This is your hardest dynamic core movement." },
-                { name: "Ab Wheel Rollout", rx: "3x10", notes: "Week 3 target. You should be rolling further out than Week 1 with better control. Still from knees." }
+                { name: "McGill Curl-Up", rx: "3x12 each side", notes: "" },
+                { name: "Bird-Dog", rx: "3x10 each side", notes: "" },
+                { name: "Side Plank", rx: "3x35 sec each side", notes: "" },
+                { name: "Hanging Leg Raise (straight leg attempt)", rx: "3x8", notes: "Progress from knee raises. Control it." },
+                { name: "Pallof Press Walkout", rx: "3x8 each side", notes: "" }
               ]
             },
-            {
-              title: "Sauna (post-session)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Post-lift. 24oz water + second LMNT after. This is your hardest lifting session of the whole block -- sauna accelerates the recovery process heading into Thursday's tempo bike ride." }
-              ]
-            }
+            { title: "Sauna (post-session)", exercises: [
+              { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "" }
+            ]}
           ],
-          coachNote: "This is your highest-intensity lifting session of the whole block. After this, we start tapering into the deload. Give it honest effort but keep form clean."
+          recovery: "lift",
+          coachNote: "Heaviest hinge and peak row volume of the block."
         },
         {
-          day: "Thursday", date: "Apr 17", type: "bike",
-          title: "Bike + Tempo Effort",
-          subtitle: "Aerobic base with a tempo block",
-          duration: "55-65 min",
+          day: "Thursday", date: "Apr 17", type: "run",
+          title: "Easy Run #2 + Strides", subtitle: "Mileage + neuromuscular speed", duration: "45-50 min total",
+          morningMobility: true, mentalPrep: "run",
           sections: [
             {
-              title: "The Ride",
+              title: "Dynamic Warm-Up -- Run Prep (8 min)",
               exercises: [
-                { name: "Warm-Up Spin", rx: "15 min easy", notes: "Flat terrain, spin easy, get the legs going." },
-                { name: "Tempo Block", rx: "2x10 min at 'comfortably hard' effort with 5 min easy between", notes: "Push the pace to where breathing is elevated and you can only say a few words. Seated. This builds cycling-specific lactate threshold." },
-                { name: "Easy Spin Cooldown", rx: "15 min easy", notes: "Bring heart rate back down. Spin the lactic acid out." }
+                { name: "Walk", rx: "3 min", notes: "", isWarmup: true },
+                { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+                { name: "Walking Knee Hugs + Quad Pulls", rx: "6 each", notes: "", isWarmup: true },
+                { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+                { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "", isWarmup: true }
               ]
             },
-            {
-              title: "Post-Ride",
-              exercises: [
-                { name: "Hip Flexor + Quad Stretch", rx: "45 sec each", notes: "" },
-                { name: "Hamstring Stretch", rx: "30 sec each", notes: "" }
-              ]
-            }
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "4.0 miles @ easy pace", notes: "Bumped to 4 miles. Your body can handle this." },
+              { name: "Strides", rx: "4x20 sec @ 85%, 60 sec walk between", notes: "Fast and smooth, not all-out." }
+            ]}
           ],
-          coachNote: "First structured intensity on the bike. Two 10-min tempo blocks is very manageable with the easy bookends. This trains your body to clear lactate while pedaling -- critical for the bike leg of a half Ironman."
+          recovery: "run",
+          coachNote: "4 miles. Running total: ~29.5/60. Almost halfway."
         },
         {
           day: "Friday", date: "Apr 18", type: "lift",
-          title: "Full Body Strength C",
-          subtitle: "Hypertrophy focus, last hard session before deload",
-          duration: "55-65 min",
+          title: "Full Body Hypertrophy C",
+          subtitle: "Last hard session before deload",
+          duration: "70-80 min",
+          morningMobility: true, mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (6 min)",
+              title: "Dynamic Warm-Up -- Unilateral/Pull Prep (10 min)",
               exercises: [
-                { name: "Jump Rope", rx: "2 min", notes: "" },
-                { name: "World's Greatest Stretch", rx: "5 each side", notes: "" },
-                { name: "Band Dislocates", rx: "2x10", notes: "" }
+                { name: "Jump Rope", rx: "2 min", notes: "", isWarmup: true },
+                { name: "World's Greatest Stretch", rx: "5 each", notes: "", isWarmup: true },
+                { name: "Lateral Lunge", rx: "5 each", notes: "", isWarmup: true },
+                { name: "Band Dislocates", rx: "2x10", notes: "", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+                { name: "Terminal Knee Extension", rx: "2x15 each", notes: "", isWarmup: true }
               ]
             },
             {
-              title: "Strength",
+              title: "Strength / Hypertrophy (16 working sets)",
               exercises: [
-                { name: "Front Squat", rx: "3x5 @ RPE 8", notes: "Slightly heavier than Week 2. Last heavy squat before deload." },
-                { name: "Weighted Dip", rx: "3x8 @ RPE 8-9", notes: "Push the load a bit. Last chance before the deload eases off." },
-                { name: "Chin-Up", rx: "3x8 @ RPE 8", notes: "" }
-              ]
-            },
-            {
-              title: "Hypertrophy / Pump",
-              exercises: [
-                { name: "Leg Extension", rx: "3x15 + drop set on final set @ RPE 10", notes: "On the last set, hit 15, drop weight 30%, immediately do max reps. Quad destruction in the best way." },
-                { name: "Cable Lateral Raise", rx: "3x12 each @ RPE 9", notes: "" },
-                { name: "EZ Bar Curl (21s)", rx: "2 sets", notes: "7 bottom half, 7 top half, 7 full ROM. You know these from Nippard's pump day. Bicep finisher." },
-                { name: "Tricep Pressdown", rx: "3x15 @ RPE 9", notes: "" }
+                { name: "Walking Lunge (DB) -- WARM-UP", rx: "Set 1: bodyweight x 6 each | Set 2: 60% x 5 each", notes: "", isWarmup: true },
+                { name: "Walking Lunge (DB)", rx: "3x10 each leg @ RPE 9", notes: "Peak unilateral loading. Push it." },
+                { name: "Flat DB Bench -- WARM-UP", rx: "Set 1: 50% x 8 | Set 2: 75% x 4", notes: "", isWarmup: true },
+                { name: "Flat DB Bench Press", rx: "3x10 @ RPE 8-9", notes: "" },
+                { name: "Weighted Chin-Up -- WARM-UP", rx: "Set 1: bodyweight x 5 | Set 2: 50% added x 3", notes: "", isWarmup: true },
+                { name: "Weighted Chin-Up", rx: "3x8 @ RPE 8-9", notes: "Peak pulling of the block." },
+                { name: "Cable Lateral Raise", rx: "3x12 each arm @ RPE 9-10", notes: "Go to failure on last set." },
+                { name: "Curl 21s + Tricep Pressdown (superset)", rx: "2 sets", notes: "7 bottom-half, 7 top-half, 7 full ROM. Pressdowns to finish triceps." }
               ]
             },
             {
               title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "McGill Curl-Up", rx: "3x12 each side", notes: "Last hard core session before deload. Full control." },
-                { name: "Bird-Dog", rx: "3x10 + 3-sec hold", notes: "Stay square. This is your third session this week -- focus on quality over grinding through it." },
-                { name: "Side Plank (feet stacked)", rx: "3x35 sec each side", notes: "Peak hold. Add hip dips (lower hip to floor and raise) for a dynamic variation if you're feeling strong." },
-                { name: "Ab Wheel Rollout", rx: "3x10", notes: "Week 3 -- this should feel more controlled than Week 1. Full range from knees if you can." },
-                { name: "Hanging Leg Raise", rx: "3x10-12", notes: "Straight leg target. Slow eccentric on the way down -- that's where the work happens. Last hard core set of the peak block." }
+                { name: "McGill Curl-Up", rx: "3x12 each side", notes: "" },
+                { name: "Bird-Dog", rx: "3x10 each side", notes: "" },
+                { name: "Side Plank", rx: "3x35 sec each side", notes: "" },
+                { name: "Ab Wheel Rollout", rx: "3x10", notes: "Progressed to 10 reps." },
+                { name: "Copenhagen Plank", rx: "2x25 sec each side", notes: "Progressed from 20 to 25 sec." }
               ]
             },
-            {
-              title: "Sauna (post-session)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Last hard session sauna of the block. 24oz water after. Tomorrow is peak long run -- prioritize hydration and a full night's sleep tonight." }
-              ]
-            }
+            { title: "Sauna (post-session)", exercises: [
+              { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Tomorrow is your longest run yet. Sleep and hydrate." }
+            ]}
           ],
-          coachNote: "Last hard lifting session before the deload. Give it a real effort today -- you've earned the right to push after two weeks of dialing in. Tomorrow is a long endurance day, then you start recovering in Week 4."
+          recovery: "lift",
+          coachNote: "Last hard lift of the block. Give it everything. Curl 21s from Nippard make a comeback."
         },
         {
           day: "Saturday", date: "Apr 19", type: "run",
-          title: "Long Run -- Duration Peak",
-          subtitle: "Longest continuous run of the block",
-          duration: "45-50 min",
+          title: "Long Run -- Peak Distance", subtitle: "Longest run of the block", duration: "65-75 min total",
+          morningMobility: true, mentalPrep: "run",
           sections: [
             {
-              title: "The Session",
+              title: "Dynamic Warm-Up -- Long Run Prep (10 min)",
               exercises: [
-                { name: "5 min Walk Warm-Up", rx: "", notes: "" },
-                { name: "Long Easy Run", rx: "35-40 min continuous @ 10:00-10:30/mi", notes: "This is a BIG jump from Week 1's 25 minutes. Go SLOW. Walk if you need to -- 30-sec walk breaks are totally fine. The goal is time on your feet, not pace. Aim to stay relaxed: drop your shoulders, unclench your hands, breathe rhythmically. This is roughly 3.5-4 miles -- a real accomplishment from where you started." },
-                { name: "5 min Walk Cooldown", rx: "", notes: "" }
+                { name: "Walk", rx: "5 min brisk", notes: "", isWarmup: true },
+                { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+                { name: "Walking Lunge with Rotation", rx: "5 each", notes: "", isWarmup: true },
+                { name: "Walking High Knee + Quad Pull combo", rx: "6 each", notes: "", isWarmup: true },
+                { name: "A-Skips", rx: "2x20m", notes: "", isWarmup: true },
+                { name: "Banded Lateral Walk", rx: "10 each direction", notes: "Glute med for knee protection.", isWarmup: true }
               ]
             },
-            {
-              title: "Post-Run Recovery (10 min)",
-              exercises: [
-                { name: "Foam Roll: Quads, IT Band, Calves", rx: "2 min per area", notes: "Slow, deliberate. This is peak volume week -- take care of the tissue." },
-                { name: "Pigeon Stretch", rx: "60 sec each side", notes: "" },
-                { name: "Standing Calf Stretch", rx: "30 sec each, both positions", notes: "" }
-              ]
-            }
+            { title: "The Run", exercises: [
+              { name: "Long Easy Run", rx: "6.0 miles @ 10:00-10:30/mi", notes: "Six miles. Walk breaks fine. Stay relaxed. Softer surfaces if possible." }
+            ]}
           ],
-          coachNote: "35-40 minutes continuous running at an easy pace. Two weeks ago you struggled with 2 miles at 8:30. Today you're about to run close to 4 miles. That's the power of consistent Zone 2 training. If you need walk breaks, take them -- no shame. You're building."
+          recovery: "run",
+          coachNote: "6 miles on Strava. Running total: ~35.5/60. You just ran 6 miles. More than half the challenge done with 2 weeks left."
         },
         {
-          day: "Sunday", date: "Apr 20", type: "swim",
-          title: "Swim -- Technique & Endurance",
-          subtitle: "Building on your first session",
-          duration: "30-35 min pool time",
+          day: "Sunday", date: "Apr 20", type: "rest",
+          title: "Rest & Recovery", subtitle: "Full rest before deload week", duration: "--",
+          morningMobility: true,
           sections: [
             {
-              title: "The Session",
+              title: "Recovery Options",
               exercises: [
-                { name: "Easy Freestyle", rx: "200m continuous (slow)", notes: "Warm up. Focus on steady breathing and long strokes." },
-                { name: "Catch-Up Drill", rx: "4x50m with 20 sec rest", notes: "Both hands start at the front. Pull with one arm, return to front, then pull with the other. Forces you to lengthen your stroke and not rush." },
-                { name: "Freestyle with Focus", rx: "4x75m with 30 sec rest", notes: "Pick ONE thing to focus on each 75: (1) exhale underwater (2) high elbow catch (3) rotate from hips (4) relaxed kick." },
-                { name: "Cooldown", rx: "100m easy backstroke", notes: "" }
+                { name: "Extended Mobility Session", rx: "Morning routine x2 (morning + afternoon)", notes: "Extra hip and ankle work after peak week." },
+                { name: "OR: Full Rest", rx: "", notes: "After peak volume, full rest is the best choice." }
               ]
-            }
+            },
+            { title: "Sauna (Sunday protocol)", exercises: [
+              { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Fourth sauna. Recovery mode. 24oz water." }
+            ]}
           ],
-          coachNote: "~700m total -- up from ~500m in Week 2. Still firmly in technique-building mode. If you can get even 10% more efficient in the water this month, it pays massive dividends later when distances increase. Don't worry about speed."
+          coachNote: "Peak volume week done. ~35.5 miles in 18 days."
         }
       ]
     },
     {
       id: 4,
       name: "Week 4",
-      dates: "Apr 21 - Apr 27",
-      theme: "Deload & Absorb",
-      subtitle: "Volume drops ~40% across the board. This is where the gains from Weeks 1-3 actually consolidate. Lifting loads stay moderate, endurance is easy, and recovery is prioritized. You'll feel fresh and strong by the end of this week.",
+      dates: "Apr 21 - May 1",
+      theme: "Deload + Finish Line",
+      subtitle: "Lifting volume drops ~40%. Run mileage continues to close out 60 miles. Gains consolidate. ~24.5 miles needed across 11 days.",
       days: [
         {
           day: "Monday", date: "Apr 21", type: "lift",
-          title: "Full Body Deload A",
-          subtitle: "Same movements, reduced volume & intensity",
-          duration: "40-45 min",
+          title: "Full Body Deload A", subtitle: "Same movements, reduced volume/intensity", duration: "55-60 min",
+          morningMobility: true, mentalPrep: "lift",
           sections: [
             {
-              title: "Warm-Up (8 min)",
+              title: "Dynamic Warm-Up -- Squat/Push Prep (10 min)",
               exercises: [
-                { name: "Row or Bike", rx: "3 min easy", notes: "" },
-                { name: "90/90 Hip Switches", rx: "2x8", notes: "" },
-                { name: "Cat-Cow + T-Spine Rotations", rx: "8 each", notes: "" },
-                { name: "Band Pull-Aparts", rx: "2x15", notes: "" }
+                { name: "Row or Bike", rx: "3 min easy", notes: "", isWarmup: true },
+                { name: "Goblet Squat Hold", rx: "2x20 sec", notes: "", isWarmup: true },
+                { name: "Walking Knee Hugs to Lunge", rx: "5 each", notes: "", isWarmup: true },
+                { name: "Wall Slide", rx: "2x8", notes: "", isWarmup: true },
+                { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+                { name: "Terminal Knee Extension", rx: "2x15 each", notes: "", isWarmup: true }
               ]
             },
             {
-              title: "Strength (Deload)",
+              title: "Strength / Hypertrophy -- Deload (10 working sets)",
               exercises: [
-                { name: "Back Squat", rx: "2x5 @ 225-240 lbs (RPE 5-6)", notes: "This will feel light. GOOD. Move the bar with perfect technique and maximal speed. Think 'fast and crisp.'" },
-                { name: "Barbell Bench Press", rx: "2x6 @ 175-185 lbs (RPE 5-6)", notes: "Light and explosive. Maintain your setup, arch, and leg drive." },
-                { name: "Pendlay Row", rx: "2x8 @ RPE 6", notes: "Easy rows. Maintain the movement pattern." }
+                { name: "Back Squat -- WARM-UP", rx: "Set 1: bar x 8 | Set 2: 135 x 5", notes: "Only 2 warm-up sets during deload.", isWarmup: true },
+                { name: "Back Squat", rx: "2x8 @ 185-195 lbs (RPE 5-6)", notes: "Light and fast. Perfect technique." },
+                { name: "Incline DB Press -- WARM-UP", rx: "1 set: 50% x 8", notes: "", isWarmup: true },
+                { name: "Incline DB Press", rx: "2x10 @ RPE 5-6", notes: "" },
+                { name: "Lat Pulldown", rx: "2x10 @ RPE 6", notes: "No warm-up set needed -- light enough already." },
+                { name: "DB Lateral Raise", rx: "2x15 @ RPE 7", notes: "" },
+                { name: "Curl + Pressdown (superset)", rx: "2x12 each @ RPE 7", notes: "" }
               ]
             },
             {
-              title: "Accessories (Light)",
+              title: "Core Circuit -- 3 Rounds (12-15 min)",
               exercises: [
-                { name: "Walking Lunge", rx: "2x8 each leg @ RPE 6", notes: "Easy. Just move through the range of motion." },
-                { name: "Lateral Raise", rx: "2x15 @ RPE 7", notes: "Keep the shoulders healthy." },
-                { name: "Face Pull", rx: "2x15 @ RPE 7", notes: "" }
+                { name: "McGill Curl-Up", rx: "3x10 each side", notes: "Pulled back from peak." },
+                { name: "Bird-Dog", rx: "3x8 each side", notes: "" },
+                { name: "Side Plank", rx: "3x30 sec each side", notes: "" },
+                { name: "Dead Bug", rx: "3x8 each side", notes: "" },
+                { name: "Pallof Press", rx: "3x8 each side", notes: "" }
               ]
             },
-            {
-              title: "Core Circuit -- 2 Rounds (8-10 min)",
-              exercises: [
-                { name: "McGill Curl-Up", rx: "2x8 each side", notes: "Deload: back to Week 1 reps. Focus on perfect form. Your core is recovering alongside everything else." },
-                { name: "Bird-Dog", rx: "2x8 each side", notes: "2-sec hold. Easy and controlled. Deload means deload." },
-                { name: "Dead Bug", rx: "2x8 each side", notes: "Reduced volume. Stay sharp on the lower-back contact cue." },
-                { name: "Pallof Press Hold", rx: "2x20 sec each side", notes: "Back to isometric holds. Easy tension. Just maintain the motor pattern." }
-              ]
-            },
-            {
-              title: "Sauna (post-session)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Deload week -- sauna is especially powerful right now. Your body is consolidating 3 weeks of adaptation. Heat exposure continues driving cardiovascular gains while lifting volume drops. 24oz water after." }
-              ]
-            }
+            { title: "Sauna (post-session)", exercises: [
+              { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "" }
+            ]}
           ],
-          coachNote: "Deload means DELOAD. You will feel like you're not doing enough. That's the point. Your muscles are repairing, your tendons are catching up, and your aerobic adaptations from Weeks 1-3 are consolidating. Trust the process."
+          recovery: "lift",
+          coachNote: "Deload means DELOAD. Leave the gym feeling better than when you walked in. Warm-ups stay full -- recovery demands it."
         },
         {
           day: "Tuesday", date: "Apr 22", type: "run",
-          title: "Easy Recovery Run",
-          subtitle: "Very easy, short, restorative",
-          duration: "20-25 min",
+          title: "Easy Run", subtitle: "Strava miles", duration: "40 min total",
+          morningMobility: true, mentalPrep: "run",
           sections: [
-            {
-              title: "The Session",
-              exercises: [
-                { name: "5 min Walk", rx: "", notes: "" },
-                { name: "Easy Run", rx: "15-18 min @ very easy (10:00-10:30/mi)", notes: "Shorter than previous weeks. Just keep the legs moving and the aerobic pathways active. Nothing hard." },
-                { name: "4 Strides", rx: "20 sec each, 60 sec walk between", notes: "Keep the neuromuscular pathways firing. Fast and relaxed, not effortful." },
-                { name: "Walk Cooldown", rx: "3 min", notes: "" }
-              ]
-            }
+            { title: "Dynamic Warm-Up -- Run Prep (8 min)", exercises: [
+              { name: "Walk", rx: "3 min", notes: "", isWarmup: true },
+              { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+              { name: "Walking Quad Pulls + Knee Hugs", rx: "6 each", notes: "", isWarmup: true },
+              { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+              { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "", isWarmup: true }
+            ]},
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "3.5 miles @ easy pace", notes: "Consistent mileage." }
+            ]}
           ],
-          coachNote: "Shortest run of the block. Active recovery only. If you feel tired, cut the strides and just do the easy run."
+          recovery: "run", coachNote: "3.5 miles. Running total: ~39/60."
         },
         {
           day: "Wednesday", date: "Apr 23", type: "lift",
-          title: "Full Body Deload B",
-          subtitle: "Maintain movement patterns, reduced load",
-          duration: "40-45 min",
+          title: "Full Body Deload B", subtitle: "Light hinge + pull", duration: "55-60 min",
+          morningMobility: true, mentalPrep: "lift",
           sections: [
+            { title: "Dynamic Warm-Up -- Hinge/Pull Prep (10 min)", exercises: [
+              { name: "Bike", rx: "3 min", notes: "", isWarmup: true },
+              { name: "Banded Good Morning", rx: "2x10", notes: "", isWarmup: true },
+              { name: "Single-Leg RDL (bodyweight)", rx: "5 each", notes: "", isWarmup: true },
+              { name: "T-Spine Foam Roll", rx: "10 rolls", notes: "", isWarmup: true },
+              { name: "Scap Push-Ups", rx: "2x10", notes: "", isWarmup: true },
+              { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true }
+            ]},
             {
-              title: "Warm-Up (8 min)",
+              title: "Strength / Hypertrophy -- Deload (10 working sets)",
               exercises: [
-                { name: "Bike", rx: "3 min", notes: "" },
-                { name: "Banded Good Morning", rx: "2x10", notes: "" },
-                { name: "Scap Push-Ups", rx: "2x10", notes: "" },
-                { name: "Leg Swings", rx: "10 each per leg", notes: "" }
+                { name: "Romanian Deadlift -- WARM-UP", rx: "Set 1: 40% x 8 | Set 2: 60% x 5", notes: "", isWarmup: true },
+                { name: "Romanian Deadlift", rx: "2x10 @ RPE 5-6", notes: "Light. Feel the stretch." },
+                { name: "Chest-Supported Row", rx: "2x12 @ RPE 6", notes: "" },
+                { name: "Arnold Press", rx: "2x10 @ RPE 6", notes: "" },
+                { name: "DB Lateral Raise", rx: "2x15 @ RPE 7", notes: "" },
+                { name: "Hammer Curl + Dip (superset)", rx: "2x10 each @ RPE 6", notes: "" }
               ]
             },
-            {
-              title: "Strength (Deload)",
-              exercises: [
-                { name: "Deadlift", rx: "2x3 @ 275-290 lbs (RPE 5-6)", notes: "Light, fast pulls. Perfect hinge pattern. In and out." },
-                { name: "Overhead Press", rx: "2x8 @ RPE 5-6", notes: "Easy pressing. Stay sharp on bracing." },
-                { name: "Pull-Up (bodyweight)", rx: "2x8 @ RPE 6", notes: "No added weight this week. Smooth reps." }
-              ]
-            },
-            {
-              title: "Accessories (Light)",
-              exercises: [
-                { name: "Incline DB Press", rx: "2x10 @ RPE 6", notes: "" },
-                { name: "Cable Row", rx: "2x12 @ RPE 6", notes: "" },
-                { name: "Hammer Curl", rx: "2x12 @ RPE 7", notes: "" }
-              ]
-            },
-            {
-              title: "Core Circuit -- 2 Rounds (8-10 min)",
-              exercises: [
-                { name: "McGill Curl-Up", rx: "2x8 each side", notes: "Deload volume. Perfect form, no rushing." },
-                { name: "Bird-Dog", rx: "2x8 each side", notes: "2-sec hold. Smooth and controlled." },
-                { name: "Copenhagen Plank", rx: "2x20 sec each side", notes: "Back to Week 1 hold time. Just maintaining the motor pattern." },
-                { name: "Hanging Knee Raise", rx: "2x10", notes: "Controlled. No kipping. Deload doesn't mean sloppy." }
-              ]
-            },
-            {
-              title: "Sauna (post-session)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Post-lift. 24oz water after. Supercompensation is happening -- sauna continues to drive cardiovascular adaptation while your muscles recover." }
-              ]
-            }
+            { title: "Core Circuit -- 3 Rounds (12-15 min)", exercises: [
+              { name: "McGill Curl-Up", rx: "3x10 each side", notes: "" },
+              { name: "Bird-Dog", rx: "3x8 each side", notes: "" },
+              { name: "Side Plank", rx: "3x30 sec each side", notes: "" },
+              { name: "Hanging Knee Raise", rx: "3x10", notes: "" },
+              { name: "Pallof Press", rx: "3x8 each side", notes: "" }
+            ]},
+            { title: "Sauna (post-session)", exercises: [
+              { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "" }
+            ]}
           ],
-          coachNote: "You should leave the gym feeling BETTER than when you walked in. That's the deload test. If you're grinding through the workout, you went too heavy."
+          recovery: "lift", coachNote: "Light and clean. Keep eating -- run volume is still high."
         },
         {
-          day: "Thursday", date: "Apr 24", type: "bike",
-          title: "Easy Recovery Ride",
-          subtitle: "Active recovery on the bike",
-          duration: "35-40 min",
+          day: "Thursday", date: "Apr 24", type: "run",
+          title: "Easy Run", subtitle: "Keep the rhythm", duration: "40 min total",
+          morningMobility: true, mentalPrep: "run",
           sections: [
-            {
-              title: "The Ride",
-              exercises: [
-                { name: "Easy Spin", rx: "35-40 min @ very easy Zone 1-2", notes: "Flat terrain. High cadence, low gear. This should feel almost too easy. Enjoy the ride -- listen to a podcast, enjoy the spring weather. The bike is flushing your legs with blood and promoting recovery." }
-              ]
-            }
+            { title: "Dynamic Warm-Up -- Run Prep (8 min)", exercises: [
+              { name: "Walk", rx: "3 min", notes: "", isWarmup: true },
+              { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+              { name: "Walking Quad Pulls + Knee Hugs", rx: "6 each", notes: "", isWarmup: true },
+              { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+              { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "", isWarmup: true }
+            ]},
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "3.5 miles @ easy pace", notes: "3.5 miles is your new normal." }
+            ]}
           ],
-          coachNote: "No tempo blocks this week. Pure recovery spinning. Your body is absorbing 3 weeks of new endurance + lifting stimulus. Let it happen."
+          recovery: "run", coachNote: "3.5 miles. Running total: ~42.5/60."
         },
         {
           day: "Friday", date: "Apr 25", type: "lift",
-          title: "Full Body Deload C",
-          subtitle: "Light lifting, emphasis on movement quality",
-          duration: "40 min",
+          title: "Full Body Deload C", subtitle: "Last lifting session of the block", duration: "50-55 min",
+          morningMobility: true, mentalPrep: "lift",
           sections: [
+            { title: "Dynamic Warm-Up -- Unilateral/Pull Prep (10 min)", exercises: [
+              { name: "Jump Rope", rx: "2 min", notes: "", isWarmup: true },
+              { name: "World's Greatest Stretch", rx: "5 each", notes: "", isWarmup: true },
+              { name: "Band Dislocates", rx: "2x10", notes: "", isWarmup: true },
+              { name: "Band Pull-Aparts", rx: "2x15", notes: "", isWarmup: true },
+              { name: "Terminal Knee Extension", rx: "2x15 each", notes: "", isWarmup: true }
+            ]},
             {
-              title: "Warm-Up (6 min)",
+              title: "Strength / Hypertrophy -- Deload (10 working sets)",
               exercises: [
-                { name: "Jump Rope", rx: "2 min", notes: "" },
-                { name: "World's Greatest Stretch", rx: "5 each side", notes: "" },
-                { name: "Band Dislocates", rx: "2x10", notes: "" }
+                { name: "Bulgarian Split Squat -- WARM-UP", rx: "1 set: bodyweight x 6 each", notes: "", isWarmup: true },
+                { name: "Bulgarian Split Squat", rx: "2x10 each leg @ RPE 6", notes: "" },
+                { name: "Flat DB Bench", rx: "2x10 @ RPE 6", notes: "" },
+                { name: "Chin-Up (bodyweight)", rx: "2x8 @ RPE 6", notes: "" },
+                { name: "Cable Lateral Raise", rx: "2x12 each arm @ RPE 7", notes: "" },
+                { name: "Curl + Extension (superset)", rx: "2x12 each @ RPE 7", notes: "" }
               ]
             },
-            {
-              title: "Strength (Deload)",
-              exercises: [
-                { name: "Front Squat", rx: "2x5 @ RPE 5-6", notes: "Light. Focus on staying upright and bracing." },
-                { name: "Weighted Dip", rx: "2x8 @ RPE 6", notes: "Bodyweight or very light added weight." },
-                { name: "Chin-Up", rx: "2x8 @ RPE 6", notes: "Bodyweight only." }
-              ]
-            },
-            {
-              title: "Pump Work (Light)",
-              exercises: [
-                { name: "Leg Extension", rx: "2x15 @ RPE 7", notes: "" },
-                { name: "Lateral Raise", rx: "2x15 @ RPE 7", notes: "" },
-                { name: "Curl of choice", rx: "2x12 @ RPE 7", notes: "" },
-                { name: "Tricep Pressdown", rx: "2x12 @ RPE 7", notes: "" }
-              ]
-            },
-            {
-              title: "Core Circuit -- 2 Rounds (8-10 min)",
-              exercises: [
-                { name: "McGill Curl-Up", rx: "2x8 each side", notes: "Last core session of the block. Perfect form. You've built a real foundation over 4 weeks -- feel the difference." },
-                { name: "Bird-Dog", rx: "2x8 each side", notes: "Smooth. 2-sec hold. Hips square." },
-                { name: "Side Plank", rx: "2x25 sec each side", notes: "Easy hold. Just maintaining." },
-                { name: "Ab Wheel Rollout", rx: "2x8", notes: "Deload reps. Controlled rollout. Last rep of the block -- make it clean." }
-              ]
-            },
-            {
-              title: "Sauna (post-session)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Last post-lift sauna of the April block. 24oz water after. Tomorrow is the block-finisher run -- you should feel rested and ready." }
-              ]
-            }
+            { title: "Core Circuit -- 3 Rounds (12-15 min)", exercises: [
+              { name: "McGill Curl-Up", rx: "3x10 each side", notes: "" },
+              { name: "Bird-Dog", rx: "3x8 each side", notes: "" },
+              { name: "Side Plank", rx: "3x30 sec each side", notes: "" },
+              { name: "Ab Wheel Rollout", rx: "3x8", notes: "" },
+              { name: "Copenhagen Plank", rx: "2x20 sec each side", notes: "" }
+            ]},
+            { title: "Sauna (post-session)", exercises: [
+              { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Last lift-day sauna." }
+            ]}
           ],
-          coachNote: "Last lifting session of the block. You should feel rested, muscles full, joints good. If you hit next month's training with this feeling, you're perfectly set up."
+          recovery: "lift", coachNote: "Last lifting session. You should feel rested, lean, and strong."
         },
         {
           day: "Saturday", date: "Apr 26", type: "run",
-          title: "Easy Run -- Block Finisher",
-          subtitle: "Celebrate how far you've come",
-          duration: "30-35 min",
+          title: "Long Run -- Challenge Push", subtitle: "Big mileage to close it out", duration: "55-65 min total",
+          morningMobility: true, mentalPrep: "run",
           sections: [
-            {
-              title: "The Session",
-              exercises: [
-                { name: "5 min Walk", rx: "", notes: "" },
-                { name: "Easy Run", rx: "25 min @ easy pace", notes: "Same duration as Week 1's long run -- except now this should feel COMFORTABLE. Notice how much easier 25 minutes feels compared to 4 weeks ago. Your aerobic base has expanded significantly." },
-                { name: "4 Strides", rx: "20 sec fast, 60 sec walk between", notes: "Finish feeling fast and springy." },
-                { name: "Walk Cooldown", rx: "5 min", notes: "" }
-              ]
-            }
+            { title: "Dynamic Warm-Up -- Long Run Prep (10 min)", exercises: [
+              { name: "Walk", rx: "5 min brisk", notes: "", isWarmup: true },
+              { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+              { name: "Walking Lunge with Rotation", rx: "5 each", notes: "", isWarmup: true },
+              { name: "A-Skips", rx: "2x20m", notes: "", isWarmup: true },
+              { name: "Banded Lateral Walk", rx: "10 each direction", notes: "", isWarmup: true }
+            ]},
+            { title: "The Run", exercises: [
+              { name: "Long Easy Run", rx: "5.5 miles @ easy pace", notes: "You've done 6. This is a pullback." }
+            ]}
           ],
-          coachNote: "This is your 'test' without calling it a test. Four weeks ago, 25 minutes of running was your max long run and you were struggling at 8:30/mi for 2 miles. Today, 25 minutes at an easy pace should feel manageable -- maybe even enjoyable. That's real, measurable progress."
+          recovery: "run", coachNote: "5.5 miles. Running total: ~48/60."
         },
         {
-          day: "Sunday", date: "Apr 27", type: "rest",
-          title: "Rest & Reflect",
-          subtitle: "End of April Training Block",
-          duration: "--",
+          day: "Sunday", date: "Apr 27", type: "run",
+          title: "Easy Recovery Run", subtitle: "Extra miles", duration: "30-35 min total",
+          morningMobility: true, mentalPrep: "run",
           sections: [
-            {
-              title: "Block Complete",
-              exercises: [
-                { name: "Full Rest Day", rx: "Recover fully", notes: "You've completed 4 weeks of hybrid training. Take stock: you've maintained your strength base (315/245/365 should still be accessible), built a real aerobic foundation, introduced swimming, and trained your body to handle concurrent demands. Month 2 builds on everything established here." },
-              ]
-            },
-            {
-              title: "Sauna (Sunday protocol)",
-              exercises: [
-                { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "Final sauna of the April block. Parasympathetic recovery session. You've completed 4 weeks of consistent sauna use alongside training -- the cardiovascular and recovery adaptations are real. 24oz water after. Reflect on the month." }
-              ]
-            }
+            { title: "Dynamic Warm-Up -- Easy Run (6 min)", exercises: [
+              { name: "Walk", rx: "3 min", notes: "", isWarmup: true },
+              { name: "Leg Swings", rx: "8 each", notes: "", isWarmup: true },
+              { name: "Walking Quad Pulls", rx: "6 each", notes: "", isWarmup: true },
+              { name: "Single-Leg Glute Bridge", rx: "6 each", notes: "", isWarmup: true }
+            ]},
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "2.5 miles @ very easy", notes: "" },
+              { name: "Strides", rx: "4x20 sec", notes: "" }
+            ]},
+            { title: "Sauna (Sunday protocol)", exercises: [
+              { name: "Sauna", rx: "15-20 min @ 80-100 degC", notes: "" }
+            ]}
           ],
-          coachNote: "You're no longer just a lifter. You're a hybrid athlete. The next block will add more run volume toward half-marathon distance, increase bike duration, and start brick workouts (bike->run). But that's May. Today, rest."
+          recovery: "run", coachNote: "2.5 miles. Running total: ~50.5/60."
+        },
+        {
+          day: "Monday", date: "Apr 28", type: "run",
+          title: "Easy Run -- Closing Miles", subtitle: "Home stretch", duration: "40 min total",
+          morningMobility: true, mentalPrep: "run",
+          sections: [
+            { title: "Dynamic Warm-Up -- Run Prep (8 min)", exercises: [
+              { name: "Walk", rx: "3 min", notes: "", isWarmup: true },
+              { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+              { name: "Walking Quad Pulls + Knee Hugs", rx: "6 each", notes: "", isWarmup: true },
+              { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+              { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "", isWarmup: true }
+            ]},
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "3.5 miles @ easy pace", notes: "" }
+            ]}
+          ],
+          recovery: "run", coachNote: "3.5 miles. Running total: ~54/60."
+        },
+        {
+          day: "Wednesday", date: "Apr 30", type: "run",
+          title: "Easy Run -- Penultimate", subtitle: "Almost there", duration: "40 min total",
+          morningMobility: true, mentalPrep: "run",
+          sections: [
+            { title: "Dynamic Warm-Up -- Run Prep (8 min)", exercises: [
+              { name: "Walk", rx: "3 min", notes: "", isWarmup: true },
+              { name: "Leg Swings (front-back + lateral)", rx: "10 each, each leg", notes: "", isWarmup: true },
+              { name: "Walking Quad Pulls", rx: "6 each", notes: "", isWarmup: true },
+              { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true },
+              { name: "Single-Leg Glute Bridge", rx: "8 each", notes: "", isWarmup: true }
+            ]},
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "3.5 miles @ easy pace", notes: "" }
+            ]}
+          ],
+          recovery: "run", coachNote: "3.5 miles. Running total: ~57.5/60."
+        },
+        {
+          day: "Thursday", date: "May 1", type: "run",
+          title: "Victory Run -- 60 Mile Finish", subtitle: "Complete the challenge. Celebrate.", duration: "30 min total",
+          morningMobility: true, mentalPrep: "run",
+          sections: [
+            { title: "Dynamic Warm-Up -- Victory Lap (8 min)", exercises: [
+              { name: "Walk", rx: "3 min", notes: "", isWarmup: true },
+              { name: "Leg Swings", rx: "10 each", notes: "", isWarmup: true },
+              { name: "Walking Quad Pulls + Knee Hugs", rx: "6 each", notes: "", isWarmup: true },
+              { name: "A-Skips", rx: "2x15m", notes: "", isWarmup: true }
+            ]},
+            { title: "The Run", exercises: [
+              { name: "Easy Run", rx: "2.5-3.0 miles @ whatever feels good", notes: "This is the last run. Whatever you need to hit 60. Savor it." }
+            ]}
+          ],
+          recovery: "run",
+          coachNote: "60 miles complete. You ran 60 miles in 30 days from a 2-mile max, while lifting 3x/week, building muscle, and running a startup as a full-time student. You're a hybrid athlete."
         }
       ]
     }
   ]
 };
+
+
 
 // =============================================
 // STATE MANAGEMENT WITH LOCALSTORAGE
@@ -1909,7 +2141,7 @@ function loadState() {
     const saved = safeStorage.get(STORAGE_KEY);
     if (saved) return JSON.parse(saved);
   } catch(e) {}
-  return { completedDays: {}, checkedExercises: {}, currentWeek: 1, expandedDays: {} };
+  return { completedDays: {}, checkedExercises: {}, currentWeek: 1, expandedDays: {}, openPanels: {} };
 }
 
 function saveState() {
@@ -1943,31 +2175,23 @@ function renderOverview() {
   el.innerHTML = `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
       <h2 style="font-family:var(--font-display);font-size:28px;margin-bottom:12px;">Program Philosophy</h2>
-      <p style="color:var(--text-dim);line-height:1.8;margin-bottom:16px;">This April block is a <strong style="color:var(--text)">concurrent training foundation phase</strong> -- the bridge between your pure powerbuilding background and your hybrid athlete future. The science is clear: you can build endurance while maintaining muscle, but the programming must respect recovery constraints.</p>
+      <p style="color:var(--text-dim);line-height:1.8;margin-bottom:16px;">This April block is built around a hard constraint: <strong style="color:var(--accent)">60 miles of running by May 1st</strong> for the fraternity fundraiser, while maintaining muscle mass and building an athletic physique. The training is structured to hit that mileage target without destroying your ability to lift, grow, and recover as a full-time student and startup founder.</p>
       <div style="display:grid;gap:12px;">
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--lift);font-size:13px;margin-bottom:4px;">LIFTING: 3x/week -- Upper/Lower Split</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Volume drops ~30% from Nippard but intensity stays high enough to maintain your 315/245/365 numbers. Each muscle group is hit 2x/week -- the minimum effective frequency for hypertrophy per Schoenfeld's meta-analyses. This is the sweet spot: enough stimulus for modest growth, enough recovery to absorb concurrent endurance work. The net result after April: leaner at similar muscle mass, which visually reads as more muscular.</p>
+          <h4 style="color:var(--run);font-size:13px;margin-bottom:4px;">RUNNING: 4x/week -- 60 Miles in 30 Days</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Mileage distribution: ~12 mi (Week 1) -> ~16 mi (Week 2) -> ~17 mi (Week 3) -> ~15 mi (Week 4+). All runs at Zone 2 conversational pace (9:30-10:30/mi). No tempo work, no intervals -- the challenge rewards miles, not speed. 95/5 polarization with strides maintaining neuromuscular speed. Easy pace minimizes muscle damage and CNS fatigue, protecting your lifting.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--run);font-size:13px;margin-bottom:4px;">RUNNING: 2x/week (Easy + Long/Tempo)</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Your running base is low (~2mi at 8:30 with difficulty), so we build conservatively. 80/20 polarized model: most running is Zone 2 (conversational), with tempo introduced in Week 3. Long run duration increases ~10-15% weekly. Strides in Week 2 maintain neuromuscular speed without fatigue cost.</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--bike);font-size:13px;margin-bottom:4px;">CYCLING: 1x/week</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Cycling builds aerobic volume with near-zero eccentric muscle damage and zero impact stress -- protecting your legs for lifting while producing massive cardiovascular gains. Duration builds from 40 min to 60+ min. You own the road bike. Use it.</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--swim);font-size:13px;margin-bottom:4px;">SWIMMING: 1x/week (Weeks 2-3)</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">These sessions are SKILL sessions, not cardio. Swimming is the most technique-dependent triathlon discipline -- poor form burns 3x the energy. Volume stays very low (500-700m). The goal is water comfort and freestyle efficiency. Speed comes later.</p>
+          <h4 style="color:var(--lift);font-size:13px;margin-bottom:4px;">LIFTING: 3x/week Full Body -- Hypertrophy Focus</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Shifted from powerbuilding to hypertrophy and functional athleticism. Compound loads drop to 65-70% (8-12 rep range). Bulgarian split squats and walking lunges replace heavy back squats as primary leg movers -- building the unilateral stability your knees need at 200 lbs running 15 mi/wk. Weighted pull-ups and lateral raises in EVERY session for V-taper and capped delts. Trap bar DL and RDLs replace conventional pulls for less spinal loading. 14-16 working sets per session max.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
           <h4 style="color:var(--core);font-size:13px;margin-bottom:4px;">CORE: Dedicated 12-15 Min Circuit After Every Lift</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Core is a real training block -- not a tack-on. Structured around Dr. Stuart McGill's anti-movement framework: anti-extension (dead bug, ab wheel), anti-rotation (Pallof press), anti-lateral flexion (Copenhagen plank, side plank), and dynamic work (hanging leg raise). The McGill Big 3 (curl-up, bird-dog, side plank) form the foundation every session. Core always comes AFTER heavy compound lifts -- your spine needs to be fresh for squats and deadlifts. Progressive overload via reps, hold times, and movement difficulty across the 4 weeks.</p>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">McGill Big 3 (curl-up, bird-dog, side plank) as the foundation every session. Supplemented with anti-extension (dead bug, ab wheel), anti-rotation (Pallof press), anti-lateral flexion (Copenhagen plank), and dynamic work (hanging leg raise). Progressive overload via reps and hold times across all 4 weeks. Running 15 mi/wk at 200 lbs makes core stability even MORE critical for injury prevention.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
           <h4 style="color:#f0c040;font-size:13px;margin-bottom:4px;">SAUNA: 4x/week (Post-Lift + Sunday)</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">15-20 min Finnish dry sauna at 80-100 degC after every lifting session and on Sunday rest days. Benefits: plasma volume expansion (same adaptation as endurance training), GH spike in your post-lift anabolic window, accelerated muscle recovery between sessions, and reduced cortisol over time. 4x/week is the sweet spot from the Laukkanen cohort studies. Always rehydrate with 24oz water immediately after. Never sauna pre-workout.</p>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">15-20 min Finnish dry sauna at 80-100 degC after every lifting session and on Sunday rest days. Plasma volume expansion actually helps running performance alongside the GH spike, accelerated recovery, and cortisol reduction. Always rehydrate 24oz immediately after. Never pre-workout.</p>
         </div>
       </div>
     </div>
@@ -1975,44 +2199,65 @@ function renderOverview() {
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
       <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:12px;">Key Principles</h3>
       <div style="color:var(--text-dim);font-size:13px;line-height:1.8;">
-        <p style="margin-bottom:10px;"><strong style="color:var(--text)">Interference Management:</strong> Hard lifting and hard endurance are never on the same day. Lift -> easy endurance the next day -> lift. This minimizes AMPK suppression of mTOR -- keeping muscle-building signaling intact while still building an aerobic engine.</p>
-        <p style="margin-bottom:10px;"><strong style="color:var(--text)">RPE-Based Autoregulation:</strong> All lifting uses RPE (Rate of Perceived Exertion) rather than strict percentages. Endurance fatigue changes your readiness day to day. RPE 7 always means 3 reps left in the tank -- regardless of what the bar weight is. Load to feel, not to a number.</p>
-        <p style="margin-bottom:10px;"><strong style="color:var(--text)">80/20 Polarized Endurance:</strong> ~80% of endurance training is Zone 2 (conversational, nose-breathing). ~20% is harder (tempo, strides). Moderate-intensity "junk miles" produce worse adaptations than a polarized mix of very easy and very hard. Go slower than your ego wants.</p>
-        <p style="margin-bottom:10px;"><strong style="color:var(--text)">360-Degree Core Brace:</strong> Before every squat and deadlift rep -- big breath into your belly, brace as if you're about to take a punch from every direction. This is the Valsalva maneuver. A trained core makes this brace significantly stronger, which is why the core circuit matters for your big lifts, not just your aesthetics.</p>
-        <p><strong style="color:var(--text)">Planned Deload (Week 4):</strong> Volume drops ~40% to allow supercompensation -- the actual fitness gains consolidate during recovery, not during training. Skipping the deload is the fastest path to plateau or injury.</p>
+        <p style="margin-bottom:10px;"><strong style="color:var(--text)">Session Sequencing:</strong> Lifting and running NEVER share the same day. Mon/Wed/Fri = lift, Tue/Thu/Sat = run. Heavy squats (Monday) always get 24+ hours before the next run (Tuesday). This eliminates acute AMPK/mTOR interference and keeps muscle-building signaling intact.</p>
+        <p style="margin-bottom:10px;"><strong style="color:var(--text)">RPE-Based Autoregulation:</strong> All lifting uses RPE. Endurance fatigue accumulates across the week. RPE 7-8 means 2-3 reps in the tank -- regardless of bar weight. If the prescribed load feels like RPE 9, drop it. The RPE targets already account for running fatigue.</p>
+        <p style="margin-bottom:10px;"><strong style="color:var(--text)">All Easy, All The Time:</strong> No tempo runs, no intervals. The 60-mile challenge rewards miles, not pace. Running fast creates more muscle damage, more CNS fatigue, and more interference with lifting. Every run is conversational Zone 2 -- nose-breathe when possible. Strides (20 sec, 4x, after select easy runs) maintain fast-twitch activation without fatigue cost.</p>
+        <p style="margin-bottom:10px;"><strong style="color:var(--text)">Injury Mitigation:</strong> Going from ~5 mi/wk to 15 mi/wk carries real risk (shin splints, knee pain, Achilles tendinitis). Mitigations: all easy pace, softer surfaces when available, mandatory post-run stretching, unilateral leg training and Copenhagen planks for hip/knee stability. If you feel sharp pain (not soreness), scale back immediately.</p>
+        <p><strong style="color:var(--text)">Planned Deload (Week 4):</strong> Lifting volume drops ~40%. Running mileage stays consistent to close out the challenge. This is where strength and aerobic gains from Weeks 1-3 actually consolidate.</p>
       </div>
     </div>
 
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
+      <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:12px;">Mileage Tracker</h3>
+      <p style="color:var(--text-dim);font-size:13px;line-height:1.6;margin-bottom:14px;">60 miles by May 1st. Every run is tracked on Strava. Here's the weekly target breakdown:</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;">
+        <div style="background:var(--surface-2);border-radius:8px;padding:12px;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:4px;">WEEK 1</div>
+          <div style="font-family:var(--font-display);font-size:22px;color:var(--text);">~12 mi</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">4 runs (3 + 4.5 + 2.5 + 2)</div>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:12px;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:4px;">WEEK 2</div>
+          <div style="font-family:var(--font-display);font-size:22px;color:var(--text);">~16 mi</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">4 runs (3.5 + 3.5 + 5 + rest)</div>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:12px;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:4px;">WEEK 3</div>
+          <div style="font-family:var(--font-display);font-size:22px;color:var(--text);">~17 mi</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">4 runs (3.5 + 4 + 6 + rest)</div>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:12px;">
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:4px;">WEEK 4+</div>
+          <div style="font-family:var(--font-display);font-size:22px;color:var(--text);">~15 mi</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">5-6 runs to close it out</div>
+        </div>
+      </div>
+    </div>
+` +
+  // Keep existing hydration, nutrition, and supplement sections
+  `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
       <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:16px;">Hydration Protocol</h3>
-      <p style="color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:16px;">At 200 lbs with 3+ training sessions and 4 saunas per week, your fluid and electrolyte demands are significantly higher than a sedentary person. Chronic dehydration (indicated by dry lips, dark urine) tanks performance, recovery, and focus. This protocol fixes that.</p>
+      <p style="color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:16px;">At 200 lbs with 6 training sessions, 4 saunas, and 15+ miles of running per week, your fluid demands are high. Chronic dehydration tanks performance, recovery, and focus.</p>
       <div style="display:grid;gap:10px;margin-bottom:16px;">
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
           <h4 style="color:var(--swim);font-size:13px;margin-bottom:6px;">MORNING (Wake Up)</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">16oz plain water immediately -- before caffeine. Your body is mildly dehydrated after 7-8 hours without fluid. Follow with your LMNT packet mixed into another 16oz. If having a Celsius, take it here with food.</p>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">16oz plain water immediately -- before caffeine. Follow with LMNT packet in another 16oz. If having a Celsius, take it here with food.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
           <h4 style="color:var(--swim);font-size:13px;margin-bottom:6px;">CAFFEINE RULE</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Pre-workout (225mg) + Celsius (200mg) = 425mg before noon. That's too much stacking. On lift days: take pre-workout, skip the Celsius. On non-lift days: Celsius is fine. Never stack both on the same day.</p>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Pre-workout (225mg) + Celsius (200mg) = 425mg. Too much stacking. On lift days: take pre-workout, skip Celsius. On run days: Celsius is fine. Never stack both on the same day.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--swim);font-size:13px;margin-bottom:6px;">PRE-WORKOUT (60-90 min before lifting)</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">16-20oz water. Take your pre-workout mixed into this or alongside it.</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--swim);font-size:13px;margin-bottom:6px;">DURING TRAINING</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Sip consistently -- 6-8oz every 15-20 minutes. Target 24-32oz across a 60-75 min session. Sip, don't chug -- consistent intake maintains plasma volume better than bolus drinking.</p>
+          <h4 style="color:var(--swim);font-size:13px;margin-bottom:6px;">PRE-RUN</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">8-12oz water 30 min before running. Don't chug right before -- it sloshes. If running over 45 min, bring a small water bottle or plan a route past a fountain.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
           <h4 style="color:var(--swim);font-size:13px;margin-bottom:6px;">POST-LIFT + POST-SAUNA</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">24oz water immediately after sauna. Second LMNT packet on lift+sauna days -- you've sweated through a full workout AND 15-20 min of heat. One morning packet doesn't cover that. On cardio-only days (no sauna), 16-20oz post-session without a second LMNT is sufficient.</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--swim);font-size:13px;margin-bottom:6px;">EVENING</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">16oz with dinner. Stop large fluid intake ~90 min before bed to avoid disrupting sleep with bathroom trips.</p>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">24oz water immediately after sauna. Second LMNT packet on lift+sauna days. On run-only days, 16-20oz post-session without a second LMNT is sufficient.</p>
         </div>
       </div>
-      <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;margin-bottom:10px;">
+      <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
         <h4 style="color:var(--swim);font-size:13px;margin-bottom:8px;">DAILY TARGETS BY DAY TYPE</h4>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
           <div style="background:var(--surface-3);border-radius:6px;padding:10px;">
@@ -2021,49 +2266,30 @@ function renderOverview() {
             <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">2 LMNT packets</div>
           </div>
           <div style="background:var(--surface-3);border-radius:6px;padding:10px;">
-            <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:4px;">CARDIO ONLY</div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:4px;">RUN ONLY</div>
             <div style="font-size:13px;color:var(--text);font-weight:600;">~115-120oz</div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">1 LMNT packet</div>
           </div>
           <div style="background:var(--surface-3);border-radius:6px;padding:10px;">
             <div style="font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-bottom:4px;">REST + SAUNA</div>
-            <div style="font-size:13px;color:var(--text);font-weight:600;">~110oz</div>
-            <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">1-2 LMNT packets</div>
+            <div style="font-size:13px;color:var(--text);font-weight:600;">~110-120oz</div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">1 LMNT packet</div>
           </div>
         </div>
-      </div>
-      <div style="background:var(--accent-glow);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 16px;">
-        <p style="font-size:13px;color:var(--text);line-height:1.6;"><strong>The real-time check:</strong> Urine color. Pale yellow = well hydrated. Dark yellow = you're behind. Clear = overhydrated (rare). Check first thing in the morning and mid-afternoon. If it's dark before you've trained, you're starting the day in a deficit.</p>
       </div>
     </div>
 
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
-      <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:12px;">Nutrition -- Dining Hall Framework</h3>
-      <p style="color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:14px;">You're on a university meal plan with variable options. The goal isn't to control every ingredient -- it's to control your <strong style="color:var(--text)">plate composition</strong> regardless of what's being served. Target: maintenance calories + a very slight surplus (+100-200 kcal). You're burning significantly more from endurance work -- eat enough to support training without cutting into muscle.</p>
+      <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:16px;">Dining Hall Nutrition</h3>
+      <p style="color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:14px;">Target: <strong style="color:var(--text)">maintenance calories or slight surplus (+100-200 kcal)</strong>. You're adding ~1,500 kcal/week in running expenditure on top of lifting. If you don't eat enough, you'll lose muscle. Protein: <strong style="color:var(--text)">160-200g/day (0.8-1g/lb)</strong>. Carbs are NOT the enemy this month -- your endurance training depends on glycogen.</p>
       <div style="display:grid;gap:10px;margin-bottom:14px;">
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">BUILD EVERY PLATE THE SAME WAY</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">1. <strong style="color:var(--text)">Anchor with protein first</strong> -- find the protein source before anything else. If it's insufficient, supplement from your daily reliables (cottage cheese, tofu, eggs, Greek yogurt, milk). 2. <strong style="color:var(--text)">Fill with fiber and volume</strong> -- salad bar, vegetables, fruit. Keeps you full without caloric cost. 3. <strong style="color:var(--text)">Add carbs for fuel</strong> -- pasta, rice, potatoes. Don't fear them. Your endurance training runs on glycogen.</p>
+          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">THE PLATE FRAMEWORK</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Every meal: Palm-sized protein (1.5x on lift days), fist of carbs (extra on run days and post-lift), thumb of fats, load vegetables from salad bar. Breakfast is your highest-leverage meal -- made-to-order eggs (3-4), Greek yogurt, milk = 40-50g protein locked in before 9 AM.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">DAILY PROTEIN ANCHORS (always available)</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Cottage cheese (~14g/half cup)  -  Tofu (~10g/half cup, load generously)  -  Made-to-order eggs (prioritize every morning)  -  Greek yogurt (~15-17g/cup)  -  Milk (8g/glass, add to every meal)  -  Burger patties (reliable protein, skip extra bun if eating pasta)</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">BREAKFAST -- YOUR MOST CONTROLLED MEAL</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">You have maximum control at breakfast. Target build: 3 made-to-order eggs + Greek yogurt + fruit + 1 glass milk. That single meal delivers 40-50g of protein before 9am -- taking enormous pressure off the rest of the day. Homefries or a bagel depending on training load that day.</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">SALAD BAR STRATEGY</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Your best volume-eating tool. Load: spinach/mixed greens base, bell peppers, beets (dietary nitrates -- genuine endurance benefit), carrots, cucumbers, broccoli, chickpeas if available. Avoid: croutons, pasta salad, heavy dressings, shredded cheese -- they silently turn a low-calorie plate into a high-calorie one. Oil + vinegar dressing only, or very light.</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">YOUR 5 MEAL SWIPES -- USE STRATEGICALLY</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;"><strong style="color:var(--text)">Best use:</strong> Chicken grape wrap + soup + yogurt combo on days when the hot option is poor or unidentifiable -- clean, balanced, zero guesswork. <strong style="color:var(--text)">Second best:</strong> Build-your-own wraps (lean protein + vegetables, light on cheese and sauce). <strong style="color:var(--text)">Save swipes for:</strong> days when the main dining option is fat-heavy with no clear protein. <strong style="color:var(--text)">Don't burn swipes on:</strong> days when a straightforward protein option is available.</p>
-        </div>
-        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">UNKNOWN MEAL CHECKLIST</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Walk in, run this: Is there an identifiable protein? (Yes -> moderate portion. No -> go straight to cottage cheese/tofu/patty.) Is it swimming in oil or sauce? (Yes -> smaller portion, compensate with salad bar volume.) Are vegetables available? (Yes -> load them regardless.) Am I about to train or did I just train? (Yes to either -> make sure carbs are on the plate.)</p>
+          <h4 style="color:var(--lift);font-size:13px;margin-bottom:6px;">RUN DAY FUEL</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Pre-run: light carbs 60-90 min before (banana, toast, granola bar). Post-run: protein + carbs within 60 min (chocolate milk from the dining hall is a legitimate recovery drink -- protein, carbs, fluid, electrolytes). Don't skip post-run nutrition or you'll dig yourself into a recovery hole.</p>
         </div>
       </div>
       <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
@@ -2095,26 +2321,64 @@ function renderOverview() {
 
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;">
       <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:12px;">Supplements</h3>
-      <p style="color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:14px;">Keep it simple. Everything on this list has genuine evidence behind it. Everything not on this list is marketing.</p>
+      <p style="color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:14px;">Same stack. Evidence-based only.</p>
       <div style="display:grid;gap:10px;">
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">CREATINE MONOHYDRATE -- Priority #1</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;"><strong style="color:var(--text)">5g daily.</strong> Every day. Timing doesn't matter -- consistency does. No loading phase needed. Buy plain CreaPure monohydrate powder -- most studied form, no reason to pay more for anything fancier. Most research-backed supplement in existence for strength, power output, and muscle retention. Non-negotiable.</p>
+          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">CREATINE MONOHYDRATE -- 5g daily</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Every day, timing doesn't matter. Non-negotiable for strength and muscle retention during concurrent training.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">WHEY PROTEIN -- Priority #2</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Insurance for bad dining hall days. One scoop = 25g protein in 30 seconds. Keep it in your dorm. Use it when the dining hall fails you -- not as a replacement for food. Optimum Nutrition Gold Standard is reliable and cost-effective.</p>
+          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">WHEY PROTEIN -- as needed</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Insurance for bad dining hall days. One scoop = 25g protein. Keep in your dorm.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">VITAMIN D3 -- Priority #3</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;"><strong style="color:var(--text)">2,000-3,000 IU daily with a meal.</strong> Finishing a spring semester in upstate New York means you've had minimal sun exposure for months. Deficiency is extremely common in college students and directly impairs testosterone production, recovery, and mood. Cost: ~$8 for a 6-month supply. No reason not to.</p>
+          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">VITAMIN D3 -- 2,000-3,000 IU daily</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">With a meal. Upstate NY spring = minimal sun. Deficiency impairs testosterone, recovery, and mood.</p>
         </div>
         <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
-          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">OMEGA-3s -- Priority #4 (budget permitting)</h4>
-          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Fish oil capsules add up. The budget workaround: <strong style="color:var(--text)">canned sardines or canned salmon</strong> from a grocery store -- cheaper per gram of EPA/DHA than capsules, and it's actual food. If you want capsules, any basic fish oil (1-2g EPA/DHA daily) works. Anti-inflammatory, supports recovery and cardiovascular health.</p>
+          <h4 style="color:var(--accent);font-size:13px;margin-bottom:4px;">OMEGA-3s -- via canned sardines/salmon or capsules</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Anti-inflammatory. Supports recovery from the increased training volume. 1-2g EPA/DHA daily.</p>
         </div>
-        <div style="background:var(--surface-3);border-radius:8px;padding:12px 14px;">
-          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;"><strong style="color:var(--text-dim)">Skip entirely:</strong> BCAAs (redundant if protein is sufficient), fat burners (ineffective), testosterone boosters (marketing), glutamine (no evidence at adequate protein intake), anything claiming to be a "proprietary blend." Don't let supplement marketing convince you otherwise.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
+      <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:12px;">Recovery & Mobility Framework</h3>
+      <p style="color:var(--text-dim);font-size:13px;line-height:1.8;margin-bottom:14px;">Three layers of mobility/recovery are built into every day. This isn't optional -- it's what keeps you training at this volume without breaking.</p>
+      <div style="display:grid;gap:10px;">
+        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+          <h4 style="color:var(--core);font-size:13px;margin-bottom:4px;">LAYER 1: MORNING MOBILITY (10 min, every day)</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Equipment-free, dorm-friendly. Built on FRC (Functional Range Conditioning) principles -- CARs for hips, thoracic spine, and ankles map your available ROM and distribute synovial fluid. Combined with 90/90 hip switches, cat-cow, and wall ankle dorsiflexion work. This addresses the three primary restriction sites for a 6'3" desk-bound athlete: hip capsule, T-spine rotation, and ankle dorsiflexion. Do this before anything else -- it takes 10 minutes and prevents the "locked up" feeling you experienced on your first lift day.</p>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+          <h4 style="color:var(--core);font-size:13px;margin-bottom:4px;">LAYER 2: SESSION-SPECIFIC DYNAMIC WARM-UPS (8-12 min)</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Each session type has its own prep sequence. Squat/push days: goblet squat holds (hip capsule + ankle under load), wall slides (scapular activation), TKEs (VMO for knee protection). Hinge/pull days: banded good mornings (hinge patterning), single-leg RDLs (glute activation), T-spine foam rolling. Run days: leg swings (dynamic hip ROM), A-skips (running-specific activation), single-leg glute bridges (prevent lumbar compensation at 200 lbs). Long runs get banded lateral walks for glute med and knee protection. These are NOT generic warm-ups -- every exercise addresses a specific biomechanical demand of that day's session.</p>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+          <h4 style="color:var(--core);font-size:13px;margin-bottom:4px;">LAYER 3: POST-SESSION RECOVERY PROTOCOLS</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Lift days: 90/90 breathing reset (parasympathetic shift before sauna), standing quad stretch with posterior pelvic tilt (stretches rectus femoris AND hip flexor), pigeon stretch (glute/piriformis), doorway pec stretch (counteracts pressing), child's pose with lat reach. Run days: walk cooldown, calf stretches (both gastrocnemius and soleus -- different positions), quad stretch, pigeon stretch, figure-4 stretch, prone diaphragmatic breathing (nervous system reset). Each protocol is specific to the tissue demands of that session type.</p>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+          <h4 style="color:var(--core);font-size:13px;margin-bottom:4px;">YOUR KNEE AND LOWER BACK -- SPECIFIC PROTOCOLS</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Your knee history is addressed through: TKEs before every squat session (VMO activation stabilizes the patella), Copenhagen planks 2x/week (adductor strength prevents femoral internal rotation), banded lateral walks before long runs (glute med controls knee tracking), wall ankle dorsiflexion daily (restricted ankles increase patellofemoral stress). Your lower back tightness is addressed through: morning hip CARs (restoring hip ROM so your lumbar spine stops compensating), single-leg glute bridges before every run (wake up inhibited glutes), dedicated breathing resets (reduce paraspinal tension), and the full McGill core circuit 3x/week (build the spinal stability that makes your back stop overworking).</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;">
+      <h3 style="font-family:var(--font-display);font-size:22px;margin-bottom:12px;">Sleep & Cognitive Performance</h3>
+      <div style="display:grid;gap:10px;">
+        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+          <h4 style="color:var(--lift);font-size:13px;margin-bottom:4px;">SLEEP TARGETS</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Research (Dattilo et al. 2011, Mah et al. 2011 with Stanford athletes) is unambiguous: <strong style="color:var(--text);">7.5-9 hours per night is the target at this training volume.</strong> The quality of your first 90-minute sleep cycle matters more than total duration -- this is when the largest GH pulse occurs (which synergizes with your sauna protocol). Practical: set a consistent bedtime within a 30-min window. Stop large fluid intake 90 min before bed. No screens 30 min before sleep (or use night mode aggressively). If you're consistently getting less than 7 hours, reduce training volume before reducing sleep -- sleep is the #1 recovery tool.</p>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+          <h4 style="color:var(--lift);font-size:13px;margin-bottom:4px;">COGNITIVE LOAD MANAGEMENT</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Marcora et al. (2009) demonstrated that mental fatigue inflates RPE by 1-1.5 points -- what feels like RPE 8 when you're mentally fried is actually RPE 6.5-7 mechanically. The pre-session mental shift protocol built into every day addresses this: box breathing (4-4-4-4) downregulates the prefrontal cortex and shifts from analytical to kinesthetic awareness. On high-stress days (exam week, investor meetings, deadline pressure), drop ALL RPE targets by 1 point. Don't skip the session -- just lower the intensity. Consistency at reduced load beats skipped sessions every time. Post-session, training actually improves cognitive performance for 2-4 hours (Tomporowski et al. 2008) -- schedule your hardest academic work AFTER training when possible.</p>
+        </div>
+        <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+          <h4 style="color:var(--lift);font-size:13px;margin-bottom:4px;">WEEKLY RECOVERY STRUCTURE</h4>
+          <p style="color:var(--text-dim);font-size:13px;line-height:1.6;">Beyond the sauna protocol (4x/week): Sunday is your full recovery day. No running, no lifting. Morning mobility only. If you do the extended mobility option (2x morning routine), that's your active recovery. Nutrition on rest days stays at maintenance -- don't cut calories because you're not training. Your body is repairing. Week 4 deload drops lifting volume 40% while running continues -- this is where the actual gains consolidate. If at any point during Weeks 2-3 you feel unusually fatigued (RPE on easy runs jumps 2+ points, sleep quality crashes, appetite drops), take an unscheduled rest day. One missed run is recoverable. An overtraining spiral is not.</p>
         </div>
       </div>
     </div>
@@ -2123,6 +2387,13 @@ function renderOverview() {
 
 function selectWeek(weekId) {
   state.currentWeek = weekId;
+  saveState();
+  render();
+}
+
+function togglePanel(key) {
+  if (!state.openPanels) state.openPanels = {};
+  state.openPanels[key] = !state.openPanels[key];
   saveState();
   render();
 }
@@ -2268,45 +2539,161 @@ function render() {
   dayGrid.innerHTML = week.days.map((d, di) => {
     const dayKey = `day-${week.id}-${di}`;
     const isComplete = !!state.completedDays[dayKey];
+    const panelState = state.openPanels || {};
 
-    let detailHTML = '';
+    function panelKey(label) { return `p-${week.id}-${di}-${label}`; }
+    function isOpen(label) { return !!panelState[panelKey(label)]; }
+    function panelToggle(label) { return `togglePanel('${panelKey(label)}')`; }
+
+    function makePanel(type, icon, title, meta, contentHTML, defaultOpen) {
+      const open = panelState[panelKey(type)] !== undefined ? isOpen(type) : defaultOpen;
+      return `<div class="day-panel panel-${type} ${open ? 'panel-open' : ''}" id="${panelKey(type)}">
+        <div class="day-panel-header" onclick="event.stopPropagation();togglePanel('${panelKey(type)}')">
+          <div class="day-panel-label">
+            <span class="day-panel-icon">${icon}</span>
+            <span class="day-panel-title">${title}</span>
+          </div>
+          ${meta ? `<span class="day-panel-meta">${meta}</span>` : ''}
+          <span class="day-panel-chevron">&#9662;</span>
+        </div>
+        <div class="day-panel-body">${contentHTML}</div>
+      </div>`;
+    }
+
+    function renderExercises(section, si) {
+      return section.exercises.map((e, ei) => {
+        const exKey = `ex-${week.id}-${di}-${si}-${ei}`;
+        const checked = !!state.checkedExercises[exKey];
+        const isWU = !!e.isWarmup;
+        if (isWU) {
+          return `<div class="warmup-set-row">
+            <div>
+              <div class="ex-name">${e.name}</div>
+              <div class="ex-prescription">${e.rx}</div>
+              ${e.notes ? `<div class="ex-notes">${e.notes}</div>` : ''}
+            </div>
+            <span class="warmup-tag">warm-up</span>
+          </div>`;
+        }
+        return `<div class="exercise-row">
+          <div>
+            <div class="ex-name">${e.name}</div>
+            <div class="ex-prescription">${e.rx}</div>
+            ${e.notes ? `<div class="ex-notes">${e.notes}</div>` : ''}
+          </div>
+          <div class="ex-check ${checked ? 'checked' : ''}" onclick="handleCheck(event,${week.id},${di},${si},${ei})">&#10003;</div>
+        </div>`;
+      }).join('');
+    }
+
+    let detailHTML = '<div style="display:flex;flex-direction:column;gap:6px;padding:12px 16px 4px;">';
+
     if (d.type === 'rest') {
-      detailHTML = d.sections.map(s => `
+      detailHTML += d.sections.map(s => `
         <div class="rest-content">
           <h4>${s.title}</h4>
           <p>${s.exercises.map(e => `<strong>${e.name}</strong>${e.rx ? ': '+e.rx : ''}${e.notes ? ' -- '+e.notes : ''}`).join('<br><br>')}</p>
         </div>
-      `).join('<hr style="border:none;border-top:1px solid var(--border);margin:8px 0;">');
-    } else {
-      detailHTML = d.sections.map((s, si) => `
-        <div class="section-block">
-          <div class="section-title">${s.title}</div>
-          ${s.exercises.map((e, ei) => {
-            const exKey = `ex-${week.id}-${di}-${si}-${ei}`;
-            const checked = !!state.checkedExercises[exKey];
-            return `<div class="exercise-row">
-              <div>
-                <div class="ex-name">${e.name}</div>
-                <div class="ex-prescription">${e.rx}</div>
-                ${e.notes ? `<div class="ex-notes">${e.notes}</div>` : ''}
-              </div>
-              <div class="ex-check ${checked ? 'checked' : ''}" onclick="handleCheck(event,${week.id},${di},${si},${ei})">&#10003;</div>
-            </div>`;
-          }).join('')}
-        </div>
       `).join('');
+    } else {
+
+      // 1. Mental Prep panel (collapsed by default -- reference material)
+      if (d.mentalPrep && typeof MENTAL_PREP !== 'undefined' && MENTAL_PREP[d.mentalPrep]) {
+        const mp = MENTAL_PREP[d.mentalPrep];
+        detailHTML += makePanel('mental', '&#9881;', 'Mental Prep', null,
+          `<div style="font-size:13px;color:var(--text-dim);line-height:1.7;">${mp.text}</div>`, false);
+      }
+
+      // 2. Morning Mobility panel (collapsed -- done before arriving at gym)
+      if (d.morningMobility && typeof MORNING_MOBILITY !== 'undefined') {
+        const mobContent = MORNING_MOBILITY.exercises.map(e => `
+          <div class="mobility-item">
+            <div class="mobility-item-name">${e.name}</div>
+            <div class="mobility-item-rx">${e.rx}</div>
+            ${e.notes ? `<div class="mobility-item-notes">${e.notes}</div>` : ''}
+          </div>`).join('');
+        detailHTML += makePanel('mobility', '&#9673;', 'Morning Mobility', '10 min', mobContent, false);
+      }
+
+      // Group sections by type
+      const warmupSections = d.sections.filter(s => s.title.toLowerCase().includes('warm'));
+      const workSections = d.sections.filter(s => {
+        const t = s.title.toLowerCase();
+        return !t.includes('warm') && !t.includes('core') && !t.includes('sauna') && !t.includes('run') && !t.includes('ride') && !t.includes('swim') && !t.includes('the session') && !t.includes('the run');
+      });
+      const runSections = d.sections.filter(s => {
+        const t = s.title.toLowerCase();
+        return t.includes('the run') || t.includes('the session') || t.includes('the ride');
+      });
+      const coreSections = d.sections.filter(s => s.title.toLowerCase().includes('core'));
+      const saunaSections = d.sections.filter(s => s.title.toLowerCase().includes('sauna'));
+
+      // 3. Warm-Up panel (open by default -- first thing at gym)
+      if (warmupSections.length > 0) {
+        const idx = d.sections.indexOf(warmupSections[0]);
+        const wuContent = warmupSections.map((s, i) => renderExercises(s, d.sections.indexOf(s))).join('');
+        const duration = warmupSections[0].title.match(/\(([^)]+)\)/)?.[1] || '10-12 min';
+        detailHTML += makePanel('warmup', '&#9654;', 'Dynamic Warm-Up', duration, wuContent, true);
+      }
+
+      // 4. Run/Cardio panel (open by default)
+      if (runSections.length > 0) {
+        const runContent = runSections.map(s => renderExercises(s, d.sections.indexOf(s))).join('');
+        detailHTML += makePanel('run', '&#9312;', 'The Session', d.duration || '', runContent, true);
+      }
+
+      // 5. Working Sets panel (open by default -- the main work)
+      if (workSections.length > 0) {
+        let workContent = '';
+        workSections.forEach(s => {
+          const si = d.sections.indexOf(s);
+          workContent += `<div style="font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border);">${s.title}</div>`;
+          workContent += renderExercises(s, si);
+        });
+        const totalSets = workSections.reduce((sum, s) => sum + s.exercises.filter(e => !e.isWarmup).length, 0);
+        detailHTML += makePanel('work', '&#9997;', 'Working Sets', `${totalSets} exercises`, workContent, true);
+      }
+
+      // 6. Core Circuit panel (collapsed by default -- end of session)
+      if (coreSections.length > 0) {
+        const coreContent = coreSections.map(s => renderExercises(s, d.sections.indexOf(s))).join('');
+        detailHTML += makePanel('core', '&#11044;', 'Core Circuit', '12-15 min', coreContent, false);
+      }
+
+      // 7. Sauna panel (collapsed -- reference)
+      if (saunaSections.length > 0) {
+        const saunaContent = saunaSections.map(s => renderExercises(s, d.sections.indexOf(s))).join('');
+        detailHTML += makePanel('sauna', '&#9728;', 'Sauna', '15-20 min', saunaContent, false);
+      }
     }
 
+    // 8. Recovery panel (collapsed -- post-session reference)
+    if (d.recovery) {
+      const recData = d.recovery === 'lift' ? RECOVERY_LIFT : d.recovery === 'run' ? RECOVERY_RUN : null;
+      if (recData) {
+        const recContent = recData.exercises.map(e => `
+          <div class="mobility-item">
+            <div class="mobility-item-name">${e.name}</div>
+            <div class="mobility-item-rx">${e.rx}</div>
+            ${e.notes ? `<div class="mobility-item-notes">${e.notes}</div>` : ''}
+          </div>`).join('');
+        detailHTML += makePanel('recovery', '&#10004;', 'Post-Session Recovery', null, recContent, false);
+      }
+    }
+
+    // 9. Coach Note panel (collapsed -- reference)
     if (d.coachNote) {
-      detailHTML += `<div class="coach-note">
-        <div class="note-label">Coach's Note</div>
-        <p>${d.coachNote}</p>
-      </div>`;
+      detailHTML += makePanel('coach', '&#128483;', "Coach's Note", null,
+        `<div class="coach-note" style="margin:0;border-left:none;padding:0;background:transparent;"><p>${d.coachNote}</p></div>`, false);
     }
 
-    detailHTML += `<button class="complete-day-btn ${isComplete ? 'is-complete' : ''}" onclick="handleDayComplete(event,${week.id},${di})">
-      ${isComplete ? '&#10003; Day Completed' : 'Mark Day Complete'}
-    </button>`;
+    detailHTML += '</div>';
+
+    detailHTML += `<div style="padding:0 16px 16px;">
+      <button class="complete-day-btn ${isComplete ? 'is-complete' : ''}" onclick="handleDayComplete(event,${week.id},${di})">
+        ${isComplete ? '&#10003; Day Completed' : 'Mark Day Complete'}
+      </button>
+    </div>`;
 
     const isExpanded = !!(state.expandedDays && state.expandedDays[`${week.id}-${di}`]);
     return `<div class="day-card ${isComplete ? 'completed' : ''} ${isExpanded ? 'expanded' : ''}" data-day-key="${week.id}-${di}" onclick="toggleDay(${week.id},${di})">
@@ -2627,6 +3014,7 @@ function renderLog() {
     let dayHasCardio = !!logData.cardio[dk];
     d.sections.forEach((s, si) => {
       s.exercises.forEach((ex, ei) => {
+        if (ex.isWarmup) return;
         daySetCount += (logData.sets[logKey(week.id, di, si, ei)] || []).length;
       });
     });
@@ -2693,6 +3081,7 @@ function renderLog() {
       d.sections.forEach((s, si) => {
         if (!isLoggableSection(s.title)) return;
         s.exercises.forEach((ex, ei) => {
+          if (ex.isWarmup) return;
           if (!isWeightExercise(ex.name)) return;
           html += renderExerciseLog(week.id, di, si, ei, ex);
         });
@@ -2722,6 +3111,7 @@ function renderLog() {
 }
 
 function renderExerciseLog(weekId, dayIdx, secIdx, exIdx, ex) {
+  if (ex.isWarmup) return '';
   const key = logKey(weekId, dayIdx, secIdx, exIdx);
   const sets = getSets(key);
   const prescribed = parseRx(ex.rx);
