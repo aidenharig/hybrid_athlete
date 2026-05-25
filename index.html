@@ -3,1437 +3,1456 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0b">
-<title>Rebound Protocol // Summer 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Phase 0 — Re-entry Protocol | Summer 2026</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
   :root {
-    --bg: #0a0a0b;
-    --bg-elev: #131316;
-    --bg-elev-2: #1a1a1f;
-    --border: #26262d;
-    --border-strong: #353540;
-    --text: #e8e8ea;
-    --text-dim: #888892;
-    --text-faint: #5a5a64;
-    --accent: #ff5c1c;
-    --accent-dim: #b54414;
-    --accent-glow: rgba(255, 92, 28, 0.15);
-    --conservative: #4a90d9;
-    --conservative-bg: rgba(74, 144, 217, 0.08);
-    --aggressive: #d94a4a;
-    --aggressive-bg: rgba(217, 74, 74, 0.08);
-    --warn: #f5b342;
-    --warn-bg: rgba(245, 179, 66, 0.08);
-    --ok: #4caf6e;
-    --font-display: 'Fraunces', 'Times New Roman', serif;
-    --font-body: 'Inter', -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    --bg: #0d0f12;
+    --surface: #141720;
+    --surface2: #1c2030;
+    --border: #2a2f3e;
+    --text: #d8dce8;
+    --text-dim: #6b7280;
+    --text-muted: #3d4455;
+    --accent: #4a7fff;
+    --accent-dim: #1e3a6e;
+    --green: #34d399;
+    --green-dim: #0d3325;
+    --yellow: #fbbf24;
+    --yellow-dim: #3d2f08;
+    --red: #f87171;
+    --red-dim: #3d1212;
+    --orange: #fb923c;
+    --orange-dim: #3d1f0a;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
-
   body {
     background: var(--bg);
-    background-image:
-      radial-gradient(ellipse at top left, rgba(255, 92, 28, 0.06), transparent 50%),
-      radial-gradient(ellipse at bottom right, rgba(74, 144, 217, 0.04), transparent 50%);
-    background-attachment: fixed;
     color: var(--text);
-    font-family: var(--font-body);
-    font-size: 15px;
+    font-family: var(--sans);
+    font-size: 14px;
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
+    padding: 32px 24px 80px;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  /* ============ HEADER ============ */
+  /* HEADER */
   .doc-header {
     border-bottom: 1px solid var(--border);
-    padding: 32px 0 28px;
+    padding-bottom: 24px;
     margin-bottom: 32px;
-    position: relative;
   }
-  .doc-header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 60px; height: 3px;
-    background: var(--accent);
-  }
-  .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
-  .doc-meta {
-    font-family: var(--font-mono);
+  .doc-label {
+    font-family: var(--mono);
     font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .doc-meta .accent { color: var(--accent); }
-  .doc-title {
-    font-family: var(--font-display);
-    font-size: clamp(38px, 7vw, 64px);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 14px;
-  }
-  .doc-title .italic { font-style: italic; font-weight: 400; color: var(--text-dim); }
-  .doc-subtitle {
-    font-size: 17px;
-    color: var(--text-dim);
-    max-width: 680px;
-    line-height: 1.55;
-  }
-  .doc-stamp {
-    margin-top: 24px;
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    padding: 6px 12px;
-    border: 1px solid var(--accent);
-    border-radius: 2px;
     color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-  }
-  .doc-stamp .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-  /* ============ TOC ============ */
-  .toc {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 20px 24px;
-    margin-bottom: 40px;
-  }
-  .toc-title {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .toc ol { list-style: none; counter-reset: toc; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
-  @media (max-width: 600px) { .toc ol { grid-template-columns: 1fr; } }
-  .toc li { counter-increment: toc; font-family: var(--font-mono); font-size: 13px; }
-  .toc a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; display: flex; align-items: baseline; gap: 10px; padding: 4px 0; }
-  .toc a::before { content: counter(toc, decimal-leading-zero); color: var(--text-faint); font-size: 11px; }
-  .toc a:hover { color: var(--accent); }
-
-  /* ============ SECTIONS ============ */
-  .section { margin-bottom: 56px; scroll-margin-top: 24px; }
-  .section-num {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.015em;
     margin-bottom: 8px;
   }
-  .section-lede {
+  .doc-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .doc-subtitle {
+    font-size: 14px;
     color: var(--text-dim);
-    font-size: 15px;
-    margin-bottom: 24px;
-    max-width: 640px;
+    font-weight: 300;
   }
-
-  p { margin-bottom: 12px; color: var(--text); }
-  p + p { margin-top: 0; }
-  strong { color: var(--text); font-weight: 600; }
-  em { color: var(--text-dim); font-style: italic; }
-
-  /* ============ COLLAPSIBLE ============ */
-  details {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
+  .doc-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 10px;
     border-radius: 4px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    transition: border-color 0.2s;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
   }
-  details:hover { border-color: var(--border-strong); }
-  details[open] { border-color: var(--border-strong); }
-  summary {
+  .meta-chip.accent { border-color: var(--accent-dim); color: var(--accent); }
+
+  /* SECTION HEADERS */
+  h2 {
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 24px 0 10px;
+  }
+  h4 {
+    font-size: 12px;
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 16px 0 8px;
+  }
+
+  /* GOVERNING RULES */
+  .rule-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .rule-box strong { color: #fff; }
+  .rule-box.green { border-left-color: var(--green); }
+  .rule-box.yellow { border-left-color: var(--yellow); }
+  .rule-box.red { border-left-color: var(--red); }
+  .rule-box.orange { border-left-color: var(--orange); }
+
+  /* DAY CARD */
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
     padding: 14px 18px;
-    cursor: pointer;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+  .day-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 3px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .day-badge.green { background: var(--green-dim); color: var(--green); }
+  .day-badge.yellow { background: var(--yellow-dim); color: var(--yellow); }
+  .day-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .day-focus {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-left: auto;
+    font-family: var(--mono);
+  }
+  .day-time {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 0 18px 10px;
+    padding-top: 10px;
+  }
+  .day-body { padding: 0 18px 18px; }
+
+  /* PHASE TABLE */
+  .phase-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 4px;
+    font-size: 13px;
+  }
+  .phase-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+  .phase-table td {
+    padding: 8px 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #1a1e28;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .phase-table tr:last-child td { border-bottom: none; }
+  .phase-table tr:hover td { background: #161920; }
+  .phase-table .ex-name { font-weight: 500; color: #fff; min-width: 180px; }
+  .phase-table .ex-sets { font-family: var(--mono); color: var(--accent); white-space: nowrap; }
+  .phase-table .ex-rir { font-family: var(--mono); color: var(--green); white-space: nowrap; }
+  .phase-table .ex-rest { font-family: var(--mono); color: var(--yellow); white-space: nowrap; }
+  .phase-table .ex-note { color: var(--text-dim); font-size: 12px; }
+
+  /* WARM-UP BLOCK */
+  .warmup-block {
+    background: #10121a;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+  .warmup-block h4 { margin-top: 0; }
+  .warmup-steps {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .warmup-steps li {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .warmup-steps li::before {
+    content: '›';
+    color: var(--accent);
+    font-size: 14px;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+  .warmup-steps li strong { color: var(--text); }
+  .time-est {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* SECTION BLOCKS INSIDE DAYS */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 0 5px;
+    color: var(--text-muted);
+    margin-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .section-label:first-of-type { border-top: none; }
+  .section-label span {
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  /* SUBSTITUTION BOX */
+  .sub-box {
+    background: #10121a;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .sub-box strong { color: var(--yellow); font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; }
+
+  /* CONDITIONING BLOCK */
+  .cond-block {
+    background: var(--green-dim);
+    border: 1px solid #1a4a38;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .cond-block h4 { color: var(--green); margin-top: 0; }
+  .cond-block p { font-size: 13px; color: var(--text); margin-bottom: 6px; line-height: 1.6; }
+  .cond-block p:last-child { margin-bottom: 0; }
+  .cond-block .cond-detail { color: var(--text-dim); font-size: 12px; }
+
+  /* WEEK DIVIDER */
+  .week-divider {
     display: flex;
     align-items: center;
     gap: 12px;
-    user-select: none;
-    transition: background 0.15s;
+    margin: 36px 0 20px;
   }
-  summary::-webkit-details-marker { display: none; }
-  summary:hover { background: var(--bg-elev-2); }
-  .sum-chev {
-    width: 12px; height: 12px;
-    flex-shrink: 0;
-    border-right: 1.5px solid var(--text-dim);
-    border-bottom: 1.5px solid var(--text-dim);
-    transform: rotate(-45deg);
-    transition: transform 0.2s;
-    margin-right: 4px;
-  }
-  details[open] .sum-chev { transform: rotate(45deg); }
-  .sum-tag {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 7px;
-    border-radius: 2px;
-    background: var(--bg-elev-2);
-    color: var(--text-dim);
+  .week-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .week-divider-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    padding: 5px 14px;
+    background: var(--surface2);
     border: 1px solid var(--border);
+    border-radius: 4px;
+    letter-spacing: 0.04em;
   }
-  .sum-tag.cons { color: var(--conservative); border-color: var(--conservative); background: var(--conservative-bg); }
-  .sum-tag.aggr { color: var(--aggressive); border-color: var(--aggressive); background: var(--aggressive-bg); }
-  .sum-tag.warn { color: var(--warn); border-color: var(--warn); background: var(--warn-bg); }
-  .sum-tag.gate { color: var(--accent); border-color: var(--accent); background: var(--accent-glow); }
-  .sum-title { font-weight: 500; flex: 1; font-size: 15px; }
-  .sum-meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); }
-  .det-body { padding: 4px 18px 18px; border-top: 1px solid var(--border); }
 
-  /* ============ DECISION TREE ============ */
-  .gate {
-    background: linear-gradient(135deg, var(--accent-glow), transparent);
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    padding: 24px;
-    margin-bottom: 32px;
+  /* ADJUSTMENT RULES */
+  .adj-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
   }
-  .gate-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
+  @media (max-width: 600px) { .adj-grid { grid-template-columns: 1fr; } }
+  .adj-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .adj-card .adj-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .adj-card.red .adj-title { color: var(--red); }
+  .adj-card.yellow .adj-title { color: var(--yellow); }
+  .adj-card.orange .adj-title { color: var(--orange); }
+  .adj-card.blue .adj-title { color: var(--accent); }
+  .adj-step {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+  }
+  .adj-step:last-child { border-bottom: none; padding-bottom: 0; }
+  .adj-step .adj-trigger {
+    font-family: var(--mono);
+    font-size: 11px;
+    min-width: 20px;
+    color: var(--text-muted);
+  }
+
+  /* LOG TEMPLATE */
+  .log-block {
+    background: #0a0c12;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 2;
+    white-space: pre-wrap;
+    margin-top: 8px;
+  }
+  .log-block .log-key { color: var(--accent); }
+  .log-block .log-val { color: var(--green); }
+  .log-block .log-comment { color: var(--text-muted); }
+
+  /* W2 DELTA */
+  .delta-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #1e2a12;
+    color: #86efac;
+    border: 1px solid #2d4a1e;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .callout .icon { font-size: 16px; line-height: 1.4; flex-shrink: 0; }
+  .callout strong { color: #fff; }
+
+  /* TOTALS BAR */
+  .totals-bar {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .total-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .total-chip .t-val { color: #fff; font-weight: 600; }
+
+  p { margin-bottom: 10px; color: var(--text-dim); font-size: 13px; line-height: 1.7; }
+  ul { margin: 8px 0 10px 18px; }
+  ul li { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 3px; }
+  strong { color: var(--text); }
+  
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+    flex-wrap: wrap;
+  }
+  .nav-tab {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 8px 14px;
+    cursor: pointer;
+    color: var(--text-dim);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .print-note {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
     margin-bottom: 8px;
   }
-  .gate-q {
-    font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 16px;
-  }
-  .gate-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 600px) { .gate-paths { grid-template-columns: 1fr; } }
-  .path {
-    border: 1px solid var(--border-strong);
-    border-radius: 4px;
-    padding: 16px;
-    background: var(--bg-elev);
-  }
-  .path.cons { border-color: var(--conservative); }
-  .path.aggr { border-color: var(--aggressive); }
-  .path-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .path.cons .path-label { color: var(--conservative); }
-  .path.aggr .path-label { color: var(--aggressive); }
-  .path-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-  .path-desc { font-size: 13px; color: var(--text-dim); }
 
-  /* ============ CALLOUTS ============ */
-  .callout {
-    border-left: 3px solid var(--accent);
-    background: var(--bg-elev);
-    padding: 14px 18px;
-    border-radius: 0 4px 4px 0;
-    margin: 16px 0;
+  @media print {
+    body { background: white; color: black; padding: 16px; }
+    .nav-tabs { display: none; }
+    .tab-content { display: block !important; }
   }
-  .callout.warn { border-left-color: var(--warn); }
-  .callout.cons { border-left-color: var(--conservative); }
-  .callout.aggr { border-left-color: var(--aggressive); }
-  .callout-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-  .callout.warn .callout-label { color: var(--warn); }
-  .callout.cons .callout-label { color: var(--conservative); }
-  .callout.aggr .callout-label { color: var(--aggressive); }
-
-  /* ============ CHECKLISTS / LISTS ============ */
-  ul.tactical, ol.tactical {
-    list-style: none;
-    padding-left: 0;
-    margin: 8px 0 12px;
-  }
-  ul.tactical li, ol.tactical li {
-    padding: 6px 0 6px 24px;
-    position: relative;
-    color: var(--text);
-    line-height: 1.55;
-  }
-  ul.tactical li::before {
-    content: '';
-    position: absolute;
-    left: 4px; top: 14px;
-    width: 8px; height: 1px;
-    background: var(--accent);
-  }
-  ol.tactical { counter-reset: tac; }
-  ol.tactical li { counter-increment: tac; }
-  ol.tactical li::before {
-    content: counter(tac, decimal-leading-zero);
-    position: absolute;
-    left: 0; top: 6px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  /* ============ TABLES ============ */
-  .tbl {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    margin: 12px 0;
-    font-family: var(--font-mono);
-  }
-  .tbl th, .tbl td {
-    padding: 8px 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-  .tbl th {
-    background: var(--bg-elev-2);
-    color: var(--text-dim);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-  .tbl tr:last-child td { border-bottom: none; }
-  .tbl td { color: var(--text); }
-  .tbl td.dim { color: var(--text-dim); }
-  .tbl .num { text-align: right; }
-
-  /* ============ PHASE CARD ============ */
-  .phase {
-    border: 1px solid var(--border-strong);
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 18px;
-    background: var(--bg-elev);
-    position: relative;
-    overflow: hidden;
-  }
-  .phase::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: var(--accent);
-  }
-  .phase.p0::before { background: var(--text-faint); }
-  .phase.p1::before { background: var(--conservative); }
-  .phase.p2::before { background: #6c8c4a; }
-  .phase.p3::before { background: var(--warn); }
-  .phase.p4::before { background: var(--aggressive); }
-  .phase-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; flex-wrap: wrap; gap: 8px; }
-  .phase-num {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--text-faint);
-    text-transform: uppercase;
-  }
-  .phase-weeks { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
-  .phase-name { font-family: var(--font-display); font-size: 22px; font-weight: 600; margin-bottom: 4px; }
-  .phase-tag { font-size: 13px; color: var(--text-dim); margin-bottom: 14px; font-style: italic; }
-  .phase-grid { display: grid; grid-template-columns: 110px 1fr; gap: 6px 16px; font-size: 13px; padding-top: 12px; border-top: 1px solid var(--border); }
-  .phase-grid dt { color: var(--text-faint); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .phase-grid dd { color: var(--text); }
-
-  /* ============ WEEK SCHEDULE ============ */
-  .week-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin: 12px 0;
-    font-family: var(--font-mono);
-    font-size: 11px;
-  }
-  @media (max-width: 600px) {
-    .week-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  .day {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 8px;
-    text-align: center;
-    min-height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .day-name { color: var(--text-faint); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
-  .day-content { color: var(--text); font-size: 11px; line-height: 1.3; }
-  .day.lift { background: rgba(255, 92, 28, 0.08); border-color: var(--accent); }
-  .day.bike { background: rgba(74, 144, 217, 0.08); border-color: var(--conservative); }
-  .day.run { background: rgba(108, 140, 74, 0.08); border-color: #6c8c4a; }
-  .day.rest { background: var(--bg-elev-2); }
-  .day.hybrid { background: rgba(245, 179, 66, 0.08); border-color: var(--warn); }
-
-  /* ============ EXERCISE TABLE ============ */
-  .ex-block { margin-bottom: 14px; }
-  .ex-block-h { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px dashed var(--border); }
-
-  /* ============ FOOTER ============ */
-  .doc-footer {
-    border-top: 1px solid var(--border);
-    margin-top: 64px;
-    padding: 32px 0 48px;
-    text-align: center;
-    color: var(--text-faint);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-  }
-  .doc-footer .sig { color: var(--accent); margin-bottom: 8px; font-size: 12px; }
-
-  /* nested */
-  .nested-wrap { margin-top: 8px; }
-  .nested-wrap details { background: var(--bg-elev-2); }
-
-  /* highlight */
-  .hl { color: var(--accent); font-weight: 500; }
-  .hl-cons { color: var(--conservative); font-weight: 500; }
-  .hl-aggr { color: var(--aggressive); font-weight: 500; }
 </style>
 </head>
 <body>
 
-<div class="container">
-
-  <!-- ============ HEADER ============ -->
-  <header class="doc-header">
-    <div class="doc-meta">CLASSIFICATION <span class="accent">// PERSONAL OPERATIONS</span> // SUMMER 2026</div>
-    <h1 class="doc-title">The Rebound <span class="italic">Protocol</span></h1>
-    <p class="doc-subtitle">A 14-week return-from-illness program built to recover lost ground, then surpass it. Designed for symptom-gated execution off post-mononucleosis recovery, with hypertrophy as the principal driver and tactical capacity as the long horizon.</p>
-    <div class="doc-stamp"><span class="dot"></span>Awaiting clearance</div>
-  </header>
-
-  <!-- ============ TOC ============ -->
-  <nav class="toc">
-    <div class="toc-title">Contents</div>
-    <ol>
-      <li><a href="#sec-1">The Doctrine</a></li>
-      <li><a href="#sec-2">The Clearance Gate</a></li>
-      <li><a href="#sec-3">Phase Architecture</a></li>
-      <li><a href="#sec-4">Training Detail</a></li>
-      <li><a href="#sec-5">Endurance Layer</a></li>
-      <li><a href="#sec-6">Mobility & Movement</a></li>
-      <li><a href="#sec-7">Nutrition</a></li>
-      <li><a href="#sec-8">Sleep & Recovery</a></li>
-      <li><a href="#sec-9">Mind & Environment</a></li>
-      <li><a href="#sec-10">Monitoring & Audits</a></li>
-    </ol>
-  </nav>
-
-  <!-- ============ 1. DOCTRINE ============ -->
-  <section class="section" id="sec-1">
-    <div class="section-num">01 // Doctrine</div>
-    <h2 class="section-title">What this program actually is</h2>
-    <p class="section-lede">Read this once. It governs every decision downstream.</p>
-
-    <p>Three weeks of forced rest from mononucleosis cost you almost no muscle. Myonuclei persist for months. What you actually lost is contractile efficiency, neural drive, and aerobic capacity — all of which respond to <em>any</em> progressive stimulus and return faster than first acquired. The "muscle memory" effect isn't folklore; it's the dominant signal of weeks 3–6.</p>
-
-    <p>What can still hurt you is invisible. Mono leaves cellular debris in muscle tissue, can transiently enlarge the spleen, disrupts deep-stage sleep architecture for weeks after symptomatic recovery, and tanks ferritin. Train through any of those and you don't just stall — you risk rolling the illness back out. <strong class="hl">The rate limiter on this program is not training; it is the recovery substrate underneath it.</strong></p>
-
-    <div class="callout">
-      <div class="callout-label">First Principle</div>
-      <p style="margin:0">Hypertrophy is driven by mechanical tension at proximity to failure, not by maximum load. You can grow muscle at 60% 1RM if you take it close to failure. This is the unlock that lets the rebound be both <em>cautious</em> and <em>productive</em> at the same time. Light loads, hard sets, no compromise on results.</p>
-    </div>
-
-    <p>The summer is structured in four phases over fourteen weeks, gated by symptom response — not by calendar. You move forward when the body confirms it's ready. The program supports two execution paths: a <span class="hl-cons">Conservative</span> ramp if your doctor finds anything ongoing, and a <span class="hl-aggr">Standard</span> ramp if you're fully cleared. Both end in the same place by week 14.</p>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Background</span>
-        <span class="sum-title">The science behind the doctrine</span>
-      </summary>
-      <div class="det-body">
-        <p><strong>Detraining of 21–28 days:</strong> ~5–10% drop in 1RM strength, &lt;3% drop in muscle cross-sectional area, ~10–15% drop in VO2 max. Strength returns within 2–4 weeks of resumed training; aerobic returns within 4–6 weeks of resumed volume.</p>
-        <p><strong>Post-EBV physiology:</strong> Even after symptom resolution, lymphocytic infiltration of skeletal muscle is documented for 4–8 weeks. NREM sleep can stay disrupted 8+ weeks. Iron metabolism can stay impaired for months. None of this prevents training — it dictates its volume and intensity envelope.</p>
-        <p><strong>Why hypertrophy first, strength second:</strong> Strength expression depends on neural drive, intramuscular coordination, and CNS readiness. All three are downstream of recovery quality. Hypertrophy is more forgiving of suboptimal recovery — you can drive growth on a so-so day. You can't drive a true 1RM PR on one. Building the muscle first creates the substrate the strength block then maps onto.</p>
-        <p><strong>Concurrent endurance, why now:</strong> The literature on AMPK/mTOR interference is real but graded. The interference is dose-dependent and modality-dependent. Cycling interferes less than running due to lower eccentric load and lower CNS cost. Sub-45-minute Zone 2 sessions, 2–3x per week, post-lift or on off-days, sit safely below the interference threshold.</p>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 2. GATE ============ -->
-  <section class="section" id="sec-2">
-    <div class="section-num">02 // Clearance Gate</div>
-    <h2 class="section-title">Before anything else</h2>
-    <p class="section-lede">The conversation with your doctor sets the path. Walk in with this list — most appointments don't cover these by default.</p>
-
-    <div class="gate">
-      <div class="gate-label">At your clearance appointment, ask explicitly</div>
-      <div class="gate-q">"Beyond general activity, what level of load am I cleared for?"</div>
-      <ol class="tactical">
-        <li><strong>Spleen status.</strong> Has splenomegaly fully resolved? If unsure, request an ultrasound. Heavy compound lifts at high intensity create Valsalva pressure that has been associated with splenic rupture in athletes still in recovery — this is the single non-negotiable gate.</li>
-        <li><strong>Heavy Valsalva clearance.</strong> Specifically: am I cleared for back squats, deadlifts, and overhead presses at intensities above 80% of pre-illness training maxes?</li>
-        <li><strong>Bloodwork.</strong> Request <span class="hl">ferritin, full CBC, vitamin D, and TSH</span>. These are not standard mono follow-up but are the four most likely sub-clinical issues left over from EBV that will silently sabotage training. Ask for the actual numbers, not just "normal."</li>
-        <li><strong>Residual fatigue check.</strong> Be honest about energy, sleep quality, and any recurring sore throat or lymph node tenderness. These determine which path below you start on.</li>
-      </ol>
-    </div>
-
-    <div class="gate-paths">
-      <div class="path cons">
-        <div class="path-label">If incomplete recovery</div>
-        <div class="path-title">Conservative Path</div>
-        <div class="path-desc">Phase 0 extended to 2 weeks. Phase 1 starts at 50% load. Endurance held to walking only until week 3. Re-evaluate weekly.</div>
-      </div>
-      <div class="path aggr">
-        <div class="path-label">If fully cleared</div>
-        <div class="path-title">Standard Path</div>
-        <div class="path-desc">Phase 0 compressed to 1 week. Phase 1 starts at 60% load. Bike Zone 2 introduced week 2. Standard 14-week build.</div>
-      </div>
-    </div>
-
-    <div class="callout warn">
-      <div class="callout-label">Symptom Flare Protocol</div>
-      <p style="margin:0">If at any point you experience: recurring sore throat, swollen lymph nodes, fatigue lasting &gt;48 hr after a session, low-grade fever, or upper-left abdominal discomfort — <strong>stop immediately</strong>. Drop back one phase. If the symptom persists 72 hr, return to clinic. This is the single rule that overrides every other rule in this document.</p>
-    </div>
-  </section>
-
-  <!-- ============ 3. PHASE ARCHITECTURE ============ -->
-  <section class="section" id="sec-3">
-    <div class="section-num">03 // Architecture</div>
-    <h2 class="section-title">The fourteen weeks</h2>
-    <p class="section-lede">Phase progression is gated by symptom-free completion of the prior phase. If a phase costs you a flare, you don't advance — you repeat or descend.</p>
-
-    <div class="phase p0">
-      <div class="phase-head">
-        <span class="phase-num">Phase 00 // Reactivation</span>
-        <span class="phase-weeks">Week 1 (or 1–2 if conservative)</span>
-      </div>
-      <div class="phase-name">Wake the system</div>
-      <div class="phase-tag">Confirm nothing flares. The work is irrelevant; the data is the point.</div>
-      <dl class="phase-grid">
-        <dt>Volume</dt><dd>3 full-body sessions, 45 min cap</dd>
-        <dt>Intensity</dt><dd>50–60% of pre-mono working weights, RPE 6 max</dd>
-        <dt>Cardio</dt><dd>Walking only, 20–30 min daily</dd>
-        <dt>Goal</dt><dd>Three clean sessions with no symptom flare</dd>
-        <dt>Advance when</dt><dd>3 sessions complete, 0 flares, sleep quality stable</dd>
-      </dl>
-    </div>
-
-    <div class="phase p1">
-      <div class="phase-head">
-        <span class="phase-num">Phase 01 // Foundation</span>
-        <span class="phase-weeks">Weeks 2–5</span>
-      </div>
-      <div class="phase-name">Re-acquire the base</div>
-      <div class="phase-tag">Volume comes back, loads stay polite. This is where muscle memory does its work.</div>
-      <dl class="phase-grid">
-        <dt>Split</dt><dd>Upper / Lower x2 (4 lifts/week)</dd>
-        <dt>Volume</dt><dd>8–12 hard sets per major muscle per week</dd>
-        <dt>Intensity</dt><dd>RPE 7 cap, 3+ reps in reserve always</dd>
-        <dt>Cardio</dt><dd>Zone 2 bike 2x30 min/week (week 3+)</dd>
-        <dt>Advance when</dt><dd>Week-on-week load progression, RPE feels controlled</dd>
-      </dl>
-    </div>
-
-    <div class="phase p2">
-      <div class="phase-head">
-        <span class="phase-num">Phase 02 // Build</span>
-        <span class="phase-weeks">Weeks 6–9</span>
-      </div>
-      <div class="phase-name">The growth block</div>
-      <div class="phase-tag">Now you push. Hypertrophy at full volume, the form your physique will hold.</div>
-      <dl class="phase-grid">
-        <dt>Split</dt><dd>Push / Pull / Legs / Upper / Lower (5 lifts/week)</dd>
-        <dt>Volume</dt><dd>12–18 hard sets per muscle per week</dd>
-        <dt>Intensity</dt><dd>RPE 8 isolations, RPE 7 compounds</dd>
-        <dt>Cardio</dt><dd>Bike 2x40 min + 1 short tempo run (15–20 min)</dd>
-        <dt>Advance when</dt><dd>Week 9 complete, recovery still keeping pace</dd>
-      </dl>
-    </div>
-
-    <div class="phase p3">
-      <div class="phase-head">
-        <span class="phase-num">Phase 03 // Strength Integration</span>
-        <span class="phase-weeks">Weeks 10–13</span>
-      </div>
-      <div class="phase-name">Reintroduce the heavy</div>
-      <div class="phase-tag">Strength touches return inside the hypertrophy frame. Not a strength block — a strength accent.</div>
-      <dl class="phase-grid">
-        <dt>Split</dt><dd>PPL / Upper / Lower with strength leads</dd>
-        <dt>Volume</dt><dd>14–18 hard sets per muscle per week</dd>
-        <dt>Intensity</dt><dd>1 strength set @ 5 reps, RPE 8 leads each compound day; rest is hypertrophy</dd>
-        <dt>Cardio</dt><dd>Bike 1x45 min Z2 + 1x20 min Z3 + occasional run</dd>
-        <dt>Advance when</dt><dd>Week 13 complete, joints/sleep clean</dd>
-      </dl>
-    </div>
-
-    <div class="phase p4">
-      <div class="phase-head">
-        <span class="phase-num">Phase 04 // Test & Reset</span>
-        <span class="phase-weeks">Week 14</span>
-      </div>
-      <div class="phase-name">Confirm the gains</div>
-      <div class="phase-tag">Test working sets, not 1RMs. The number you can hit for 5 reps clean is more useful than a max grind.</div>
-      <dl class="phase-grid">
-        <dt>Mon</dt><dd>Squat 5RM test, light upper accessories</dd>
-        <dt>Wed</dt><dd>Bench 5RM test, light pull accessories</dd>
-        <dt>Fri</dt><dd>Deadlift 5RM test, light push accessories</dd>
-        <dt>Sat</dt><dd>Bike 30 min easy, light mobility, photos</dd>
-        <dt>Sun</dt><dd>Full rest, sauna, plan next block</dd>
-      </dl>
-    </div>
-  </section>
-
-  <!-- ============ 4. TRAINING DETAIL ============ -->
-  <section class="section" id="sec-4">
-    <div class="section-num">04 // Training Detail</div>
-    <h2 class="section-title">What you actually do in the gym</h2>
-    <p class="section-lede">Each phase below opens to its full weekly schedule, exercise selection, and progression rules.</p>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag gate">P0</span>
-        <span class="sum-title">Phase 00 — Reactivation Sessions</span>
-        <span class="sum-meta">3 sessions / week 1</span>
-      </summary>
-      <div class="det-body">
-        <p>Three identical full-body sessions, 45 min ceiling. Same 5 movement patterns each time. Don't progress weights this week — just complete it.</p>
-
-        <div class="ex-block">
-          <div class="ex-block-h">Session A / B / C — same template</div>
-          <table class="tbl">
-            <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>Load</th><th>RPE</th></tr></thead>
-            <tbody>
-              <tr><td>Goblet Squat</td><td>3 x 8</td><td class="dim">~50% of working weight</td><td>6</td></tr>
-              <tr><td>Dumbbell Bench Press</td><td>3 x 8</td><td class="dim">~50% of working weight</td><td>6</td></tr>
-              <tr><td>Lat Pulldown</td><td>3 x 10</td><td class="dim">moderate</td><td>6</td></tr>
-              <tr><td>Romanian Deadlift (DB)</td><td>3 x 8</td><td class="dim">moderate</td><td>6</td></tr>
-              <tr><td>Cable Row</td><td>3 x 10</td><td class="dim">moderate</td><td>6</td></tr>
-              <tr><td>Plank + Side Plank</td><td>2 x 30s each</td><td class="dim">bw</td><td>—</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="callout cons">
-          <div class="callout-label">Conservative path note</div>
-          <p style="margin:0">If you started on the conservative path, run this template for <strong>2 weeks</strong>, not 1. Same loads. The point isn't progress; it's confirming the body is rebuilt enough to handle Phase 1 volume.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">P1</span>
-        <span class="sum-title">Phase 01 — Foundation: Upper / Lower</span>
-        <span class="sum-meta">4 sessions / weeks 2–5</span>
-      </summary>
-      <div class="det-body">
-        <p>4-day split. Upper twice, Lower twice. RPE 7 ceiling. Loads start ~60% of pre-mono working weights and progress weekly by feel — add 2.5–5 lb when a session feels like RPE 6.</p>
-
-        <div class="week-grid">
-          <div class="day lift"><div class="day-name">Mon</div><div class="day-content">Upper A</div></div>
-          <div class="day bike"><div class="day-name">Tue</div><div class="day-content">Bike Z2<br>30 min</div></div>
-          <div class="day lift"><div class="day-name">Wed</div><div class="day-content">Lower A</div></div>
-          <div class="day rest"><div class="day-name">Thu</div><div class="day-content">Walk 30 min</div></div>
-          <div class="day lift"><div class="day-name">Fri</div><div class="day-content">Upper B</div></div>
-          <div class="day bike"><div class="day-name">Sat</div><div class="day-content">Bike Z2<br>30 min</div></div>
-          <div class="day lift"><div class="day-name">Sun</div><div class="day-content">Lower B</div></div>
-        </div>
-
-        <div class="nested-wrap">
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Upper A — Horizontal emphasis</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Barbell Bench Press</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Chest-Supported Row</td><td>3 x 10</td><td>7</td></tr>
-                  <tr><td>Incline DB Press</td><td>3 x 10</td><td>7</td></tr>
-                  <tr><td>Lat Pulldown</td><td>3 x 12</td><td>7</td></tr>
-                  <tr><td>DB Lateral Raise</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Cable Tricep Pressdown</td><td>2 x 12</td><td>8</td></tr>
-                  <tr><td>DB Hammer Curl</td><td>2 x 12</td><td>8</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Lower A — Quad emphasis</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Back Squat</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Romanian Deadlift</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Walking Lunge</td><td>2 x 10/leg</td><td>7</td></tr>
-                  <tr><td>Leg Extension</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Standing Calf Raise</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Hanging Knee Raise</td><td>3 x 10</td><td>8</td></tr>
-                  <tr><td>Side Plank</td><td>2 x 40s/side</td><td>—</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Upper B — Vertical emphasis</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Overhead Press (DB or BB)</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Neutral-Grip Pull-Up (or assisted)</td><td>3 x AMRAP-2</td><td>8</td></tr>
-                  <tr><td>DB Bench Press</td><td>3 x 10</td><td>7</td></tr>
-                  <tr><td>Single-Arm Cable Row</td><td>3 x 10/arm</td><td>7</td></tr>
-                  <tr><td>Cable Lateral Raise</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Face Pull</td><td>3 x 15</td><td>8</td></tr>
-                  <tr><td>Preacher Curl</td><td>2 x 12</td><td>8</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Lower B — Posterior emphasis</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Trap Bar Deadlift</td><td>3 x 6</td><td>7</td></tr>
-                  <tr><td>Front Squat (or Goblet)</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Bulgarian Split Squat</td><td>2 x 10/leg</td><td>8</td></tr>
-                  <tr><td>Lying Leg Curl</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Hip Thrust</td><td>3 x 10</td><td>7</td></tr>
-                  <tr><td>Seated Calf Raise</td><td>3 x 15</td><td>8</td></tr>
-                  <tr><td>Pallof Press</td><td>3 x 10/side</td><td>—</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-        </div>
-
-        <div class="callout">
-          <div class="callout-label">Progression rule</div>
-          <p style="margin:0">Add weight only when the last set of a movement felt like RPE 6 the prior session. Add 2.5 lb to upper body movements, 5 lb to lower. If a session ever creeps to RPE 8+, hold loads next session.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">P2</span>
-        <span class="sum-title">Phase 02 — Build: Push / Pull / Legs / Upper / Lower</span>
-        <span class="sum-meta">5 sessions / weeks 6–9</span>
-      </summary>
-      <div class="det-body">
-        <p>5-day split. PPL run-through then a U/L pair. Volume climbs to 12–18 hard sets per major muscle per week. RPE 8 on isolations, RPE 7 on compounds.</p>
-
-        <div class="week-grid">
-          <div class="day lift"><div class="day-name">Mon</div><div class="day-content">Push</div></div>
-          <div class="day lift"><div class="day-name">Tue</div><div class="day-content">Pull</div></div>
-          <div class="day bike"><div class="day-name">Wed</div><div class="day-content">Bike Z2<br>40 min</div></div>
-          <div class="day lift"><div class="day-name">Thu</div><div class="day-content">Legs</div></div>
-          <div class="day lift"><div class="day-name">Fri</div><div class="day-content">Upper</div></div>
-          <div class="day run"><div class="day-name">Sat</div><div class="day-content">Tempo run<br>15–20 min</div></div>
-          <div class="day lift"><div class="day-name">Sun</div><div class="day-content">Lower</div></div>
-        </div>
-
-        <div class="callout warn">
-          <div class="callout-label">Heads up</div>
-          <p style="margin:0">This is a 6-day-a-week schedule (5 lifts + 1 cardio + 1 run). It's the highest demand week of the program. If sleep slips or RPE creeps, drop Friday Upper before anything else.</p>
-        </div>
-
-        <div class="nested-wrap">
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Push Day</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Barbell Bench Press</td><td>4 x 6–8</td><td>7</td></tr>
-                  <tr><td>Overhead Press</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Incline DB Press</td><td>3 x 10</td><td>8</td></tr>
-                  <tr><td>Cable Lateral Raise</td><td>4 x 12–15</td><td>8</td></tr>
-                  <tr><td>Pec Deck</td><td>3 x 12</td><td>9</td></tr>
-                  <tr><td>Cable Tricep Pressdown</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Overhead Tricep Extension</td><td>3 x 12</td><td>8</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Pull Day</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Weighted Pull-Up (or Lat Pulldown)</td><td>4 x 6–8</td><td>7</td></tr>
-                  <tr><td>Pendlay Row (or Chest-Supported)</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Single-Arm DB Row</td><td>3 x 10/arm</td><td>8</td></tr>
-                  <tr><td>Face Pull</td><td>4 x 15</td><td>8</td></tr>
-                  <tr><td>Cable Curl</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Hammer Curl</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Reverse Pec Deck</td><td>3 x 12</td><td>9</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Legs Day</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Back Squat</td><td>4 x 6–8</td><td>7</td></tr>
-                  <tr><td>Romanian Deadlift</td><td>3 x 8</td><td>7</td></tr>
-                  <tr><td>Hack Squat (or Leg Press)</td><td>3 x 10</td><td>8</td></tr>
-                  <tr><td>Lying Leg Curl</td><td>4 x 12</td><td>8</td></tr>
-                  <tr><td>Walking Lunge</td><td>2 x 12/leg</td><td>8</td></tr>
-                  <tr><td>Standing Calf Raise</td><td>4 x 10</td><td>9</td></tr>
-                  <tr><td>Hanging Leg Raise</td><td>3 x 12</td><td>8</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Upper Day (Friday)</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>DB Bench Press</td><td>3 x 10</td><td>8</td></tr>
-                  <tr><td>Lat Pulldown</td><td>3 x 10</td><td>8</td></tr>
-                  <tr><td>Cable Crossover</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>Cable Row</td><td>3 x 12</td><td>8</td></tr>
-                  <tr><td>DB Lateral Raise</td><td>3 x 15</td><td>9</td></tr>
-                  <tr><td>EZ-Bar Curl</td><td>3 x 10</td><td>8</td></tr>
-                  <tr><td>Skullcrusher</td><td>3 x 10</td><td>8</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-
-          <details>
-            <summary><span class="sum-chev"></span><span class="sum-title">Lower Day (Sunday)</span></summary>
-            <div class="det-body">
-              <table class="tbl">
-                <thead><tr><th>Exercise</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-                <tbody>
-                  <tr><td>Front Squat (or Trap Bar DL)</td><td>3 x 6–8</td><td>7</td></tr>
-                  <tr><td>Hip Thrust</td><td>3 x 10</td><td>8</td></tr>
-                  <tr><td>Bulgarian Split Squat</td><td>3 x 10/leg</td><td>8</td></tr>
-                  <tr><td>Leg Extension</td><td>3 x 12</td><td>9</td></tr>
-                  <tr><td>Seated Leg Curl</td><td>3 x 12</td><td>9</td></tr>
-                  <tr><td>Seated Calf Raise</td><td>4 x 15</td><td>9</td></tr>
-                  <tr><td>Pallof Press</td><td>3 x 10/side</td><td>—</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">P3</span>
-        <span class="sum-title">Phase 03 — Strength Integration</span>
-        <span class="sum-meta">5 sessions / weeks 10–13</span>
-      </summary>
-      <div class="det-body">
-        <p>Same 5-day structure as P2, but each compound day now opens with a <strong>strength lead</strong>: 1 working set of 5 reps at RPE 8 before the hypertrophy work. This is how you reintroduce heavy without losing growth volume.</p>
-
-        <div class="ex-block">
-          <div class="ex-block-h">Strength leads (added before hypertrophy work each day)</div>
-          <table class="tbl">
-            <thead><tr><th>Day</th><th>Lead Lift</th><th>Sets x Reps</th><th>RPE</th></tr></thead>
-            <tbody>
-              <tr><td>Push</td><td>Bench Press</td><td>1 x 5 (after warm-up sets)</td><td>8</td></tr>
-              <tr><td>Pull</td><td>Weighted Pull-Up or Pendlay Row</td><td>1 x 5</td><td>8</td></tr>
-              <tr><td>Legs</td><td>Back Squat</td><td>1 x 5</td><td>8</td></tr>
-              <tr><td>Upper</td><td>Overhead Press</td><td>1 x 5</td><td>8</td></tr>
-              <tr><td>Lower</td><td>Trap Bar Deadlift</td><td>1 x 5</td><td>8</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="callout">
-          <div class="callout-label">Why one set</div>
-          <p style="margin:0">A single heavy set drives neural adaptation without the systemic cost of a strength block. The hypertrophy volume that follows is what builds the muscle mass that <em>lets</em> the strength climb. This is the most efficient strength reintegration coming off detraining — and it's the reason the program ends with a 5RM test, not a 1RM.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">P4</span>
-        <span class="sum-title">Phase 04 — Test Week</span>
-        <span class="sum-meta">5 sessions / week 14</span>
-      </summary>
-      <div class="det-body">
-        <p>Volume drops 40%. You test 5RMs, not maxes. Compare to projected 5RM from your pre-mono 1RMs (1RM × 0.87 ≈ 5RM). If you match those numbers, the rebound succeeded. If you exceed them, the program built net new capacity on top of the rebound — exactly the goal.</p>
-
-        <table class="tbl">
-          <thead><tr><th>Lift</th><th>Pre-Mono 1RM</th><th>Projected 5RM</th><th>Aspirational 5RM</th></tr></thead>
-          <tbody>
-            <tr><td>Back Squat</td><td>315</td><td>275</td><td>285+</td></tr>
-            <tr><td>Bench Press</td><td>245</td><td>215</td><td>225+</td></tr>
-            <tr><td>Deadlift</td><td>365</td><td>320</td><td>330+</td></tr>
-          </tbody>
-        </table>
-
-        <div class="callout warn">
-          <div class="callout-label">No max-out grinding</div>
-          <p style="margin:0">If a 5RM rep would visibly grind, stop at 4. You've tested the lift. The number is honest. Grinding 1RMs at the end of a hypertrophy block is how people get hurt finishing well-built programs.</p>
-        </div>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 5. ENDURANCE ============ -->
-  <section class="section" id="sec-5">
-    <div class="section-num">05 // Endurance Layer</div>
-    <h2 class="section-title">The cardio that won't fight your gains</h2>
-    <p class="section-lede">Bike-led endurance with strategic running. The volume is calibrated to sit beneath the AMPK/mTOR interference threshold while still developing aerobic base for the long-horizon tactical goal.</p>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Modality</span>
-        <span class="sum-title">Why bike, not run, for the rebound</span>
-      </summary>
-      <div class="det-body">
-        <p>Cycling is a closed-chain, low-eccentric movement. Running is a high-eccentric impact loaded movement. The difference matters for two reasons:</p>
-        <ul class="tactical">
-          <li>Eccentric loading drives muscle damage that competes with hypertrophy recovery. Cycling produces a fraction of this.</li>
-          <li>Impact loading stresses joints already deconditioned by 3+ weeks off. Running too early in the rebound is the most common cause of overuse injury in returning athletes.</li>
-        </ul>
-        <p>Running gets reintroduced in Phase 2 as short tempo work, then again in Phase 3 as occasional aerobic. Long runs stay off the menu through week 14 — they're the modality that most threatens the hypertrophy goal.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Zones</span>
-        <span class="sum-title">Heart rate zones (for cycling)</span>
-      </summary>
-      <div class="det-body">
-        <p>Use percentage of estimated max HR (220 - age, so for you, ~199 bpm). These are working ranges, not strict gates.</p>
-        <table class="tbl">
-          <thead><tr><th>Zone</th><th>HR Range</th><th>Feel</th><th>Used In</th></tr></thead>
-          <tbody>
-            <tr><td>Z1 Recovery</td><td>110–130</td><td>Conversational, easy</td><td>warm-up, cool-down</td></tr>
-            <tr><td>Z2 Aerobic Base</td><td>130–155</td><td>Nasal breathing, full sentences</td><td>Phase 1+ main bike work</td></tr>
-            <tr><td>Z3 Tempo</td><td>155–170</td><td>Short sentences only</td><td>Phase 3 tempo work</td></tr>
-            <tr><td>Z4+</td><td>170+</td><td>Burning, hard</td><td>Not used in this program</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Schedule</span>
-        <span class="sum-title">Weekly endurance dose by phase</span>
-      </summary>
-      <div class="det-body">
-        <table class="tbl">
-          <thead><tr><th>Phase</th><th>Bike</th><th>Run</th><th>Total / week</th></tr></thead>
-          <tbody>
-            <tr><td>P0</td><td class="dim">walking only</td><td class="dim">none</td><td>~150 min walk</td></tr>
-            <tr><td>P1</td><td>2 x 30 min Z2</td><td class="dim">none</td><td>60 min</td></tr>
-            <tr><td>P2</td><td>1 x 40 min Z2</td><td>1 x 15–20 min tempo</td><td>~60 min</td></tr>
-            <tr><td>P3</td><td>1 x 45 min Z2 + 1 x 20 min Z3</td><td>1 x 20–25 min easy (optional)</td><td>~85 min</td></tr>
-            <tr><td>P4</td><td>1 x 30 min easy</td><td class="dim">none</td><td>30 min</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 6. MOBILITY ============ -->
-  <section class="section" id="sec-6">
-    <div class="section-num">06 // Mobility & Movement</div>
-    <h2 class="section-title">Maintain the chassis</h2>
-    <p class="section-lede">Your existing FRC-based CARs routine, McGill core foundation, and knee/lower back accommodations carry forward intact. The protocol is unchanged from the April program.</p>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">AM</span>
-        <span class="sum-title">Morning CARs Routine — 10 min daily</span>
-      </summary>
-      <div class="det-body">
-        <p>Done first thing, every morning. Slow controlled rotations through full range of each joint. Two reps each direction.</p>
-        <ol class="tactical">
-          <li>Neck CARs (slow, no force) — 2/direction</li>
-          <li>Shoulder CARs (each side) — 2/direction</li>
-          <li>Spine segmental — cat/cow then thoracic rotation 5/side</li>
-          <li>Hip CARs (each side) — 2/direction</li>
-          <li>Knee CARs — 2/direction each leg</li>
-          <li>Ankle CARs — 5/direction each foot</li>
-          <li>90/90 hip switches — 6 reps</li>
-          <li>Wall ankle dorsiflexion — 5/side</li>
-        </ol>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Core</span>
-        <span class="sum-title">McGill Big 3 — every lift day, integrated</span>
-      </summary>
-      <div class="det-body">
-        <p>Anti-movement framework: anti-extension, anti-rotation, anti-lateral-flexion. Done at the end of the lift session. Progressive overload across each phase.</p>
-        <ol class="tactical">
-          <li><strong>McGill Curl-Up:</strong> 3 holds at 8 sec each. One leg straight, one bent. Hands under lower back. Lift head/shoulders just off floor. (Switch leg position halfway through the holds — this is one continuous block, not "each side.")</li>
-          <li><strong>Side Plank:</strong> 3 x 30 sec each side. Phase 2+: progress to 45 sec.</li>
-          <li><strong>Bird-Dog:</strong> 3 x 8 reps each side. Hold each rep 2 sec at full extension.</li>
-        </ol>
-        <p style="margin-top:8px"><strong>Lower back accommodations woven in:</strong> Pallof presses on Lower B days, single-leg glute bridges on warm-ups, banded lateral walks before any squat session.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Knees</span>
-        <span class="sum-title">Knee accommodations</span>
-      </summary>
-      <div class="det-body">
-        <ul class="tactical">
-          <li>Terminal knee extensions (band) — 2 x 15 each leg before any quad-dominant day</li>
-          <li>Wall ankle dorsiflexion mobility — 5/side daily</li>
-          <li>Slow eccentric on every quad movement (3 sec down minimum)</li>
-          <li>Avoid leg press at &gt;90° hip flexion if knee tightness shows up</li>
-          <li>Copenhagen plank progression — 2 x 20 sec/side, 2x/week</li>
-        </ul>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Pre-lift</span>
-        <span class="sum-title">Session-specific dynamic warm-ups</span>
-      </summary>
-      <div class="det-body">
-        <p>10–12 min, tailored to the day. The warm-up is the bridge between the cold body that walked into the gym and the body that can express force safely.</p>
-
-        <div class="ex-block">
-          <div class="ex-block-h">Squat / Lower body days</div>
-          <ul class="tactical">
-            <li>3 min bike or row at easy pace</li>
-            <li>Goblet squat hold 2 x 20 sec (DB at chest, full depth)</li>
-            <li>World's greatest stretch 5/side</li>
-            <li>Banded lateral walks 10/direction</li>
-            <li>Bodyweight squat 10 reps slow</li>
-            <li>2 warm-up sets of the day's first lift</li>
-          </ul>
-        </div>
-
-        <div class="ex-block">
-          <div class="ex-block-h">Push / upper days</div>
-          <ul class="tactical">
-            <li>3 min bike or row</li>
-            <li>Wall slides 10 reps</li>
-            <li>Band pull-aparts 15 reps</li>
-            <li>Scapular push-ups 10 reps</li>
-            <li>Arm circles, both directions, 10 each</li>
-            <li>2 warm-up sets of the day's first lift</li>
-          </ul>
-        </div>
-
-        <div class="ex-block">
-          <div class="ex-block-h">Pull / hinge days</div>
-          <ul class="tactical">
-            <li>3 min bike or row</li>
-            <li>Cat-cow 10 reps</li>
-            <li>Thoracic rotation 5/side</li>
-            <li>Banded face pulls 15 reps</li>
-            <li>Hip airplane 5/side</li>
-            <li>2 warm-up sets of the day's first lift</li>
-          </ul>
-        </div>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 7. NUTRITION ============ -->
-  <section class="section" id="sec-7">
-    <div class="section-num">07 // Nutrition</div>
-    <h2 class="section-title">Fuel the rebuild</h2>
-    <p class="section-lede">A modest surplus, high protein, micronutrient density. Your existing dining hall framework still applies — this is the layer on top.</p>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Macros</span>
-        <span class="sum-title">Daily targets by phase</span>
-      </summary>
-      <div class="det-body">
-        <table class="tbl">
-          <thead><tr><th>Phase</th><th>Calories</th><th>Protein</th><th>Carbs</th><th>Fat</th></tr></thead>
-          <tbody>
-            <tr><td>P0</td><td class="dim">maintenance + 100</td><td>1.0 g/lb (~200g)</td><td>2.0 g/lb</td><td>~80g</td></tr>
-            <tr><td>P1</td><td class="dim">maint + 200</td><td>1.0 g/lb</td><td>2.2 g/lb</td><td>~85g</td></tr>
-            <tr><td>P2</td><td class="dim">maint + 300</td><td>1.0 g/lb</td><td>2.5 g/lb</td><td>~90g</td></tr>
-            <tr><td>P3</td><td class="dim">maint + 250</td><td>1.0 g/lb</td><td>2.3 g/lb</td><td>~90g</td></tr>
-            <tr><td>P4</td><td class="dim">maintenance</td><td>1.0 g/lb</td><td>2.0 g/lb</td><td>~85g</td></tr>
-          </tbody>
-        </table>
-        <p style="margin-top:10px"><strong>Maintenance estimate</strong> for a 200 lb active male around 6'3": ~2,900 kcal/day. Adjust upward 100 kcal weekly if scale is flat for 10 days during P2/P3.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Protein</span>
-        <span class="sum-title">Protein distribution rules</span>
-      </summary>
-      <div class="det-body">
-        <ul class="tactical">
-          <li>4 feedings of ~50g protein, 3–5 hours apart, beats one big dump</li>
-          <li>Pre-lift: 30–40g, ~90 min before</li>
-          <li>Post-lift: 30–40g + 60–80g carbs within 60 min</li>
-          <li>Pre-bed: 30g slow protein (Greek yogurt, cottage cheese, casein) — supports overnight muscle protein synthesis</li>
-          <li>Whey shake covers gaps when dining hall protein is weak</li>
-        </ul>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag warn">Critical</span>
-        <span class="sum-title">Iron & micronutrient priorities</span>
-      </summary>
-      <div class="det-body">
-        <p>Mono frequently leaves ferritin low. Low ferritin sabotages endurance training and can produce fatigue indistinguishable from residual mono. Address it deliberately:</p>
-        <ul class="tactical">
-          <li><strong>Heme iron sources daily:</strong> red meat 2x/week minimum, dark poultry, sardines (you already eat these)</li>
-          <li><strong>Vitamin C with iron-rich meals:</strong> citrus, bell pepper, strawberry — increases absorption ~3x</li>
-          <li><strong>Avoid coffee/tea within 1 hr of iron-rich meals</strong> — tannins block absorption</li>
-          <li><strong>Re-test ferritin at week 6.</strong> If still low (&lt;50 ng/mL for an athlete), supplement under doctor guidance</li>
-        </ul>
-        <p style="margin-top:8px">Other micros to watch: <strong>vitamin D</strong> (3,000 IU/day continues), <strong>magnesium</strong> (400mg evening, supports sleep + recovery), <strong>zinc</strong> (15mg, immune + testosterone). All cheap, all relevant.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Stack</span>
-        <span class="sum-title">Supplement protocol</span>
-      </summary>
-      <div class="det-body">
-        <ul class="tactical">
-          <li><strong>Creatine monohydrate</strong> — 5g daily, anytime, with water. Continue uninterrupted.</li>
-          <li><strong>Whey protein</strong> — as needed to hit protein target, 1–2 servings/day</li>
-          <li><strong>Vitamin D3</strong> — 3,000 IU/day with a fatty meal</li>
-          <li><strong>Magnesium glycinate</strong> — 400mg, 30 min before bed</li>
-          <li><strong>Omega-3s</strong> — 2g EPA+DHA via canned sardines, salmon, or fish oil</li>
-          <li><strong>Zinc</strong> — 15mg, 2–3x/week, not daily</li>
-        </ul>
-        <p style="margin-top:8px"><em>Hold on:</em> aggressive pre-workout stacks. Caffeine is fine; the Celsius + pre-workout stack you flagged previously stays off the table during P0–P1. Reintroduce moderate caffeine (one source per session) in P2 if needed.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Hydration</span>
-        <span class="sum-title">Hydration protocol — carries over</span>
-      </summary>
-      <div class="det-body">
-        <p>Existing protocol from the April block stands. LMNT electrolyte packets, day-type-specific targets:</p>
-        <ul class="tactical">
-          <li>Lift days: ~1 gallon water + 1 LMNT</li>
-          <li>Bike/run days: ~1.25 gal + 1–2 LMNT</li>
-          <li>Rest days: ~3L water</li>
-          <li>Sauna days: +500mL + 1 LMNT post-sauna</li>
-        </ul>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 8. SLEEP ============ -->
-  <section class="section" id="sec-8">
-    <div class="section-num">08 // Sleep & Recovery</div>
-    <h2 class="section-title">The actual rate limiter</h2>
-    <p class="section-lede">Mono specifically disrupts deep NREM sleep — the stage where 70%+ of growth hormone release happens. Without restored sleep architecture, the entire training stimulus is wasted. This is the single highest-leverage protocol in the document.</p>
-
-    <details open>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag warn">Priority 1</span>
-        <span class="sum-title">Sleep protocol — non-negotiable</span>
-      </summary>
-      <div class="det-body">
-        <ol class="tactical">
-          <li><strong>Fixed wake time, 7 days/week.</strong> Within 30 min, regardless of when you fell asleep. Anchors the circadian system.</li>
-          <li><strong>Morning light, 5–10 min, within 30 min of waking.</strong> Outside if possible. Not through a window.</li>
-          <li><strong>Last meal 3 hr before bed minimum.</strong> Late eating wrecks deep sleep architecture.</li>
-          <li><strong>No caffeine after 2pm.</strong> Half-life 5–6 hr — afternoon caffeine still in your system at midnight.</li>
-          <li><strong>Cool room (65–68°F).</strong> Body temp drop is the primary deep sleep trigger.</li>
-          <li><strong>No screens in bed.</strong> If awake and unable to sleep, leave the bed. Bed = sleep, only.</li>
-          <li><strong>Magnesium glycinate 400mg, 30 min before bed.</strong> Modest but real effect on sleep onset and depth.</li>
-          <li><strong>Target 8 hr in bed, not 8 hr asleep.</strong> Real sleep efficiency is 85–90% — plan accordingly.</li>
-        </ol>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Recovery</span>
-        <span class="sum-title">Sauna protocol — carries over</span>
-      </summary>
-      <div class="det-body">
-        <p>Existing 4x/week protocol holds: 15–20 min at 80–100°C, post-lift sessions and Sunday. Hydration replenishment afterward as protocoled. The cardiovascular and growth hormone benefits are well-documented and synergistic with the rebound.</p>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Recovery</span>
-        <span class="sum-title">Active recovery & off-day movement</span>
-      </summary>
-      <div class="det-body">
-        <ul class="tactical">
-          <li>Walk 20–30 min after dinner — circadian + glucose disposal</li>
-          <li>Foam roll major muscle groups 5–10 min, 3x/week</li>
-          <li>One full rest day per week — no structured activity, walking only</li>
-          <li>Optional: cold shower 1–2 min at end of regular shower (NOT post-lift on muscle-building days — cold blunts hypertrophy signaling for ~6 hr)</li>
-        </ul>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Tracking</span>
-        <span class="sum-title">Recovery markers worth tracking</span>
-      </summary>
-      <div class="det-body">
-        <p>Don't track everything. Track these four:</p>
-        <ol class="tactical">
-          <li><strong>Resting HR upon waking</strong> — &gt;5 bpm above baseline for 2+ days = under-recovered</li>
-          <li><strong>Subjective energy 1–10</strong> — log first thing in the morning</li>
-          <li><strong>Sleep duration</strong> — under 7hr for 2 consecutive nights = throttle the next session</li>
-          <li><strong>Bodyweight</strong> — weekly only, same day, same time</li>
-        </ol>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 9. MIND ============ -->
-  <section class="section" id="sec-9">
-    <div class="section-num">09 // Mind & Environment</div>
-    <h2 class="section-title">The other half of the operator</h2>
-    <p class="section-lede">You came into this program after illness. Coming out of it, you're a college junior with a startup. The cognitive load is real and the program won't survive it without environmental design.</p>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Mental</span>
-        <span class="sum-title">Pre-session mental shift — carries over</span>
-      </summary>
-      <div class="det-body">
-        <p>The existing protocol from April applies. Cognitive fatigue inflates RPE, which causes you to under-perform what your body could actually do. The shift isn't motivational — it's a state change.</p>
-        <ol class="tactical">
-          <li>Close laptop. Phone face-down. Stand up.</li>
-          <li>3 minutes of nasal breathing, 4-second in, 6-second out</li>
-          <li>One sentence written down: <em>what am I training today?</em></li>
-          <li>Walk to the gym, no podcast/music for the first 5 min — let the mind decompress</li>
-          <li>Music on at the door</li>
-        </ol>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag warn">Critical</span>
-        <span class="sum-title">Honest weekly check-in</span>
-      </summary>
-      <div class="det-body">
-        <p>Sunday evening, 5 minutes. Write down answers, don't just think them.</p>
-        <ol class="tactical">
-          <li>Energy this week, 1–10. Lower than 6 = phase pause next week.</li>
-          <li>Did anything mono-adjacent show up? Sore throat, swollen glands, fatigue spike, low fever?</li>
-          <li>Sleep average — ballpark hours per night.</li>
-          <li>Mood — any persistent low? Mono lies, but so does post-illness depression. Both real.</li>
-          <li>Was a session skipped? Why? Honestly.</li>
-        </ol>
-        <div class="callout">
-          <div class="callout-label">The point</div>
-          <p style="margin:0">This is the single most important habit in the program. The Outsider on the council flagged it — "are you still recovering or are you actually back?" — and the answer can only come from honest weekly self-audit, not from how the lifts feel in the moment.</p>
-        </div>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Environment</span>
-        <span class="sum-title">Cognitive load & startup management</span>
-      </summary>
-      <div class="det-body">
-        <ul class="tactical">
-          <li><strong>One hard gym slot per day, locked.</strong> Same time, same calendar block. Decisions about when to train consume executive function — eliminate them.</li>
-          <li><strong>Pre-pack gym bag the night before.</strong> Friction is the silent killer of programs.</li>
-          <li><strong>No startup work after 9pm.</strong> Cortisol stays elevated for hours after intense cognitive work; deep sleep depends on its decline.</li>
-          <li><strong>One full half-day off per week.</strong> No school, no startup, no training planning. Required, not optional.</li>
-          <li><strong>Identify your two highest-leverage school deadlines</strong> for any given week and protect the morning before each one — no early gym, full sleep priority.</li>
-        </ul>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Identity</span>
-        <span class="sum-title">A note on the long horizon</span>
-      </summary>
-      <div class="det-body">
-        <p>The original Delta-tier resources are still on the table. This summer is not that — and it shouldn't try to be. The fastest path to elite tactical capacity from where you are now is, paradoxically, a hypertrophy and base-building summer. Every operator-level program assumes a strength and aerobic foundation already exists. The summer's job is to build that foundation back, then surpass it. Special-ops-style work picks up cleanly in the fall, against a body that can take it.</p>
-        <p>Be patient with the velocity. Be impatient with the destination.</p>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ 10. AUDITS ============ -->
-  <section class="section" id="sec-10">
-    <div class="section-num">10 // Monitoring & Audits</div>
-    <h2 class="section-title">How we know it's working</h2>
-    <p class="section-lede">Built-in checkpoints. If you fail an audit, you don't power through — you adjust the program.</p>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Audit</span>
-        <span class="sum-title">Phase exit gates</span>
-      </summary>
-      <div class="det-body">
-        <table class="tbl">
-          <thead><tr><th>Phase</th><th>Exit when</th><th>If failed</th></tr></thead>
-          <tbody>
-            <tr><td>P0</td><td>3 sessions complete, no flares</td><td>Repeat week, see doctor if 2nd repeat</td></tr>
-            <tr><td>P1</td><td>4 weeks complete, weekly load progression</td><td>Extend P1 by 2 weeks at current loads</td></tr>
-            <tr><td>P2</td><td>4 weeks complete, recovery markers stable</td><td>Drop to 4-day P2 split, extend by 1 week</td></tr>
-            <tr><td>P3</td><td>4 weeks complete, joints/sleep clean</td><td>Skip strength leads, run as P2</td></tr>
-            <tr><td>P4</td><td>5RMs hit projected targets</td><td>5RMs are the data either way; plan next block accordingly</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Audit</span>
-        <span class="sum-title">Bloodwork checkpoints</span>
-      </summary>
-      <div class="det-body">
-        <ul class="tactical">
-          <li><strong>Pre-program:</strong> ferritin, CBC, vitamin D, TSH</li>
-          <li><strong>Week 6 (mid-program):</strong> ferritin re-test</li>
-          <li><strong>Week 14 (post-program):</strong> ferritin, vitamin D, optional testosterone if interested</li>
-        </ul>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag">Audit</span>
-        <span class="sum-title">Photo & body composition</span>
-      </summary>
-      <div class="det-body">
-        <ul class="tactical">
-          <li>Front, side, back photos at the start of each phase, same lighting, same time of day, same conditions</li>
-          <li>Bodyweight weekly, Sunday morning, fasted, after bathroom</li>
-          <li>Don't measure body fat with calipers/DEXA more than once mid-program — measurement noise dwarfs real change at this timescale</li>
-        </ul>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="sum-chev"></span>
-        <span class="sum-tag warn">Stop</span>
-        <span class="sum-title">When to abort the program</span>
-      </summary>
-      <div class="det-body">
-        <p>Stop and re-clinic if any of these occur:</p>
-        <ul class="tactical">
-          <li>Recurring sore throat or swollen lymph nodes (any time)</li>
-          <li>Fatigue lasting &gt;48 hr after a session, twice in one phase</li>
-          <li>Upper-left abdominal pain or discomfort</li>
-          <li>Low-grade fever during a training week</li>
-          <li>Sleep quality drops persistently for &gt;7 nights</li>
-          <li>Resting HR &gt;7 bpm above baseline for &gt;5 days</li>
-        </ul>
-        <p style="margin-top:8px">None of these mean the program failed. They mean recovery is incomplete and the program needs to wait. Aborting is data, not weakness.</p>
-      </div>
-    </details>
-  </section>
-
-  <!-- ============ FOOTER ============ -->
-  <footer class="doc-footer">
-    <div class="sig">// END PROTOCOL</div>
-    <div>Compiled by the Council // Summer 2026 // Symptom-gated // Revision 01</div>
-  </footer>
+<div class="doc-header">
+  <div class="doc-label">Summer 2026 Training Protocol</div>
+  <div class="doc-title">Phase 0 — Re-entry / Foundation</div>
+  <div class="doc-subtitle">Weeks 1–2 · Executable Training Document</div>
+  <div class="doc-meta">
+    <span class="meta-chip accent">5 days/week · Mon–Fri</span>
+    <span class="meta-chip">≤70 min per session</span>
+    <span class="meta-chip">3–4 RIR all work sets</span>
+    <span class="meta-chip">Post-mono re-entry</span>
+    <span class="meta-chip">Knee: yellow flag</span>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showTab('governing')">Governing Rules</div>
+  <div class="nav-tab" onclick="showTab('week1')">Week 1</div>
+  <div class="nav-tab" onclick="showTab('week2')">Week 2</div>
+  <div class="nav-tab" onclick="showTab('adjustments')">Adjustment Rules</div>
+  <div class="nav-tab" onclick="showTab('log')">Daily Log</div>
+</div>
+
+<!-- ═══════════════════════════════════════ GOVERNING RULES ═══════════════════════════════ -->
+<div id="governing" class="tab-content active">
+
+  <h2>Phase 0 Purpose and Governing Rules</h2>
+
+  <p>Phase 0 is a 2-week diagnostic and re-entry block. Its job is not to make you tired. Its job is to rebuild tissue tolerance, re-establish aerobic rhythm, groove movement quality, and generate the data needed to program Phase 1 correctly.</p>
+
+  <div class="rule-box green">
+    <strong>THE ONE RULE.</strong> Every session ends with you feeling you could have done meaningfully more. This is the success criterion for every single workout in these two weeks. If you're grinding, you're doing it wrong.
+  </div>
+
+  <div class="rule-box">
+    <strong>Loads are anchored to current capacity, not pre-mono maxes.</strong> Bench works at ~155–170 lbs. Squat works at ~175–195 lbs. These are not light — they are right. You are reloading a known pattern, not testing limits. Resist the urge to push heavier.
+  </div>
+
+  <div class="rule-box yellow">
+    <strong>All work sets are 3–4 RIR (reps in reserve).</strong> If you reach 3 RIR on any set, stop. Do not squeeze out extra reps. Do not ego-load. RIR is the intensity dial — use it.
+  </div>
+
+  <div class="rule-box">
+    <strong>Time cap is hard at 70 minutes.</strong> If a section is running long, cut the last accessory, not the main lift. Never sacrifice the primary movement to fit in extras. Extras are earned — the main lift is mandatory.
+  </div>
+
+  <div class="rule-box orange">
+    <strong>Knee is a yellow flag throughout.</strong> Any increase in knee ache during a set is a cue to modify, not push through. See the Adjustment Rules tab for exact protocols.
+  </div>
+
+  <div class="rule-box">
+    <strong>No running this phase.</strong> Conditioning is bike and swim only. This is not a compromise — it is the correct prescription for a post-mono athlete with a yellow-flag knee building an aerobic base.
+  </div>
+
+  <h2>Weekly Structure — At a Glance</h2>
+
+  <table class="phase-table">
+    <tr>
+      <th>Day</th>
+      <th>Type</th>
+      <th>Primary Focus</th>
+      <th>Session Time</th>
+    </tr>
+    <tr>
+      <td class="ex-name">Monday</td>
+      <td><span class="meta-chip accent">Lift</span></td>
+      <td>Lower body — quad & hinge patterns, knee durability</td>
+      <td class="ex-rest">~65 min</td>
+    </tr>
+    <tr>
+      <td class="ex-name">Tuesday</td>
+      <td><span class="meta-chip green">Conditioning</span></td>
+      <td>Bike Zone 2 + upper durability finisher</td>
+      <td class="ex-rest">~45 min</td>
+    </tr>
+    <tr>
+      <td class="ex-name">Wednesday</td>
+      <td><span class="meta-chip accent">Lift</span></td>
+      <td>Upper body — press, pull, shoulder durability</td>
+      <td class="ex-rest">~65 min</td>
+    </tr>
+    <tr>
+      <td class="ex-name">Thursday</td>
+      <td><span class="meta-chip green">Conditioning</span></td>
+      <td>Swim or bike Zone 2 + core finisher</td>
+      <td class="ex-rest">~45 min</td>
+    </tr>
+    <tr>
+      <td class="ex-name">Friday</td>
+      <td><span class="meta-chip accent">Lift</span></td>
+      <td>Upper-biased full body — press, row, hip hinge, carry</td>
+      <td class="ex-rest">~65 min</td>
+    </tr>
+    <tr>
+      <td class="ex-name">Sat–Sun</td>
+      <td><span class="meta-chip">Optional</span></td>
+      <td>Easy walk, swim, or recreational bike — nothing programmed</td>
+      <td class="ex-rest">—</td>
+    </tr>
+  </table>
+
+  <h2>How to Read the Session Tables</h2>
+
+  <div class="callout">
+    <div class="icon">ℹ</div>
+    <div><strong>Sets × Reps</strong> are working sets only, not warm-up sets. Before your first exercise each session, do 1–2 ramp-up sets at 50% and 70% of working weight. These take 2–3 minutes and do not count toward the working sets. <strong>RIR</strong> = reps in reserve. A 3 RIR set of 10 means you stop at 10 when you could have done 13. <strong>Rest</strong> is clock rest between working sets. Use it. Don't rush.</div>
+  </div>
+
+  <div class="callout">
+    <div class="icon">⏱</div>
+    <div><strong>Estimated times</strong> per section are realistic, not optimistic. They assume you start sets on time. If a section runs over, trim the last set of the last exercise — never cut the primary movement or its rest periods.</div>
+  </div>
 
 </div>
 
+<!-- ═══════════════════════════════════════ WEEK 1 ═══════════════════════════════════════ -->
+<div id="week1" class="tab-content">
+
+  <div class="week-divider">
+    <div class="week-divider-line"></div>
+    <div class="week-divider-label">WEEK 1 — Establish</div>
+    <div class="week-divider-line"></div>
+  </div>
+
+  <div class="callout">
+    <div class="icon">🎯</div>
+    <div><strong>Week 1 objective:</strong> Find your honest working loads. Every set should finish with at least 3 reps clearly left in the tank. Log the weight, how it moved, and how your knee felt. This data writes your Week 2 and then your Phase 1.</div>
+  </div>
+
+  <!-- MONDAY -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge">MON</div>
+      <div class="day-name">Lower Body</div>
+      <div class="day-focus">Quad · Hinge · Knee Durability</div>
+    </div>
+    <div class="day-time">⏱ Target: ~65 min total including warm-up</div>
+    <div class="day-body">
+
+      <div class="warmup-block">
+        <h4>Warm-Up — 10 min</h4>
+        <ul class="warmup-steps">
+          <li><strong>5 min easy stationary bike</strong> — light resistance, get blood moving. Per JN: core temp up before any dynamic work, especially critical for morning sessions.</li>
+          <li><strong>Foam roll</strong> — quads, IT band, calves, glutes — 60 sec each side. Brief and targeted.</li>
+          <li><strong>Front/back leg swings</strong> × 12 each leg</li>
+          <li><strong>Side/side leg swings</strong> × 12 each leg</li>
+          <li><strong>Bodyweight squat</strong> × 10 — slow, deep as knee permits, feel for tracking</li>
+          <li><strong>Hip flexor stretch</strong> — lunge position, 30 sec each side</li>
+          <li><strong>Terminal knee extensions with band</strong> (or bodyweight) × 15 each leg — loop a band around a rack at knee height, step back, slight bend, squeeze into extension. This directly fires the VMO and is your best pre-activation for a tweaky knee.</li>
+        </ul>
+        <div class="time-est">Warm-up est: 10 min</div>
+      </div>
+
+      <div class="section-label"><span>A1 — Primary Lift (~18 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Goblet Squat</td>
+          <td class="ex-sets">3 × 8</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2 min</td>
+          <td class="ex-note">Start here, not barbell. Use a 50–65 lb dumbbell. 3-sec controlled descent, pause at bottom 1 sec. Knees tracking over toes. This is intentionally not the barbell back squat — it unloads the spine and teaches the pattern clean. Upgrade to barbell squat in Week 2 if this is effortless and knee is silent.</td>
+        </tr>
+      </table>
+      <div class="sub-box">
+        <strong>⚠ KNEE SUBSTITUTION:</strong> If goblet squat produces knee ache during — not just pre-session stiffness — switch to <strong>leg press at a high foot position</strong> (feet high on plate reduces knee flexion demand). Same sets/reps/RIR.
+      </div>
+
+      <div class="section-label"><span>A2 — Hip Hinge (~15 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Romanian Deadlift (barbell)</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2 min</td>
+          <td class="ex-note">Start at ~135 lbs. Hips back, slight knee bend, bar drags down your legs, neutral lower back throughout. This is not a conventional deadlift — no pull from the floor. Stop when you feel hamstring tension, not when the bar hits the floor. Almost zero knee compressive load here — it's your safest lower-body strength work this phase.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>B — Unilateral / Knee Durability (~15 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Dumbbell Step-Up (low box, ~10–12")</td>
+          <td class="ex-sets">3 × 8 each leg</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Use 20–30 lb dumbbells. Drive through the heel of the top leg. Do NOT bounce off the bottom leg. Step-ups at a low box = controlled unilateral load with minimal knee angle stress. Drawn from the JSOC single-leg program as a foundational unilateral pattern.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Single-Leg Glute Bridge (bodyweight)</td>
+          <td class="ex-sets">2 × 12 each leg</td>
+          <td class="ex-rir">3</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Floor, one heel planted, drive hip up, squeeze glute at top for 1 sec. Builds posterior chain support around the knee without any knee-compressive load. From JSOC asymmetrical program correctives list.</td>
+        </tr>
+      </table>
+      <div class="sub-box">
+        <strong>⚠ KNEE SUBSTITUTION (Step-Up):</strong> If step-up produces ache during the movement, reduce box height to a 6" step or substitute <strong>Split Squat (bodyweight only, short stance)</strong>. Do not add load until the movement is clean and quiet.
+      </div>
+
+      <div class="section-label"><span>C — Knee Durability Finisher (~5 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Terminal Knee Extension (band)</td>
+          <td class="ex-sets">2 × 15 each leg</td>
+          <td class="ex-rir">N/A</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Band looped around rack at mid-shin height. Face rack, step back until band is taut at bend. Straighten knee fully against the band — no hip movement. This is a rehab/prehab finisher, not a strength move. Slow and deliberate. VMO activation and tendon loading at low stress.</td>
+        </tr>
+      </table>
+
+      <div class="totals-bar">
+        <div class="total-chip">Working sets: <span class="t-val">11</span></div>
+        <div class="total-chip">Main lift sets: <span class="t-val">3</span></div>
+        <div class="total-chip">Est. total: <span class="t-val">~63 min</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TUESDAY -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge green">TUE</div>
+      <div class="day-name">Conditioning — Bike + Upper Durability</div>
+      <div class="day-focus">Zone 2 · Aerobic Base · Shoulder Prehab</div>
+    </div>
+    <div class="day-time">⏱ Target: ~45 min total</div>
+    <div class="day-body">
+
+      <div class="cond-block">
+        <h4>Bike — Zone 2 Steady State</h4>
+        <p><strong>Duration:</strong> 25–28 minutes. <strong>Intensity:</strong> RPE 4–5/10.</p>
+        <p><strong>Talk test (your only gauge since you have no HR monitor):</strong> You should be able to speak in complete sentences without pausing for breath. If you can only manage a few words, slow down. This is Zone 2 — not a workout, an aerobic stimulus.</p>
+        <p class="cond-detail">Set resistance at a light-moderate level. Cadence 75–90 RPM feels natural for Zone 2. This should feel almost too easy. That's correct.</p>
+        <p class="cond-detail"><strong>If fatigued:</strong> Drop to 20 min. Keep RPE the same — do not compensate with harder effort to make a shorter session "worth it."</p>
+      </div>
+
+      <div class="section-label"><span>Upper Durability Finisher — 10–12 min</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Band Pull-Apart</td>
+          <td class="ex-sets">3 × 15</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Light band. Arms straight, pull apart to T position, squeeze shoulder blades for 1 sec at end range. This is rear delt and scapular retractor work — directly from JN's warm-up and shoulder durability protocols.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Cable or Band External Rotation</td>
+          <td class="ex-sets">2 × 15 each side</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Elbow at 90°, pinned to your side. Rotate forearm out slowly. Light resistance, feel the infraspinatus working. Per JN warm-up protocol — cable external rotation is listed directly.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Prone Trap Raise (incline bench or floor)</td>
+          <td class="ex-sets">2 × 12</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Lie face down on incline bench. Arms at Y-angle, thumbs up, lift until level with torso — no higher. Squeeze mid-back. Per JN's warm-up protocol. Mind-muscle connection with the mid back.</td>
+        </tr>
+      </table>
+
+      <div class="totals-bar">
+        <div class="total-chip">Bike: <span class="t-val">25–28 min</span></div>
+        <div class="total-chip">Finisher: <span class="t-val">~12 min</span></div>
+        <div class="total-chip">Est. total: <span class="t-val">~42 min</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEDNESDAY -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge">WED</div>
+      <div class="day-name">Upper Body</div>
+      <div class="day-focus">Press · Pull · Shoulder Health</div>
+    </div>
+    <div class="day-time">⏱ Target: ~65 min total including warm-up</div>
+    <div class="day-body">
+
+      <div class="warmup-block">
+        <h4>Warm-Up — 8 min</h4>
+        <ul class="warmup-steps">
+          <li><strong>5 min row machine or bike</strong> — easy pace, get core temp up</li>
+          <li><strong>Band pull-aparts</strong> × 15 — scapular activation</li>
+          <li><strong>Front/back leg swings</strong> × 10 each — general lower looseness</li>
+          <li><strong>Cable external rotation</strong> × 12 each arm — light, rotator cuff on</li>
+          <li><strong>Overhead shrug</strong> × 12 — per JN's warm-up table: arms overhead, light shrug, traps and upper back activation</li>
+          <li><strong>2 ramp-up sets on bench:</strong> ~95 lbs × 5, ~135 lbs × 3, then into working weight</li>
+        </ul>
+        <div class="time-est">Warm-up est: 8 min (including bench ramp)</div>
+      </div>
+
+      <div class="section-label"><span>A1 — Primary Press (~18 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Barbell Flat Bench Press</td>
+          <td class="ex-sets">3 × 8</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2.5 min</td>
+          <td class="ex-note">Working at ~155–165 lbs. Per JN's bench technique: elbows at 45°, scapulae retracted and depressed, stay firm on bench. This should feel controlled, not labored. 3–4 RIR means you stop at 8 when 12 is technically possible. DO NOT max out.</td>
+        </tr>
+      </table>
+      <div class="sub-box">
+        <strong>⚠ BENCH SUBSTITUTION (per JN):</strong> If barbell bench is unavailable — <strong>Dumbbell Bench Press</strong> or <strong>Hammer Strength Machine Press</strong>. Same sets/reps/RIR.
+      </div>
+
+      <div class="section-label"><span>A2 — Primary Pull (~15 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Seated Cable Row (neutral grip)</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2 min</td>
+          <td class="ex-note">Moderate weight. Retract scapulae during the pull, protract on the return — don't just pull with your arms. Row to your sternum, not your belly button. Keep the torso upright. 2-sec return.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Lat Pulldown (shoulder-width grip)</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Per JN: elbows straight out to sides, 1.5× shoulder-width grip. Pull to upper chest. Don't lean back excessively. Mind-muscle: think "elbows to back pockets."</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>B — Shoulder & Accessory (~14 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Dumbbell Lateral Raise</td>
+          <td class="ex-sets">3 × 12</td>
+          <td class="ex-rir">3</td>
+          <td class="ex-rest">75 sec</td>
+          <td class="ex-note">Light dumbbells — 15–25 lbs. Slight forward lean, pinky slightly higher than thumb. Slow negative. Per JN: this builds the medial delt which is key for shoulder width. Prioritized because it matters for your physique goal.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Dumbbell Curl (supinated)</td>
+          <td class="ex-sets">2 × 12</td>
+          <td class="ex-rir">3</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Drive the pinky harder into the handle than the pointer finger. Per JN's supinated curl cue. Light, controlled. Arm work starts here to begin the hypertrophy signal in a time-efficient way.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Rope Tricep Extension</td>
+          <td class="ex-sets">2 × 12</td>
+          <td class="ex-rir">3</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Per JN: pull arm behind torso at bottom, keep upper arm stationary. Elbow work as an easy Phase 0 accessory to begin tissue loading.</td>
+        </tr>
+      </table>
+
+      <div class="totals-bar">
+        <div class="working-sets">Working sets: <span class="t-val">16</span></div>
+        <div class="total-chip">Est. total: <span class="t-val">~64 min</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- THURSDAY -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge green">THU</div>
+      <div class="day-name">Conditioning — Swim or Bike + Core</div>
+      <div class="day-focus">Zone 2 · Aerobic Base · Core Stability</div>
+    </div>
+    <div class="day-time">⏱ Target: ~45 min total</div>
+    <div class="day-body">
+
+      <div class="cond-block">
+        <h4>Option A: Swimming (preferred if accessible)</h4>
+        <p><strong>Duration:</strong> 25–28 min easy swimming. Mix strokes freely — crawl, backstroke, breaststroke. <strong>Intensity:</strong> Easy, never breathless. This is the best Zone 2 modality in your toolkit: zero knee load, gentle full-body, deeply aerobic and excellent for post-mono recovery.</p>
+        <p class="cond-detail">Do not worry about pace, distance, or efficiency. The goal is continuous movement at low intensity. Rest at the wall briefly if needed — not a problem in Week 1.</p>
+      </div>
+
+      <div class="cond-block">
+        <h4>Option B: Bike (if no swim access)</h4>
+        <p><strong>Duration:</strong> 28 min Zone 2 bike, same talk-test standard as Tuesday. Slightly longer than Tuesday since there's no shoulder finisher to follow.</p>
+        <p class="cond-detail"><strong>If fatigued:</strong> 20 min is fine. Honest easy effort beats a short hard effort every time this phase.</p>
+      </div>
+
+      <div class="section-label"><span>Core Finisher — 8 min</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps/Time</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Dead Bug</td>
+          <td class="ex-sets">3 × 8 each side</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Flat back pressed to floor throughout. Opposite arm and leg extend slowly — back must not arch. Anti-extension core stability. Zero spinal compression, zero knee load.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Plank (forearm)</td>
+          <td class="ex-sets">2 × 25 sec</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Squeeze glutes, keep hips level. Per JN's lower body protocol: quality over duration. 25 seconds of honest tension beats 60 seconds of sagging hips.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Pallof Press (cable or band)</td>
+          <td class="ex-sets">2 × 10 each side</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Anti-rotation. Anchor band at chest height. Press out, hold 2 sec, return. From JSOC asymmetrical program — this is a foundational trunk stability move for tactical athletes.</td>
+        </tr>
+      </table>
+
+      <div class="totals-bar">
+        <div class="total-chip">Conditioning: <span class="t-val">25–28 min</span></div>
+        <div class="total-chip">Core: <span class="t-val">~8 min</span></div>
+        <div class="total-chip">Est. total: <span class="t-val">~40 min</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FRIDAY -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge">FRI</div>
+      <div class="day-name">Upper-Biased Full Body</div>
+      <div class="day-focus">Incline Press · Row · Hip Hinge · Farmer Carry</div>
+    </div>
+    <div class="day-time">⏱ Target: ~65 min total including warm-up</div>
+    <div class="day-body">
+
+      <div class="warmup-block">
+        <h4>Warm-Up — 8 min</h4>
+        <ul class="warmup-steps">
+          <li><strong>5 min easy bike or row</strong></li>
+          <li><strong>Foam roll</strong> — upper back and lats, 60 sec</li>
+          <li><strong>Band pull-aparts</strong> × 15</li>
+          <li><strong>Leg swing (front/back)</strong> × 10 each leg</li>
+          <li><strong>Hip flexor stretch</strong> — 20 sec each side</li>
+          <li><strong>Ramp-up on incline press:</strong> ~95 lbs × 5, ~135 lbs × 3</li>
+        </ul>
+        <div class="time-est">Warm-up est: 8 min</div>
+      </div>
+
+      <div class="section-label"><span>A1 — Primary Press (~16 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Dumbbell Incline Press</td>
+          <td class="ex-sets">3 × 8</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2.5 min</td>
+          <td class="ex-note">Different from Wednesday flat bench — this is a deliberate variation for upper chest development. Per JN: scapulae retracted and depressed. Drive elbows slightly forward and in. Start at a weight you're very confident with — 50–65 lb dumbbells is a good Phase 0 starting point.</td>
+        </tr>
+      </table>
+      <div class="sub-box">
+        <strong>⚠ SUBSTITUTION (per JN):</strong> <strong>Hammer Strength Incline Machine</strong> if dumbbells are inconvenient or loading feels uncertain.
+      </div>
+
+      <div class="section-label"><span>A2 — Row (~12 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Chest-Supported Dumbbell Row</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Incline bench, chest down. Row dumbbells to lower ribs. Per JN's chest-supported T-bar row note: "retract scapulae during the concentric, protract during the eccentric." Remove spinal erector fatigue — this isolates the upper back purely. Second pulling pattern for the week.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>B — Hip Hinge (~12 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Dumbbell Romanian Deadlift</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2 min</td>
+          <td class="ex-note">Dumbbell version of Monday's RDL — slightly easier to execute unilaterally or bilaterally. Same movement principles. Builds a second hinge exposure per week, important for glute and hamstring development.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>C — Loaded Carry + Shoulder (~10 min)</span></div>
+      <table class="phase-table">
+        <tr>
+          <th>Exercise</th><th>Sets × Distance/Reps</th><th>Rest</th><th>Notes</th>
+        </tr>
+        <tr>
+          <td class="ex-name">Farmer Carry (dumbbell)</td>
+          <td class="ex-sets">3 × 30–40 meters</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Pick a challenging dumbbell — 60–80 lbs per hand. Walk controlled. This is JSOC-sourced: the JSOC asymmetrical program lists asymmetrical farmer carries explicitly as a foundational durability movement. Zero knee impact, builds grip, trunk, traps, and total-body durability. One of the highest-value exercises in your toolkit this summer.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Seated Face Pull (cable)</td>
+          <td class="ex-sets">3 × 15</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Rope attachment at eye height. Pull elbows back and up, hands to temples. Rear delt, external rotator, and upper back — the most important shoulder health movement in your program. Per JN scapular protocol. Do not skip this.</td>
+        </tr>
+      </table>
+
+      <div class="totals-bar">
+        <div class="total-chip">Working sets: <span class="t-val">15</span></div>
+        <div class="total-chip">Est. total: <span class="t-val">~63 min</span></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════ WEEK 2 ═══════════════════════════════════════ -->
+<div id="week2" class="tab-content">
+
+  <div class="week-divider">
+    <div class="week-divider-line"></div>
+    <div class="week-divider-label">WEEK 2 — Accumulate</div>
+    <div class="week-divider-line"></div>
+  </div>
+
+  <div class="callout">
+    <div class="icon">📈</div>
+    <div><strong>Week 2 objective:</strong> Cautious, earned progression. The structure is identical to Week 1. Changes are listed per session below. <strong>Gate rule:</strong> Only apply Week 2 progressions if Week 1 went smoothly — loads moved well, knee was quiet or only mildly stiff, energy held across the week. If Week 1 was rough in any of those areas, repeat Week 1 exactly.</div>
+  </div>
+
+  <!-- MONDAY W2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge">MON</div>
+      <div class="day-name">Lower Body <span class="delta-tag">Week 2 changes</span></div>
+      <div class="day-focus">Quad · Hinge · Knee Durability</div>
+    </div>
+    <div class="day-time">⏱ Target: ~65 min</div>
+    <div class="day-body">
+
+      <div class="rule-box">
+        <strong>Week 2 changes from Week 1:</strong>
+        <ul style="margin-top:8px;">
+          <li>If goblet squat felt controlled and knee was silent in Week 1 → <strong>upgrade to Low-Bar Barbell Back Squat at ~185 lbs</strong>, same 3 × 8, same 3–4 RIR. If any knee concern, stay with goblet squat and add one set (4 × 8 goblet squat).</li>
+          <li>RDL: add one set → <strong>4 × 10</strong> at same weight, or same 3 × 10 with ~10 lb load increase (to ~145 lbs) if movement felt easy.</li>
+          <li>Step-Up: <strong>slight load increase</strong> — 30–35 lbs per hand if 20–30 felt like 4+ RIR. Box height stays the same.</li>
+          <li>TKE finisher: add one set → 3 × 15 each leg.</li>
+        </ul>
+      </div>
+
+      <div class="warmup-block">
+        <h4>Warm-Up — 12 min (add barbell squat ramp if upgrading)</h4>
+        <ul class="warmup-steps">
+          <li>5 min easy bike</li>
+          <li>Foam roll quads, IT band, calves</li>
+          <li>Front/back leg swings × 12</li>
+          <li>Side/side leg swings × 12</li>
+          <li>TKE band × 15 each leg</li>
+          <li><strong>If squatting barbell:</strong> Empty bar × 8, 95 × 5, 135 × 3, then working weight</li>
+        </ul>
+      </div>
+
+      <div class="section-label"><span>A1 — Squat (upgrade or hold)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Barbell Back Squat (if earned) <em>or</em> Goblet Squat +1 set</td>
+          <td class="ex-sets">3 × 8</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2.5 min</td>
+          <td class="ex-note">If transitioning to barbell: start at ~185 lbs. Sit back and down, 15° toe flare, knees out per JN's squat cue. This is the pre-mono baseline — it should feel moderately easy at 3–4 RIR. First time back under bar in Phase 0: treat it as skill re-acquisition, not a strength test.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>A2 — RDL (add set or load)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Romanian Deadlift</td>
+          <td class="ex-sets">4 × 10 <em>or</em> 3 × 10 + 10 lbs</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2 min</td>
+          <td class="ex-note">Choose one progression — either add a set at same weight OR add 10 lbs at same sets. Not both. Log which you chose.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>B — Unilateral (load increase)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">DB Step-Up (low box)</td>
+          <td class="ex-sets">3 × 8 each leg</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Add 5–10 lbs per hand only if Week 1 was clearly ≥4 RIR. Otherwise repeat Week 1 load.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">SL Glute Bridge</td>
+          <td class="ex-sets">2 × 12 each leg</td>
+          <td class="ex-rir">3</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Same as Week 1. Can hold a small plate on hip for extra load if very easy.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>C — Durability (add set)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Terminal Knee Extension</td>
+          <td class="ex-sets">3 × 15 each leg</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Up from 2 × 15 in Week 1. Small volume increase on a low-stress exercise.</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- TUESDAY W2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge green">TUE</div>
+      <div class="day-name">Conditioning — Bike + Upper Durability <span class="delta-tag">+5 min</span></div>
+      <div class="day-focus">Zone 2 · Aerobic Base</div>
+    </div>
+    <div class="day-time">⏱ Target: ~50 min total</div>
+    <div class="day-body">
+      <div class="rule-box">
+        <strong>Week 2 change:</strong> Extend bike from 25–28 min to <strong>30–32 min</strong>. Same Zone 2 intensity. No other changes. If this extension feels easy, that's the goal — you're building the base, not testing the ceiling.
+      </div>
+      <div class="cond-block">
+        <h4>Bike — Zone 2</h4>
+        <p><strong>Duration:</strong> 30–32 minutes. Talk test standard identical to Week 1. RPE 4–5/10.</p>
+        <p class="cond-detail">The 5-minute extension is meaningful for aerobic adaptation — don't skip it, and don't compensate with harder effort.</p>
+      </div>
+      <div class="section-label"><span>Upper Durability Finisher — same as Week 1</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Band Pull-Apart</td>
+          <td class="ex-sets">3 × 15</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Cable External Rotation</td>
+          <td class="ex-sets">2 × 15 each side</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Prone Trap Raise</td>
+          <td class="ex-sets">2 × 12</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY W2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge">WED</div>
+      <div class="day-name">Upper Body <span class="delta-tag">+1 set bench / load progression</span></div>
+      <div class="day-focus">Press · Pull · Shoulder Health</div>
+    </div>
+    <div class="day-time">⏱ Target: ~65 min</div>
+    <div class="day-body">
+      <div class="rule-box">
+        <strong>Week 2 changes:</strong>
+        <ul style="margin-top:8px;">
+          <li>Flat bench: add <strong>one working set</strong> → <strong>4 × 8</strong> at same load, OR keep 3 × 8 and add 5–10 lbs. Choose one, not both.</li>
+          <li>Seated cable row: <strong>small load increase</strong> if Week 1 was clearly 4+ RIR. Same sets.</li>
+          <li>Lat pulldown, lateral raise, arms: same as Week 1 — no change.</li>
+        </ul>
+      </div>
+
+      <div class="section-label"><span>A1 — Flat Bench (4 × 8 or +load)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Barbell Flat Bench Press</td>
+          <td class="ex-sets">4 × 8 <em>or</em> 3 × 8 +10 lbs</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2.5 min</td>
+          <td class="ex-note">If adding the 4th set, keep load at Week 1 weight. If adding load, keep at 3 sets. Track total volume — either path is a meaningful progression.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>A2 — Pulls (same + optional load increase on row)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Seated Cable Row</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2 min</td>
+          <td class="ex-note">Add small load if Week 1 was easy. Otherwise identical.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Lat Pulldown</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>B — Accessories (same as Week 1)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">DB Lateral Raise</td>
+          <td class="ex-sets">3 × 12</td>
+          <td class="ex-rest">75 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">DB Supinated Curl</td>
+          <td class="ex-sets">2 × 12</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Rope Tricep Extension</td>
+          <td class="ex-sets">2 × 12</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- THURSDAY W2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge green">THU</div>
+      <div class="day-name">Conditioning — Swim or Bike + Core <span class="delta-tag">+5 min conditioning</span></div>
+      <div class="day-focus">Zone 2 · Core Stability</div>
+    </div>
+    <div class="day-time">⏱ Target: ~48 min total</div>
+    <div class="day-body">
+      <div class="rule-box">
+        <strong>Week 2 change:</strong> Extend conditioning (swim or bike) from 25–28 min to <strong>30–32 min</strong>. Core finisher is identical to Week 1.
+      </div>
+      <div class="cond-block">
+        <h4>Swim or Bike (Option A/B same as Week 1)</h4>
+        <p><strong>Duration:</strong> 30–32 minutes. Same intensity standard.</p>
+      </div>
+      <div class="section-label"><span>Core Finisher — same as Week 1</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps/Time</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Dead Bug</td>
+          <td class="ex-sets">3 × 8 each side</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Forearm Plank</td>
+          <td class="ex-sets">2 × 30 sec</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Up from 25 sec. Small increase only.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Pallof Press</td>
+          <td class="ex-sets">2 × 10 each side</td>
+          <td class="ex-rest">45 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- FRIDAY W2 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-badge">FRI</div>
+      <div class="day-name">Upper-Biased Full Body <span class="delta-tag">+1 set incline / carry progression</span></div>
+      <div class="day-focus">Incline Press · Row · Hip Hinge · Carry</div>
+    </div>
+    <div class="day-time">⏱ Target: ~67 min</div>
+    <div class="day-body">
+      <div class="rule-box">
+        <strong>Week 2 changes:</strong>
+        <ul style="margin-top:8px;">
+          <li>DB Incline Press: add one set → <strong>4 × 8</strong> at same weight, OR 3 × 8 with 5 lbs more per dumbbell.</li>
+          <li>Farmer Carry: <strong>increase load 10–15 lbs per hand</strong> if Week 1 felt clearly manageable. Or increase distance to 45 meters.</li>
+          <li>Chest-supported row and face pull: same as Week 1.</li>
+          <li>DB RDL: same as Week 1 OR follow the Monday RDL progression logic.</li>
+        </ul>
+      </div>
+
+      <div class="section-label"><span>A1 — Incline Press (4×8 or +load)</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">DB Incline Press</td>
+          <td class="ex-sets">4 × 8 <em>or</em> 3 × 8 +5 lbs/hand</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2.5 min</td>
+          <td class="ex-note">Same progression logic as Wednesday bench. Log your choice.</td>
+        </tr>
+      </table>
+
+      <div class="section-label"><span>A2 through C — Same as Week 1 with carry load increase</span></div>
+      <table class="phase-table">
+        <tr><th>Exercise</th><th>Sets × Reps</th><th>RIR</th><th>Rest</th><th>Notes</th></tr>
+        <tr>
+          <td class="ex-name">Chest-Supported DB Row</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Same as Week 1.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">DB Romanian Deadlift</td>
+          <td class="ex-sets">3 × 10</td>
+          <td class="ex-rir">3–4</td>
+          <td class="ex-rest">2 min</td>
+          <td class="ex-note">Small load increase if Week 1 was easy (same rule as Monday).</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Farmer Carry <span class="delta-tag">+10–15 lbs/hand</span></td>
+          <td class="ex-sets">3 × 40–45 m</td>
+          <td class="ex-rest">90 sec</td>
+          <td class="ex-note">Add load if Week 1 felt manageable. Or add distance. Or both — not both.</td>
+        </tr>
+        <tr>
+          <td class="ex-name">Seated Face Pull</td>
+          <td class="ex-sets">3 × 15</td>
+          <td class="ex-rest">60 sec</td>
+          <td class="ex-note">Same as Week 1. Non-negotiable shoulder health work.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════ ADJUSTMENT RULES ═══════════════════════════════ -->
+<div id="adjustments" class="tab-content">
+
+  <h2>Daily Adjustment Rules</h2>
+  <p>These are your in-session decision rules. They override the written prescription when the conditions below are met. Read them once before the program starts so you know them by instinct in the gym.</p>
+
+  <div class="adj-grid">
+
+    <div class="adj-card red">
+      <div class="adj-title">🦵 Knee Pain — Before Session</div>
+      <div class="adj-step"><span class="adj-trigger">If:</span> Knee is noticeably achy walking in, stiff, or felt bad yesterday</div>
+      <div class="adj-step"><span class="adj-trigger">Do:</span> Do the warm-up fully, including the TKE band work. Give the knee 10 min to loosen up before deciding.</div>
+      <div class="adj-step"><span class="adj-trigger">If clears:</span> Proceed with planned session. Monitor closely — if it returns, apply in-session rule below.</div>
+      <div class="adj-step"><span class="adj-trigger">If does not clear:</span> On a lower day — skip squats and step-ups. Do RDL and non-loading knee alternatives (leg press high-foot, GHR, upper body only). On an upper/conditioning day — proceed as written.</div>
+      <div class="adj-step"><span class="adj-trigger">Never:</span> Push through a knee that is actively unhappy before you even start. That is a red flag, not a green one.</div>
+    </div>
+
+    <div class="adj-card red">
+      <div class="adj-title">🦵 Knee Pain — During Session</div>
+      <div class="adj-step"><span class="adj-trigger">Mild ache warms up:</span> Ache present on first 1–2 sets, fades by set 3 — monitor and continue with current exercise.</div>
+      <div class="adj-step"><span class="adj-trigger">Ache builds across sets:</span> Stop the exercise. Substitute: leg press (high foot) or RDL variation. Log the exercise that provoked it.</div>
+      <div class="adj-step"><span class="adj-trigger">Sharp or stabbing:</span> Stop immediately. Finish the session on upper body and non-loading exercises. No exceptions.</div>
+      <div class="adj-step"><span class="adj-trigger">Swelling or instability:</span> End the session. Rest the next lower-body day. If persists 48h, see a professional before continuing lower-body loading.</div>
+      <div class="adj-step"><span class="adj-trigger">Ache lingers next day:</span> Log it. If it happens twice on the same exercise, that exercise is flagged — report it at the Phase 1 check-in.</div>
+    </div>
+
+    <div class="adj-card yellow">
+      <div class="adj-title">😴 Bad Sleep — Under ~5 hrs</div>
+      <div class="adj-step"><span class="adj-trigger">Rule:</span> Still show up. Consistency matters more than perfection. But reduce volume ~30–35%.</div>
+      <div class="adj-step"><span class="adj-trigger">Lifting days:</span> Cut last 1–2 accessories. Main lifts stay. Drop load 5–10% if bar feels heavy.</div>
+      <div class="adj-step"><span class="adj-trigger">Conditioning days:</span> Reduce duration by 25%. Keep RPE identical — do not compensate with harder effort.</div>
+      <div class="adj-step"><span class="adj-trigger">Two bad nights in a row:</span> Consider swapping a lifting day for a conditioning day, or take the day as an active rest (15–20 min easy walk).</div>
+      <div class="adj-step"><span class="adj-trigger">Never:</span> Push volume or intensity to "make up for" bad sleep. That's how injuries and setbacks happen.</div>
+    </div>
+
+    <div class="adj-card orange">
+      <div class="adj-title">⚡ General Flatness / Low Energy</div>
+      <div class="adj-step"><span class="adj-trigger">Rule:</span> Auto-regulate by RIR. If the bar feels heavier than usual, the weight is wrong for today — not you.</div>
+      <div class="adj-step"><span class="adj-trigger">Drop load</span> until working weight sits at the prescribed RIR. A lighter session done properly always beats a prescribed session done poorly.</div>
+      <div class="adj-step"><span class="adj-trigger">Signs it's okay:</span> 1–2 exercises feel flat but then you warm into the session. This is normal.</div>
+      <div class="adj-step"><span class="adj-trigger">Signs to cut short:</span> Still flat after the first two exercises with reduced load. In that case: do your primary lift only, skip accessories, leave.</div>
+    </div>
+
+    <div class="adj-card orange" style="grid-column: 1 / -1;">
+      <div class="adj-title">🏥 Post-Mono Fatigue — The Critical One</div>
+      <div class="adj-step"><span class="adj-trigger">Normal training fatigue:</span> Tired during session, recovered within a few hours or by next morning. This is expected — it's adaptation.</div>
+      <div class="adj-step"><span class="adj-trigger">Post-mono fatigue signal:</span> Disproportionate tiredness — wiped out by a session that shouldn't have done that, or dragging for 2+ days after a session that was within the Phase 0 prescription.</div>
+      <div class="adj-step"><span class="adj-trigger">If you see it:</span> Take 2–3 fully easy or off days. Then re-enter at the previous week's volume — not where you left off. Do not try to make up the missed sessions.</div>
+      <div class="adj-step"><span class="adj-trigger">If it keeps recurring:</span> See your doctor before continuing the ramp. Post-mono fatigue relapses are real and cost far more than the sessions you'd "lose" by pausing.</div>
+      <div class="adj-step"><span class="adj-trigger">The key diagnostic:</span> You should feel at worst 80% recovered going into each session. If you consistently feel less than that after full nights of sleep, the volume is too high. Back off until you do.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════ DAILY LOG ═══════════════════════════════════════ -->
+<div id="log" class="tab-content">
+
+  <h2>Daily Log Template</h2>
+
+  <p>Copy this into your Notes app. Takes 90 seconds max per entry. This is the only tracking required. The data from these two weeks directly informs whether I write Phase 1 at the low, medium, or high end of the planned progressions.</p>
+
+  <div class="callout">
+    <div class="icon">📋</div>
+    <div><strong>What to capture:</strong> The morning readiness check takes 30 seconds. The in-session log takes 60 seconds written right after the last exercise. You don't need detailed notes — just the numbers and one honest sentence.</div>
+  </div>
+
+  <div class="log-block">
+<span class="log-comment">══════════════════════════════════
+PHASE 0 DAILY LOG — [DATE / DAY]
+══════════════════════════════════</span>
+
+<span class="log-key">MORNING CHECK (before training)</span>
+<span class="log-key">Sleep (hrs + quality 1-10):</span>  <span class="log-val">___ hrs / ___/10</span>
+<span class="log-key">Energy on waking (1-10):</span>      <span class="log-val">___/10</span>
+<span class="log-key">Knee (0=silent, 10=angry):</span>     <span class="log-val">___/10</span>
+<span class="log-key">Notes:</span>                           <span class="log-val">___________________</span>
+
+<span class="log-key">SESSION LOG</span>
+<span class="log-key">Session type:</span>  <span class="log-val">[ ] Lower  [ ] Upper  [ ] FB  [ ] Bike  [ ] Swim</span>
+<span class="log-key">Start time / End time:</span>  <span class="log-val">_____  /  _____</span>
+
+<span class="log-comment">— Main lifts (log the first working set of each) —</span>
+<span class="log-key">Exercise 1:</span>  <span class="log-val">_________________  ___lbs × ___ reps  RIR: ___</span>
+<span class="log-key">Exercise 2:</span>  <span class="log-val">_________________  ___lbs × ___ reps  RIR: ___</span>
+<span class="log-key">Exercise 3:</span>  <span class="log-val">_________________  ___lbs × ___ reps  RIR: ___</span>
+<span class="log-comment">(Accessories: just mark ✓ if completed, × if skipped)</span>
+<span class="log-key">Accessories:</span>  <span class="log-val">[ ]  [ ]  [ ]  [ ]</span>
+
+<span class="log-comment">— Conditioning days —</span>
+<span class="log-key">Modality + duration:</span>  <span class="log-val">_______________  ___min</span>
+<span class="log-key">RPE (1-10):</span>           <span class="log-val">___</span>
+<span class="log-key">Talk test:</span>            <span class="log-val">[ ] Full sentences  [ ] Broken phrases</span>
+
+<span class="log-key">POST-SESSION</span>
+<span class="log-key">Knee after session (0-10):</span>   <span class="log-val">___/10</span>
+<span class="log-key">Energy after (1-10):</span>         <span class="log-val">___/10</span>
+<span class="log-key">Session felt like:</span>           <span class="log-val">[ ] Too easy  [ ] Right  [ ] Too hard</span>
+<span class="log-key">One-sentence note:</span>           <span class="log-val">___________________________</span>
+
+<span class="log-comment">══════════════════════════════════
+WEEK 2 — FRIDAY POST-WEEK REVIEW
+(fill once at end of Week 2)
+══════════════════════════════════</span>
+
+<span class="log-key">Did main lifts progress week-over-week?</span>  <span class="log-val">[ ] Yes  [ ] No  [ ] Mixed</span>
+<span class="log-key">Did conditioning durations extend OK?</span>    <span class="log-val">[ ] Yes  [ ] No</span>
+<span class="log-key">Knee trend over 2 weeks:</span>                <span class="log-val">[ ] Improving  [ ] Stable  [ ] Worse</span>
+<span class="log-key">Any post-mono fatigue episodes?</span>          <span class="log-val">[ ] None  [ ] Once  [ ] Recurring</span>
+<span class="log-key">Missed sessions:</span>                         <span class="log-val">___ (which days: ___________)</span>
+<span class="log-key">Overall:</span>                                 <span class="log-val">[ ] Ready to ramp  [ ] Need more time</span>
+</div>
+
+  <div class="callout" style="margin-top: 16px;">
+    <div class="icon">📤</div>
+    <div>Bring the Week 2 Friday Post-Week Review when we build Phase 1. The four gate criteria — lift progression, conditioning extension, knee trend, post-mono fatigue — are exactly what determines whether Phase 1 starts at week 3 or gets delayed a week. This log is the program.</div>
+  </div>
+
+</div>
+
+<script>
+function showTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
 </body>
 </html>
